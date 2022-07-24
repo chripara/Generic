@@ -1,0 +1,17 @@
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\Generic.Persistence.csproj.AssemblyReference.cache
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\Generic.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\Generic.Persistence.AssemblyInfoInputs.cache
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\Generic.Persistence.AssemblyInfo.cs
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\Generic.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\bin\Debug\net6.0\Generic.Persistence.deps.json
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\bin\Debug\net6.0\Generic.Persistence.dll
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\bin\Debug\net6.0\Generic.Persistence.pdb
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\bin\Debug\net6.0\Generic.Domain.dll
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\bin\Debug\net6.0\Generic.Domain.pdb
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\Generic.Persistence.csproj.CopyComplete
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\Generic.Persistence.dll
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\refint\Generic.Persistence.dll
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\Generic.Persistence.pdb
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\ref\Generic.Persistence.dll
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\bin\Debug\net6.0\Generic.Persistence.runtimeconfig.json
+C:\Users\Panos\Documents\Project\Generic\Generic.Persistence\obj\Debug\net6.0\Generic.Persistence.genruntimeconfig.cache

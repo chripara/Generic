@@ -1,0 +1,14 @@
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\bin\Debug\net6.0\Generic.Domain.deps.json
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\bin\Debug\net6.0\Generic.Domain.dll
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\bin\Debug\net6.0\Generic.Domain.pdb
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\obj\Debug\net6.0\Generic.Domain.csproj.AssemblyReference.cache
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\obj\Debug\net6.0\Generic.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\obj\Debug\net6.0\Generic.Domain.AssemblyInfoInputs.cache
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\obj\Debug\net6.0\Generic.Domain.AssemblyInfo.cs
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\obj\Debug\net6.0\Generic.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\obj\Debug\net6.0\Generic.Domain.dll
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\obj\Debug\net6.0\refint\Generic.Domain.dll
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\obj\Debug\net6.0\Generic.Domain.pdb
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\obj\Debug\net6.0\ref\Generic.Domain.dll
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\bin\Debug\net6.0\Generic.Domain.runtimeconfig.json
+C:\Users\Panos\Documents\Project\Generic\Generic.Domain\obj\Debug\net6.0\Generic.Domain.genruntimeconfig.cache
