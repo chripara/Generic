@@ -3,8 +3,11 @@ using Generic.Application.Dto.Auth;
 using Generic.Application.Services.Email;
 using Generic.Domain.Models.Auth;
 using Generic.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Web;
 
 namespace Generic.API.Controllers
 {
@@ -16,21 +19,21 @@ namespace Generic.API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        //private readonly IEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
 
         public AuthController(
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             AppDbContext context,
-            IMapper mapper
-            //EmailSender emailSender
+            IMapper mapper,
+            IEmailSender emailSender
             )
         {
             _mapper = mapper;
             _signInManager = signInManager;
             _userManager = userManager;
-            _context = context; 
-            //_emailSender = emailSender;
+            _context = context;
+            _emailSender = emailSender;
         }
 
         
@@ -41,7 +44,6 @@ namespace Generic.API.Controllers
             var userByUserName = await _userManager.FindByNameAsync(dto.UserName);
             var userByEmail = await _userManager.FindByEmailAsync(dto.UserName);
             var userByPhoneNumber = _userManager.Users.FirstOrDefault(w => w.PhoneNumber == dto.PhoneNumber);
-
 
             if (userByUserName != null )
                 return BadRequest("UserName is already in use.");
@@ -72,7 +74,22 @@ namespace Generic.API.Controllers
             _context.SaveChanges();
 
             var newUser = await _userManager.FindByEmailAsync(dto.Email); 
-            return Ok(newUser);
+            await _userManager.AddPasswordAsync(newUser, dto.Password);
+
+            var generatedToken = await _userManager.GenerateChangeEmailTokenAsync(newUser, newUser.Email);
+
+            if (generatedToken == null)
+            {
+                return NotFound("Something went wrong no token generated. Please try again.");
+            }
+
+            newUser.EmailConfirmationToken = generatedToken;
+
+            _context.Update<User>(newUser);
+            await _context.SaveChangesAsync();
+            var encodedToken = HttpUtility.HtmlAttributeEncode(generatedToken);
+            var response = await _emailSender.EmailSenderAsync(newUser.Email, newUser.UserName, HttpUtility.HtmlEncode(generatedToken));
+            return Ok("Please verify your email.");
         }
 
         [HttpPost]
@@ -111,20 +128,71 @@ namespace Generic.API.Controllers
 
         [HttpPost]
         [Route("ChangePassword")]
+        [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto dto)
         {
-            //await _emailSender.EmailSenderAsync("asdfasdfasdf");
-            
-            return NotFound("komplentan");
+            var username = HttpContext.User.Identity.Name;
+            var user = await _userManager.FindByNameAsync(username);
+
+            if(user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            if(!user.EmailConfirmed)
+            {
+                return NotFound("User not confirmed the email.");
+            }
+
+            if(dto.NewPassword != dto.ConfirmNewPassword)
+            {
+                return NotFound("New pasword is not a match.");
+            }
+
+            var response = await _userManager.ChangePasswordAsync(user, dto.OldPassword, dto.NewPassword);
+
+            return Ok("Password changed status: " + response.Succeeded);
         }
 
-        [HttpPost]
-        [Route("ForwordPassword")]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
+        [HttpGet]
+        [Route("VerificationEmail")]
+        public async Task<IActionResult> VerificationEmail([FromQuery] VerificationEmailDto dto)
         {
             var user = await _userManager.FindByEmailAsync(dto.Email);
 
-            /* Send email with code */
+            if(user == null)
+            {
+                return NotFound("No user with that email.");
+            }
+
+            user.EmailConfirmed = true;
+
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+
+            return Ok("User with email: " + dto.Email + " is succesfully confirmed.");
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("ForwordPassword")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
+        {
+            var username = HttpContext.User.Identity?.Name;
+            var user = await _userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            if (!user.EmailConfirmed)
+            {
+                return NotFound("User not confirmed the email.");
+            }
+
+            await _userManager.RemovePasswordAsync(user);
+
 
             return Ok("Please check your email for reset password code.");
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SendGrid;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Generic.Application.Services.Email
 {
     public interface IEmailSender
     {
-        Task EmailSenderAsync(string email);
+        Task<Response> EmailSenderAsync(string email, string username, string token);
     }
 }

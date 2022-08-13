@@ -8,6 +8,8 @@ namespace Generic.Domain.Models.Auth
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Location { get; set; }
+        public string? EmailConfirmationToken { get; set; }
+        public string? ForgotPasswordConfirmationToken { get; set; }
         public ICollection<Booking>? Bookings { get; set; }
     }
 }
