@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "iVpC+FAXExsai8Cc4bK4CtZ+VuZqwEecfR7Vyng+C1vv0on1wrzpmgo4ByFlF9K7w6ZE02M2YCg6sjG2KTF3lA==",
+  "dgSpecHash": "qFxB5bTr8UrrY4Q7B/IJ286TzvrGJqO9FiGuKg3qJBZriMUgQBeUgA7/HQ/5leXbWvs6W736YiniC2KGdv4P3w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Panos\\Documents\\Project\\Generic\\Generic.API\\Generic.API.csproj",
   "expectedPackageFiles": [
@@ -57,10 +57,13 @@
     "C:\\Users\\Panos\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\Panos\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Panos\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\Panos\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Panos\\.nuget\\packages\\sendgrid\\9.28.0\\sendgrid.9.28.0.nupkg.sha512",
     "C:\\Users\\Panos\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.6\\sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512",
     "C:\\Users\\Panos\\.nuget\\packages\\sqlitepclraw.core\\2.0.6\\sqlitepclraw.core.2.0.6.nupkg.sha512",
     "C:\\Users\\Panos\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.6\\sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",
     "C:\\Users\\Panos\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.0.6\\sqlitepclraw.provider.e_sqlite3.2.0.6.nupkg.sha512",
+    "C:\\Users\\Panos\\.nuget\\packages\\starkbank-ecdsa\\1.3.3\\starkbank-ecdsa.1.3.3.nupkg.sha512",
     "C:\\Users\\Panos\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\Panos\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "C:\\Users\\Panos\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",

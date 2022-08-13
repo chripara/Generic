@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Generic.Application.Dto.Auth;
+using Generic.Application.Services.Email;
 using Generic.Domain.Models.Auth;
 using Generic.Persistence;
 using Microsoft.AspNetCore.Identity;
@@ -15,16 +16,21 @@ namespace Generic.API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        //private readonly IEmailSender _emailSender;
 
         public AuthController(
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             AppDbContext context,
-            IMapper mapper)
+            IMapper mapper
+            //EmailSender emailSender
+            )
         {
+            _mapper = mapper;
             _signInManager = signInManager;
             _userManager = userManager;
             _context = context; 
+            //_emailSender = emailSender;
         }
 
         
@@ -35,6 +41,7 @@ namespace Generic.API.Controllers
             var userByUserName = await _userManager.FindByNameAsync(dto.UserName);
             var userByEmail = await _userManager.FindByEmailAsync(dto.UserName);
             var userByPhoneNumber = _userManager.Users.FirstOrDefault(w => w.PhoneNumber == dto.PhoneNumber);
+
 
             if (userByUserName != null )
                 return BadRequest("UserName is already in use.");
@@ -54,16 +61,8 @@ namespace Generic.API.Controllers
             {   
                 return BadRequest("Passwords are not a match.");
             }
-
-            var registerationIdentityResult = await _userManager.CreateAsync(new User
-            {
-                UserName = dto.UserName,
-                Email = dto.Email,
-                FirstName = dto.FirstName,  
-                LastName = dto.LastName,
-                PhoneNumber = dto.PhoneNumber,  
-                Location = dto.Location
-            }, dto.Password);
+            
+            var registerationIdentityResult = await _userManager.CreateAsync(_mapper.Map<User>(dto));            
 
             if(!registerationIdentityResult.Succeeded)
             {
@@ -102,8 +101,6 @@ namespace Generic.API.Controllers
             return Ok("Sign in is successfull.");
         }
 
-
-
         [HttpGet]
         [Route("Logout")]
         public async Task<IActionResult> LogOut()
@@ -116,10 +113,10 @@ namespace Generic.API.Controllers
         [Route("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto dto)
         {
-
+            //await _emailSender.EmailSenderAsync("asdfasdfasdf");
+            
             return NotFound("komplentan");
         }
-
 
         [HttpPost]
         [Route("ForwordPassword")]
@@ -132,22 +129,20 @@ namespace Generic.API.Controllers
             return Ok("Please check your email for reset password code.");
         }
 
-
         [HttpPost]
         [Route("ResetPassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto dto)
         {
 
-            return NotFound("komplentan");
+            return NotFound("");
         }
-
 
         [HttpPost]
         [Route("ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailDto dto)
         {
 
-            return NotFound("komplentan");
+            return NotFound("");
         }
 
     }

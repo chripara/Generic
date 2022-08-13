@@ -1,4 +1,6 @@
+using AutoMapper;
 using Generic.Application.Profiles.Auth;
+using Generic.Application.Services.Email;
 using Generic.Domain.Models.Auth;
 using Generic.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -6,6 +8,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
+
+var config = new MapperConfiguration(cfg =>
+{
+    cfg.AddMaps(typeof(UserProfile));
+});
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +68,7 @@ builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

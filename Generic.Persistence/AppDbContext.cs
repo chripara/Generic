@@ -1,4 +1,5 @@
 ﻿using Generic.Domain;
+using Generic.Domain.Models;
 using Generic.Domain.Models.Auth;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace Generic.Persistence
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }  
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Booking> Booking { get; set; }
     }
 }

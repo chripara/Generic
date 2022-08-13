@@ -151,6 +151,10 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[11.0.0, )"
+            },
+            "SendGrid": {
+              "target": "Package",
+              "version": "[9.28.0, )"
             }
           },
           "imports": [
