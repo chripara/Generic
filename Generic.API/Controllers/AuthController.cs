@@ -87,8 +87,10 @@ namespace Generic.API.Controllers
 
             _context.Update<User>(newUser);
             await _context.SaveChangesAsync();
+
             var encodedToken = HttpUtility.HtmlAttributeEncode(generatedToken);
-            var response = await _emailSender.EmailSenderAsync(newUser.Email, newUser.UserName, HttpUtility.HtmlEncode(generatedToken));
+            var response = await _emailSender.EmailVerifyEmailSenderAsync(newUser.Email, newUser.UserName, HttpUtility.HtmlEncode(generatedToken));
+
             return Ok("Please verify your email.");
         }
 
@@ -165,21 +167,24 @@ namespace Generic.API.Controllers
                 return NotFound("No user with that email.");
             }
 
-            user.EmailConfirmed = true;
+            var confirmationToken = HttpUtility.HtmlDecode(dto.Token).Replace(" ", "+");
 
-            _context.Update(user);
-            await _context.SaveChangesAsync();
+            if (user.EmailConfirmationToken == confirmationToken)
+            {
+                user.EmailConfirmed = true;
+
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+            }
 
             return Ok("User with email: " + dto.Email + " is succesfully confirmed.");
         }
 
-        [HttpPost]
-        [Authorize]
+        [HttpPost]        
         [Route("ForwordPassword")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
-            var username = HttpContext.User.Identity?.Name;
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByEmailAsync(dto.Email);
 
             if (user == null)
             {
@@ -193,24 +198,100 @@ namespace Generic.API.Controllers
 
             await _userManager.RemovePasswordAsync(user);
 
+            var generatedToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            if (generatedToken == null)
+            {
+                return NotFound("Something went wrong no token generated. Please try again.");
+            }
+
+            user.ForgotPasswordConfirmationToken = generatedToken;
+
+            _context.Update<User>(user);
+            await _context.SaveChangesAsync();
+
+            var encodedToken = HttpUtility.HtmlAttributeEncode(generatedToken);
+            var response = await _emailSender.EmailForgotPasswordSenderAsync(user.Email, user.UserName, HttpUtility.HtmlEncode(generatedToken));
 
             return Ok("Please check your email for reset password code.");
         }
 
+        //[HttpGet]
+        //[Route("VerifyForgotPasswordToken")]
+        //public async Task<IActionResult> VerifyForgotPasswordToken([FromQuery] EmailTokenDto dto)
+        //{
+        //    var user = await _userManager.FindByEmailAsync(dto.Email);
+
+        //    if (user == null)
+        //    {
+        //        return NotFound("No user with that email.");
+        //    }
+
+        //    var confirmationToken = HttpUtility.HtmlDecode(dto.Token).Replace(" ", "+");
+
+        //    if (user.EmailConfirmationToken == confirmationToken)
+        //    {
+        //        user.EmailConfirmed = true;
+
+        //        _context.Update(user);
+        //        await _context.SaveChangesAsync();
+        //    }
+
+        //    return Ok("User with email: " + dto.Email + " is succesfully confirmed.");
+        //}
+
+
         [HttpPost]
         [Route("ResetPassword")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPassword([FromQuery] ResetPasswordDto dto)
         {
+            var user = await _userManager.FindByEmailAsync(dto.Email);
 
-            return NotFound("");
+            if(user == null)
+            {
+                return NotFound("User not found try again.");
+            }
+
+            var confirmationToken = HttpUtility.HtmlDecode(dto.Token).Replace(" ", "+");
+
+            if(confirmationToken != user.ForgotPasswordConfirmationToken)
+            {
+                return NotFound("Forgot password confirmation token is not a match please try again.");
+            }
+
+            if (user.EmailConfirmationToken != confirmationToken)
+            {
+                return NotFound("Email is not confirmed");
+            }
+            user.EmailConfirmed = true;
+
+            if(dto.ConfirmPassword != dto.Password)
+            {
+                return NotFound("Passwords are not a match try again.");
+            }
+            
+            var result = await _userManager.AddPasswordAsync(user, dto.Password);
+
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+
+            return Ok("Password reset was successful: " + result);
         }
 
         [HttpPost]
-        [Route("ConfirmEmail")]
-        public async Task<IActionResult> ConfirmEmail(ConfirmEmailDto dto)
+        [Route("VerifyPhoneNumber")]
+        public async Task<IActionResult> VerifyPhoneNumber(EmailTokenDto dto)
         {
+            var user = _userManager.FindByEmailAsync(dto.Email);
 
-            return NotFound("");
+            if(user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            //if(user.)
+
+            return Ok("");
         }
 
     }

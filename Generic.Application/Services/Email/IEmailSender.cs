@@ -9,6 +9,7 @@ namespace Generic.Application.Services.Email
 {
     public interface IEmailSender
     {
-        Task<Response> EmailSenderAsync(string email, string username, string token);
+        Task<Response> EmailVerifyEmailSenderAsync(string email, string username, string token);
+        Task<Response> EmailForgotPasswordSenderAsync(string email, string username, string token);
     }
 }
