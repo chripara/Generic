@@ -216,31 +216,6 @@ namespace Generic.API.Controllers
             return Ok("Please check your email for reset password code.");
         }
 
-        //[HttpGet]
-        //[Route("VerifyForgotPasswordToken")]
-        //public async Task<IActionResult> VerifyForgotPasswordToken([FromQuery] EmailTokenDto dto)
-        //{
-        //    var user = await _userManager.FindByEmailAsync(dto.Email);
-
-        //    if (user == null)
-        //    {
-        //        return NotFound("No user with that email.");
-        //    }
-
-        //    var confirmationToken = HttpUtility.HtmlDecode(dto.Token).Replace(" ", "+");
-
-        //    if (user.EmailConfirmationToken == confirmationToken)
-        //    {
-        //        user.EmailConfirmed = true;
-
-        //        _context.Update(user);
-        //        await _context.SaveChangesAsync();
-        //    }
-
-        //    return Ok("User with email: " + dto.Email + " is succesfully confirmed.");
-        //}
-
-
         [HttpPost]
         [Route("ResetPassword")]
         public async Task<IActionResult> ResetPassword([FromQuery] ResetPasswordDto dto)
@@ -280,19 +255,34 @@ namespace Generic.API.Controllers
 
         [HttpPost]
         [Route("VerifyPhoneNumber")]
-        public async Task<IActionResult> VerifyPhoneNumber(EmailTokenDto dto)
+        public async Task<IActionResult> VerifyPhoneNumber(VerifyPhoneNumberDto dto)
         {
-            var user = _userManager.FindByEmailAsync(dto.Email);
+            var user = await _userManager.FindByEmailAsync(dto.Email);
 
             if(user == null)
             {
                 return NotFound("User not found");
             }
 
-            //if(user.)
+            if(user.VerifyPhoneToken != dto.Token)
+            {
+                return NotFound("Phone verification codes are not a match plz try again.");
+            }
 
-            return Ok("");
+            user.PhoneNumberConfirmed = true;
+            user.VerifyPhoneToken = "";
+
+            await _userManager.UpdateAsync(user);
+            await _context.SaveChangesAsync();
+
+            return Ok("Phone number verified.");
         }
 
+        [HttpPost]
+        [Route("ChangeEmail")]
+        public async Task<IActionResult> ChangeEmail(ChangeEmailDto dto)
+        {
+
+        }
     }
 }
