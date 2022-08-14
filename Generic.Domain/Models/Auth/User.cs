@@ -10,8 +10,11 @@ namespace Generic.Domain.Models.Auth
         public string Location { get; set; }
         public string? EmailConfirmationToken { get; set; }
         public string? ForgotPasswordConfirmationToken { get; set; }
-        public string VerifyPhoneToken { get; set; }
-        public bool IsPhoneConfirmed { get; set; }
+        public string? VerifyPhoneToken { get; set; }
+        public string? NewEmail { get; set; }
+        public string? NewPhoneNumber { get; set; }
+        public DateTime? EmailExpirationTime { get; set; }
+        public DateTime? PhoneExpirationTime { get; set; }
         public ICollection<Booking>? Bookings { get; set; }
     }
 }
