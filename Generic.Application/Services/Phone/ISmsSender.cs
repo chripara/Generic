@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Twilio.Rest.Api.V2010.Account;
 
-namespace Generic.Application.Services.Phone
+namespace HotelReservation.Application.Services.Phone
 {
     public interface ISmsSender
     {

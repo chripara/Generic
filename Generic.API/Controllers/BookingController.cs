@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Generic.Application.Dto.Bookings;
-using Generic.Domain.Models;
-using Generic.Domain.Models.Auth;
-using Generic.Persistence;
+using HotelReservation.Application.Dto.Bookings;
+using HotelReservation.Domain.Models;
+using HotelReservation.Domain.Models.Auth;
+using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Generic.API.Controllers
+namespace HotelReservation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -33,13 +33,13 @@ namespace Generic.API.Controllers
             return Ok(booking);
         }
 
-        [HttpGet]
-        [Route("GetBookings")]
-        public async Task<IActionResult> GetBookings(GetBookingsRequestDateDto dto)
-        {            
-            var bookings = _context.Booking.Where(p => p.StartDate.Date >= dto.StartDate.Date && p.StartDate.Date <= dto.EndDate.Date).ToList();
-            return Ok(bookings);
-        }
+        //[HttpGet]
+        //[Route("GetBookings")]
+        //public async Task<IActionResult> GetBookings(GetBookingsRequestDateDto dto)
+        //{            
+        //    var bookings = _context.Booking.Where(p => p.StartDate.Date >= dto.StartDate.Date && p.StartDate.Date <= dto.EndDate.Date).ToList();
+        //    return Ok(bookings);
+        //}
 
         [HttpDelete]
         [Route("DeleteBooking")]

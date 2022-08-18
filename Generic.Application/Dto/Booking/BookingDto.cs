@@ -1,12 +1,22 @@
-﻿using System;
+﻿using HotelReservation.Application.Dto.Hotel;
+using HotelReservation.Domain.Models.Auth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generic.Application.Dto.Booking
+namespace HotelReservation.Application.Dto.Bookings
 {
-    internal class BookingDto
-    {
+    public class BookingDto
+    {        public int Id { get; set; }
+        public string Room { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Description { get; set; }
+        public HotelRoomDto HotelRoomDto { get; set; }
+        public User? User { get; set; }        
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

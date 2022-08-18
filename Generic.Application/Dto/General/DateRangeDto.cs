@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generic.Application.Dto.General
+namespace HotelReservation.Application.Dto.General
 {
-    internal class DateRangeDto
+    public class DateRangeDto
     {
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
     }
 }

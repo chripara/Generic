@@ -2,7 +2,7 @@
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
-namespace Generic.Application.Services.Phone
+namespace HotelReservation.Application.Services.Phone
 {
     public class SmsSender : ISmsSender
     {

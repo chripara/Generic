@@ -2,7 +2,7 @@
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace Generic.Application.Services.Email
+namespace HotelReservation.Application.Services.Email
 {
     public class EmailSender : IEmailSender
     {

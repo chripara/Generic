@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-using Generic.Application.Dto.Auth;
-using Generic.Application.Services.Email;
-using Generic.Application.Services.Phone;
-using Generic.Domain.Models.Auth;
-using Generic.Persistence;
+using HotelReservation.Application.Dto.Auth;
+using HotelReservation.Application.Services.Email;
+using HotelReservation.Application.Services.Phone;
+using HotelReservation.Domain.Models.Auth;
+using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Web;
 
-namespace Generic.API.Controllers
+namespace HotelReservation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

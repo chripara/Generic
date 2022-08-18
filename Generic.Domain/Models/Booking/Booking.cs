@@ -1,12 +1,12 @@
-﻿using Generic.Domain.Models.Auth;
-using Generic.Domain.Models.Bookings;
+﻿using HotelReservation.Domain.Models.Auth;
+using HotelReservation.Domain.Models.Bookings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generic.Domain.Models
+namespace HotelReservation.Domain.Models
 {
     public class Booking : IEntity
     {

@@ -1,10 +1,10 @@
-﻿using Generic.Domain.Models.Auth;
-using Generic.Persistence;
+﻿using HotelReservation.Domain.Models.Auth;
+using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Generic.API.Controllers
+namespace HotelReservation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

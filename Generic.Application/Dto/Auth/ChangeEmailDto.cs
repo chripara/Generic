@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generic.Application.Dto.Auth
+namespace HotelReservation.Application.Dto.Auth
 {
     public class ChangeEmailDto
     {

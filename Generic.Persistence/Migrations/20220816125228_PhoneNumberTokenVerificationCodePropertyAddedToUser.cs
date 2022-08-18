@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Generic.Persistence.Migrations
+namespace HotelReservation.Persistence.Migrations
 {
     public partial class PhoneNumberTokenVerificationCodePropertyAddedToUser : Migration
     {

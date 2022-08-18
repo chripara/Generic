@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generic.Domain
+namespace HotelReservation.Domain
 {
     public interface IEntity
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generic.Application.Services.Email
+namespace HotelReservation.Application.Services.Email
 {
     public interface IEmailSender
     {

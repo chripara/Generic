@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Generic.Application.Dto.Bookings;
-using Generic.Domain.Models;
+using HotelReservation.Application.Dto.Bookings;
+using HotelReservation.Domain.Models;
 
-namespace Generic.Application.Dto.Profiles
+namespace HotelReservation.Application.Dto.Profiles
 {
     public class BookingProfile : Profile
     {

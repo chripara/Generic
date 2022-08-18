@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Generic.Application\Generic.Application.csproj" />
+    <ProjectReference Include="..\Generic.Application\HotelReservation.Application.csproj" />
   </ItemGroup>
 
 </Project>

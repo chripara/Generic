@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
 
-namespace Generic.Domain.Models.Auth
+namespace HotelReservation.Domain.Models.Auth
 {
     public class User : IdentityUser<int>, IEntity
     {

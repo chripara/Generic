@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Generic.Application.Dto.Auth;
-using Generic.Domain.Models.Auth;
+using HotelReservation.Application.Dto.Auth;
+using HotelReservation.Domain.Models.Auth;
 
-namespace Generic.Application.Profiles.Auth
+namespace HotelReservation.Application.Profiles.Auth
 {
     public class UserProfile : Profile
     {

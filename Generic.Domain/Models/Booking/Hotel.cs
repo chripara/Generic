@@ -1,4 +1,4 @@
-﻿namespace Generic.Domain.Models.Bookings
+﻿namespace HotelReservation.Domain.Models.Bookings
 {
     public class Hotel : IEntity<int>
     {

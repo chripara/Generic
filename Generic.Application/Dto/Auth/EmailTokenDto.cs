@@ -1,4 +1,4 @@
-﻿namespace Generic.Application.Dto.Auth
+﻿namespace HotelReservation.Application.Dto.Auth
 {
     public class EmailTokenDto
     {

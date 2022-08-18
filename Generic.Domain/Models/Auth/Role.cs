@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generic.Domain.Models.Auth
+namespace HotelReservation.Domain.Models.Auth
 {
     public class Role : IdentityRole<int>, IEntity
     {

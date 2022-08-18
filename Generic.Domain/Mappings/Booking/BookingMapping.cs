@@ -1,8 +1,8 @@
-﻿using Generic.Domain.Models;
+﻿using HotelReservation.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Generic.Domain.Mappings.Bookings
+namespace HotelReservation.Domain.Mappings.Bookings
 {
     public class BookingMapping : IEntityTypeConfiguration<Booking>
     {

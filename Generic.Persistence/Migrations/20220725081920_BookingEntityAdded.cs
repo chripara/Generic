@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Generic.Persistence.Migrations
+namespace HotelReservation.Persistence.Migrations
 {
     public partial class BookingEntityAdded : Migration
     {

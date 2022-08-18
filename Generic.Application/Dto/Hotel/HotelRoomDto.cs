@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HotelReservation.Application.Dto.Bookings;
 
-namespace Generic.Application.Dto.Hotel
+namespace HotelReservation.Application.Dto.Hotel
 {
-    internal class HotelRoom
-    {
+    public class HotelRoomDto
+    {   public int Id { get; set; }
+        public string RoomNumber { get; set; }
+        public string Capacity { get; set; }
+        public string Cost { get; set; }
+        public string Description { get; set; }
+        public HotelDto HotelDto { get; set; }
+        public ICollection<BookingDto> Bookings { get; set; }
     }
 }

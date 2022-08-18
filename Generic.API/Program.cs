@@ -1,9 +1,9 @@
 using AutoMapper;
-using Generic.Application.Profiles.Auth;
-using Generic.Application.Services.Email;
-using Generic.Application.Services.Phone;
-using Generic.Domain.Models.Auth;
-using Generic.Persistence;
+using HotelReservation.Application.Profiles.Auth;
+using HotelReservation.Application.Services.Email;
+using HotelReservation.Application.Services.Phone;
+using HotelReservation.Domain.Models.Auth;
+using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

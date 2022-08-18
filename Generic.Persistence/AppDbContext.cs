@@ -1,12 +1,12 @@
-﻿using Generic.Domain;
-using Generic.Domain.Models;
-using Generic.Domain.Models.Auth;
-using Generic.Domain.Models.Bookings;
+﻿using HotelReservation.Domain;
+using HotelReservation.Domain.Models;
+using HotelReservation.Domain.Models.Auth;
+using HotelReservation.Domain.Models.Bookings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Generic.Persistence
+namespace HotelReservation.Persistence
 {
     public class AppDbContext : IdentityDbContext<User,Role,int>
     {
