@@ -13,6 +13,7 @@ namespace Generic.Domain.Models.Auth
         public string? VerifyPhoneToken { get; set; }
         public string? NewEmail { get; set; }
         public string? NewPhoneNumber { get; set; }
+        public string? PhoneNumberTokenVerificationCode { get; set; }   
         public DateTime? EmailExpirationTime { get; set; }
         public DateTime? PhoneExpirationTime { get; set; }
         public ICollection<Booking>? Bookings { get; set; }

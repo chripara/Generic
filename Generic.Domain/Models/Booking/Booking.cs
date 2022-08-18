@@ -1,4 +1,5 @@
 ﻿using Generic.Domain.Models.Auth;
+using Generic.Domain.Models.Bookings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,11 @@ namespace Generic.Domain.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Description { get; set; }
+        public int HotelRoomId { get; set; }
+        public HotelRoom HotelRoom { get; set; }
         public User? User { get; set; }
         public int? UserId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
-
-
 }

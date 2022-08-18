@@ -4,6 +4,7 @@ using Generic.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Generic.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220817144441_HotelHotelRoomsAndOfferTableAdded")]
+    partial class HotelHotelRoomsAndOfferTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,9 +177,6 @@ namespace Generic.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HotelRoomId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -193,8 +192,6 @@ namespace Generic.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("HotelRoomId");
 
                     b.HasIndex("UserId");
 
@@ -416,17 +413,9 @@ namespace Generic.Persistence.Migrations
 
             modelBuilder.Entity("Generic.Domain.Models.Booking", b =>
                 {
-                    b.HasOne("Generic.Domain.Models.Bookings.HotelRoom", "HotelRoom")
-                        .WithMany("Bookings")
-                        .HasForeignKey("HotelRoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Generic.Domain.Models.Auth.User", "User")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("HotelRoom");
 
                     b.Navigation("User");
                 });
@@ -514,11 +503,6 @@ namespace Generic.Persistence.Migrations
                     b.Navigation("HotelRooms");
 
                     b.Navigation("Offers");
-                });
-
-            modelBuilder.Entity("Generic.Domain.Models.Bookings.HotelRoom", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

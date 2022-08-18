@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Generic.Application.Dto.Auth;
 using Generic.Application.Services.Email;
+using Generic.Application.Services.Phone;
 using Generic.Domain.Models.Auth;
 using Generic.Persistence;
 using Microsoft.AspNetCore.Authorization;
@@ -20,13 +21,15 @@ namespace Generic.API.Controllers
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly IEmailSender _emailSender;
+        private readonly ISmsSender _smsSender;
 
         public AuthController(
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             AppDbContext context,
             IMapper mapper,
-            IEmailSender emailSender
+            IEmailSender emailSender,
+            ISmsSender smsSender
             )
         {
             _mapper = mapper;
@@ -34,9 +37,9 @@ namespace Generic.API.Controllers
             _userManager = userManager;
             _context = context;
             _emailSender = emailSender;
+            _smsSender = smsSender;
         }
-
-        
+                
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register(RegisterDto dto)
@@ -76,20 +79,30 @@ namespace Generic.API.Controllers
             var newUser = await _userManager.FindByEmailAsync(dto.Email); 
             await _userManager.AddPasswordAsync(newUser, dto.Password);
 
-            var generatedToken = await _userManager.GenerateChangeEmailTokenAsync(newUser, newUser.Email);
+            var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+            var TwoFactorToken = await _userManager.GenerateTwoFactorTokenAsync(newUser, newUser.Email);
 
-            if (generatedToken == null)
+            if (emailConfirmationToken == null)
             {
                 return NotFound("Something went wrong no token generated. Please try again.");
             }
 
-            newUser.EmailConfirmationToken = generatedToken;
+            newUser.EmailConfirmationToken = emailConfirmationToken;
+            newUser.EmailExpirationTime = DateTime.Now.AddHours(1);
 
             _context.Update<User>(newUser);
             await _context.SaveChangesAsync();
 
-            var encodedToken = HttpUtility.HtmlAttributeEncode(generatedToken);
-            var response = await _emailSender.EmailVerifyEmailSenderAsync(newUser.Email, newUser.UserName, HttpUtility.HtmlEncode(generatedToken));
+            var encodedToken = HttpUtility.HtmlAttributeEncode(emailConfirmationToken);
+            var subject = "Verification email for generic app.";
+            var plainTextContent = "Please click to this link to verify your email: " + "https://localhost:44347/api/Auth/VerificationEmail?token=" + encodedToken;
+            var htmlContent = "<strong>Please click to this link to verify your email: " + "https://localhost:44347/api/Auth/VerificationEmail?token=" + encodedToken + "&email=" + newUser.Email + "</strong>";
+            
+            var response = await _emailSender.EmailSenderAsync(newUser.Email, newUser.UserName, HttpUtility.HtmlEncode(emailConfirmationToken), subject, plainTextContent, htmlContent);
+
+            newUser.PhoneNumberTokenVerificationCode = "asdasda";
+
+            await _smsSender.SmsSenderAsync("+306955954852", "Verify your phone code:" + newUser.PhoneNumberTokenVerificationCode);
 
             return Ok("Please verify your email.");
         }
@@ -177,11 +190,11 @@ namespace Generic.API.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return Ok("User with email: " + dto.Email + " is succesfully confirmed.");
+            return Ok("User with email: " + dto.Email + " is successfully confirmed.");
         }
 
         [HttpPost]        
-        [Route("ForwordPassword")]
+        [Route("ForgordPassword")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
             var user = await _userManager.FindByEmailAsync(dto.Email);
@@ -211,7 +224,12 @@ namespace Generic.API.Controllers
             await _context.SaveChangesAsync();
 
             var encodedToken = HttpUtility.HtmlAttributeEncode(generatedToken);
-            var response = await _emailSender.EmailForgotPasswordSenderAsync(user.Email, user.UserName, HttpUtility.HtmlEncode(generatedToken));
+            var subject = "Verification email for generic app.";
+            var plainTextContent = "Please click to reset your password: " + "https://localhost:44347/api/Auth/ResetPassword?token=" + encodedToken + "&email=" + user.Email;
+            var htmlContent = "<strong>Please click to reset your password: " + "https://localhost:44347/api/Auth/ResetPassword?token=" + encodedToken + "&email=" + user.Email + "</strong>";
+
+            await _emailSender.EmailSenderAsync(user.Email, user.UserName, HttpUtility.HtmlEncode(generatedToken),
+                subject, plainTextContent, htmlContent);
 
             return Ok("Please check your email for reset password code.");
         }
@@ -279,10 +297,89 @@ namespace Generic.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("ChangeEmail")]
         public async Task<IActionResult> ChangeEmail(ChangeEmailDto dto)
         {
+            var user = await _userManager.FindByEmailAsync(dto.CurrentEmail);
 
+            if(user == null)
+            {
+                return NotFound("User not Found");
+            }
+
+            user.NewEmail = dto.NewEmail;            
+            user.EmailExpirationTime = DateTime.Now.AddHours(1);
+            user.EmailConfirmationToken = await _userManager.GenerateChangeEmailTokenAsync(user, dto.NewEmail);
+
+            if (user.EmailConfirmationToken == null)
+            {
+                return NotFound("Something went wrong no token generated. Please try again.");
+            }
+
+            _context.Update<User>(user);
+            await _context.SaveChangesAsync();
+
+            var encodedToken = HttpUtility.HtmlAttributeEncode(user.EmailConfirmationToken);
+            var subject = "Verification email for generic app.";
+            var plainTextContent = "Please click to this link to verify your email: "
+                + "https://localhost:44347/api/Auth/VerifyChangedEmail?token=" + encodedToken;
+            var htmlContent = "<strong>Please click to this link to verify your email: "
+                + "https://localhost:44347/api/Auth/VerifyChangedEmail?token=" + encodedToken + 
+                "&email=" + user.NewEmail + "</strong>";
+
+            var response = await _emailSender.EmailSenderAsync(user.NewEmail, user.UserName,
+                HttpUtility.HtmlEncode(user.EmailConfirmationToken), subject, plainTextContent, htmlContent);
+
+            //var response2 = await _emailSender.EmailForgotPasswordSenderAsync(user.NewEmail, user.UserName,
+            //    HttpUtility.HtmlEncode(user.EmailConfirmationToken));
+
+            return Ok("Please check your new email for verification.");                                                                          
+        }
+
+        [HttpPost]
+        [Route("VerifyChangedEmail")]
+        public async Task<IActionResult> VerifyChangedEmail(VerificationEmailDto dto)
+        {
+            var user = _context.Users.FirstOrDefault(x=> x.NewEmail == dto.Email);
+
+            if(user == null)
+            {
+                return NotFound("User not found email is not correct please try again.");
+            }
+
+            var confirmationToken = HttpUtility.HtmlDecode(dto.Token).Replace(" ", "+");
+
+            if (user.EmailConfirmationToken != confirmationToken)
+            {
+                return NotFound("Email verification code not found.");
+            }
+
+            user.EmailConfirmationToken = null;
+            user.Email = dto.Email;
+
+            await _userManager.UpdateNormalizedEmailAsync(user);
+            await _userManager.UpdateAsync(user);
+
+            await _context.SaveChangesAsync();
+
+            return Ok("New email verified successfully.");
+        }
+
+        [HttpGet]
+        [Route("TestEndpoint")]
+        public async Task<IActionResult> TestEndpoint()
+        {
+            var answer = await _smsSender.SmsSenderAsync("+306955954852", "Pare auto to sms gt douylevei to twilio: " + GeneratePhoneToken(6));
+
+            return Ok(answer);
+        }
+
+        private int GeneratePhoneToken(int digits)
+        {
+            var randomGenerator = new Random();
+            
+            return randomGenerator.Next(100000,Convert.ToInt32(Math.Pow(10.0, Convert.ToDouble(digits))));
         }
     }
 }

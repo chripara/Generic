@@ -1,6 +1,7 @@
 using AutoMapper;
 using Generic.Application.Profiles.Auth;
 using Generic.Application.Services.Email;
+using Generic.Application.Services.Phone;
 using Generic.Domain.Models.Auth;
 using Generic.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -67,6 +68,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddTransient<ISmsSender, SmsSender>();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

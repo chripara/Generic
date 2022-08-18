@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Generic.Application.Dto.Bookings;
 using Generic.Domain.Models;
+using Generic.Domain.Models.Auth;
 using Generic.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Generic.API.Controllers
@@ -11,6 +13,7 @@ namespace Generic.API.Controllers
     public class BookingController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
         public BookingController(
@@ -62,5 +65,9 @@ namespace Generic.API.Controllers
         {
             return Ok();
         }
+
+        //[Route("GetAllBookingsForHotel")]
+        //[Route("GetAllBookingsForHotel")]
+
     }
 }
