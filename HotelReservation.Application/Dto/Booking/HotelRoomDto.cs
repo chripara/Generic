@@ -1,6 +1,6 @@
 ﻿using HotelReservation.Application.Dto.Bookings;
 
-namespace HotelReservation.Application.Dto.Hotel
+namespace HotelReservation.Application.Dto.Hotels
 {
     public class HotelRoomDto
     {   public int Id { get; set; }

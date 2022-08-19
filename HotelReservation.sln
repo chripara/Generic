@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.API", "Generic.API\HotelReservation.API.csproj", "{C6458720-8409-4912-83BE-5A472C36D657}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.API", "HotelReservation.API\HotelReservation.API.csproj", "{C6458720-8409-4912-83BE-5A472C36D657}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.Application", "Generic.Application\HotelReservation.Application.csproj", "{73F405D8-ABED-4BFF-915E-A8457D6F5075}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.Application", "HotelReservation.Application\HotelReservation.Application.csproj", "{73F405D8-ABED-4BFF-915E-A8457D6F5075}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.Persistence", "Generic.Persistence\HotelReservation.Persistence.csproj", "{C86627E2-4A60-4A7E-B4B5-4A7B494B129C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.Persistence", "HotelReservation.Persistence\HotelReservation.Persistence.csproj", "{C86627E2-4A60-4A7E-B4B5-4A7B494B129C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.Domain", "Generic.Domain\HotelReservation.Domain.csproj", "{975E5C39-DC79-4536-9127-21C20BCF5F4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.Domain", "HotelReservation.Domain\HotelReservation.Domain.csproj", "{975E5C39-DC79-4536-9127-21C20BCF5F4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

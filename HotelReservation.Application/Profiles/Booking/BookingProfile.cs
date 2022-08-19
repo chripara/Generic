@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using HotelReservation.Application.Dto.Bookings;
+using HotelReservation.Application.Dto.Hotels;
 using HotelReservation.Domain.Models;
 
-namespace HotelReservation.Application.Dto.Profiles
+namespace HotelReservation.Application.Profiles
 {
     public class BookingProfile : Profile
     {
@@ -12,6 +13,7 @@ namespace HotelReservation.Application.Dto.Profiles
             CreateMap<Booking, GetBookingsDto>().ReverseMap();
             CreateMap<Booking, UpdateBookingDto>().ReverseMap();
             CreateMap<Booking, DeleteBookingDto>().ReverseMap();
+            CreateMap<Booking, BookedDatesDto>().ForMember(f => f.RoomNumber, mf => mf.MapFrom(p => p.HotelRoom.RoomNumber));
         }
     }
 }

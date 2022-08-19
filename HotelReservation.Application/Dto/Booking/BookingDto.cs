@@ -1,4 +1,4 @@
-﻿using HotelReservation.Application.Dto.Hotel;
+﻿using HotelReservation.Application.Dto.Hotels;
 using HotelReservation.Domain.Models.Auth;
 using System;
 using System.Collections.Generic;

@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Generic.Domain\HotelReservation.Domain.csproj" />
-    <ProjectReference Include="..\Generic.Persistence\HotelReservation.Persistence.csproj" />
+    <ProjectReference Include="..\HotelReservation.Domain\HotelReservation.Domain.csproj" />
+    <ProjectReference Include="..\HotelReservation.Persistence\HotelReservation.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

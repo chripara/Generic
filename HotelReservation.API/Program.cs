@@ -1,5 +1,5 @@
 using AutoMapper;
-using HotelReservation.Application.Profiles.Auth;
+using HotelReservation.Application.Profiles;
 using HotelReservation.Application.Services.Email;
 using HotelReservation.Application.Services.Phone;
 using HotelReservation.Domain.Models.Auth;

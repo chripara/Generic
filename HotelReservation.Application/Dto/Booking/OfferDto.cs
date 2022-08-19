@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotelReservation.Application.Dto.Hotel
+namespace HotelReservation.Application.Dto.Hotels
 {
     public class OfferDto
     {
