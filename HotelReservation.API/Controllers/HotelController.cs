@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotelReservation.Application.Dto.Booking;
 using HotelReservation.Application.Dto.Bookings;
 using HotelReservation.Application.Dto.General;
 using HotelReservation.Application.Dto.Hotels;
@@ -84,9 +85,9 @@ namespace HotelReservation.API.Controllers
             return Ok(hotel);
         }
 
-        [Route("FindAvailableRooms")]
+        [Route("FindAvailableRoomsForHotel")]
         [HttpPost]
-        public async Task<IActionResult> FindAvailableRooms(GetAvailablilityForHotelDto dto)
+        public async Task<IActionResult> FindAvailableRoomsForHotel(FindAvailableRoomsForHotelDto dto)
         {
             var hotel = await _context.Hotels.FirstOrDefaultAsync(f => f.Name == dto.HotelName);
 
@@ -113,11 +114,62 @@ namespace HotelReservation.API.Controllers
             return Ok(availability);
         }
 
-        [Route("GetAvailablilityForHotel")]
-        [HttpGet]
-        public async Task<IActionResult> GetAvailablilityForHotel(GetAvailablilityForHotelDto dto)
+        [Route("FindRoomsForDate")]
+        [HttpPost]
+        public async Task<IActionResult> FindRoomsForDate(FindRoomsForDateDto dto)
         {
-            var bookings = FindBookingsForRangeDate(dto);
+            var bookings = _context.Booking.Where(p => p.StartDate.Date >= dto.StartDate.Date
+                && p.EndDate.Date <= dto.EndDate.Date)
+                .Include(i => i.HotelRoom)
+                .Include(i => i.HotelRoom.Hotel)                
+                .Where(w => w.HotelRoom.Capacity == dto.Capacity)
+                .ToList();
+
+            var hotels = _context.Hotels.Include(i=>i.HotelRooms).ToList();
+
+            if (dto.City != null)
+            {
+                bookings = bookings.Where(w => w.HotelRoom.Hotel.City == dto.City).ToList();
+                hotels = hotels.Where(w => w.City == dto.City).ToList();
+            }
+            
+            if (dto.Capacity != null)
+            {
+                bookings = bookings.Where(w => w.HotelRoom.Capacity == dto.Capacity).ToList();
+                hotels = hotels.Where(w => w.HotelRooms.All(a => a.Capacity == dto.Capacity)).ToList();
+            }
+
+            if (dto.MinPricePerDay != null)
+            {
+                bookings = bookings.Where(w => double.Parse(w.HotelRoom.Cost) 
+                    >= double.Parse(dto.MinPricePerDay)).ToList();
+                hotels = hotels.Where(w => w.HotelRooms.All(w => 
+                    double.Parse(w.Cost) >= double.Parse(dto.MinPricePerDay))).ToList();
+}
+
+            if (dto.MaxPricePerDay != null)
+            {
+                bookings = bookings.Where(w => double.Parse(w.HotelRoom.Cost) 
+                    <= double.Parse(dto.MaxPricePerDay)).ToList();
+                hotels = hotels.Where(w => w.HotelRooms.All(w => 
+                    double.Parse(w.Cost) <= double.Parse(dto.MaxPricePerDay))).ToList();
+            }
+
+            var availabilityInHotel = new List<AvailabilityInHotel>();
+
+            foreach(var hotel in hotels)
+            {
+                availabilityInHotel.Add(new AvailabilityInHotel
+                {
+                    BookedDatesDtos = _mapper.Map<List<Booking>, List<BookedDatesDto>>(
+                        bookings.Where(w=>w.HotelRoom.Hotel.Name == hotel.Name).ToList()),
+                    EndDate = dto.EndDate,
+                    StartDate = dto.StartDate,
+                    HotelName = hotel.Name,
+                    HotelRoomDtos = _mapper.Map<List<HotelRoom>, List<HotelRoomDto>>(
+                        hotel.HotelRooms.ToList())
+                });
+            }
 
             return Ok();
         }
@@ -129,8 +181,7 @@ namespace HotelReservation.API.Controllers
             var hotels = new List<Hotel>
             {
                 new Hotel
-                {
-                    //Id = 1,
+                {                    
                     Address = "Address1",
                     City = "City",
                     Description = "Description of Hotel1",
@@ -141,8 +192,7 @@ namespace HotelReservation.API.Controllers
                     Type = "Hotel"
                 },
                 new Hotel
-                {
-                    //Id = 2,
+                {                    
                     Address = "Address2",
                     City = "City",
                     Description = "Description of Hotel2",
@@ -153,8 +203,7 @@ namespace HotelReservation.API.Controllers
                     Type = "Hotel"
                 },
                 new Hotel
-                {
-                    //Id = 3,
+                {                    
                     Address = "Address3",
                     City = "City",
                     Description = "Description of Hotel3",
@@ -165,11 +214,10 @@ namespace HotelReservation.API.Controllers
                     Type = "Hotel"
                 },
                 new Hotel
-                {
-                    //Id = 4,
+                {                    
                     Address = "Address4",
                     City = "City",
-                    Description = "Description of Hotel 4",
+                    Description = "Description of Hotel4",
                     Name = "Hote4",
                     PhoneNumber = "Hotel4 Number",
                     PostCode = "Hotel PC",
@@ -177,8 +225,7 @@ namespace HotelReservation.API.Controllers
                     Type = "Hostel"
                 },
                 new Hotel
-                {
-                    //Id = 5,
+                {                    
                     Address = "Address5",
                     City = "City",
                     Description = "Description of Hotel5",
@@ -206,8 +253,7 @@ namespace HotelReservation.API.Controllers
             {
                 var hotelRooms = new List<HotelRoom> {
                     new HotelRoom
-                    {
-                        //Id = (hotel.Id - 1) * 10 + 1,
+                    {                        
                         Capacity = "1",
                         Description = "Description 1",
                         Cost = "Cost1",
@@ -215,8 +261,7 @@ namespace HotelReservation.API.Controllers
                         HotelId = hotel.Id,
                     },
                     new HotelRoom
-                    {
-                        //Id = (hotel.Id - 1) * 10 + 2,
+                    {                        
                         Capacity = "1",
                         Description = "Description 1",
                         Cost = "Cost1",
@@ -224,8 +269,7 @@ namespace HotelReservation.API.Controllers
                         HotelId = hotel.Id,
                     },
                     new HotelRoom
-                    {
-                        //Id = (hotel.Id - 1) * 10 + 3,
+                    {                        
                         Capacity = "1",
                         Description = "Description 1",
                         Cost = "Cost1",
@@ -233,8 +277,7 @@ namespace HotelReservation.API.Controllers
                         HotelId = hotel.Id,
                     },
                     new HotelRoom
-                    {
-                        //Id = (hotel.Id - 1) * 10 + 4,
+                    {                        
                         Capacity = "2",
                         Description = "Description 1",
                         Cost = "Cost1",
@@ -242,8 +285,7 @@ namespace HotelReservation.API.Controllers
                         HotelId = hotel.Id,
                     },
                     new HotelRoom
-                    {
-                        //Id = (hotel.Id - 1) * 10 + 5,
+                    {                        
                         Capacity = "2",
                         Description = "Description 1",
                         Cost = "Cost1",
@@ -251,8 +293,7 @@ namespace HotelReservation.API.Controllers
                         HotelId = hotel.Id,
                     },
                     new HotelRoom
-                    {
-                        //Id = (hotel.Id - 1) * 10 + 6,
+                    {                        
                         Capacity = "2",
                         Description = "Description 1",
                         Cost = "Cost1",
@@ -260,8 +301,7 @@ namespace HotelReservation.API.Controllers
                         HotelId = hotel.Id,
                     },
                     new HotelRoom
-                    {
-                        //Id = (hotel.Id - 1) * 10 + 7,
+                    {                        
                         Capacity = "2",
                         Description = "Description 1",
                         Cost = "Cost1",
@@ -269,8 +309,7 @@ namespace HotelReservation.API.Controllers
                         HotelId = hotel.Id,
                     },
                     new HotelRoom
-                    {
-                        //Id = (hotel.Id - 1) * 10 + 8,
+                    {                        
                         Capacity = "3",
                         Description = "Description 1",
                         Cost = "Cost1",
@@ -278,8 +317,7 @@ namespace HotelReservation.API.Controllers
                         HotelId = hotel.Id,
                     },
                     new HotelRoom
-                    {
-                        //Id = (hotel.Id - 1) * 10 +9,
+                    {                        
                         Capacity = "3",
                         Description = "Description 1",
                         Cost = "Cost1",
@@ -287,8 +325,7 @@ namespace HotelReservation.API.Controllers
                         HotelId = hotel.Id,
                     },
                     new HotelRoom
-                    {
-                        //Id = (hotel.Id - 1) * 10 + 10,
+                    {                        
                         Capacity = "4",
                         Description = "Description 1",
                         Cost = "Cost1",
@@ -311,7 +348,7 @@ namespace HotelReservation.API.Controllers
         // anazitisi me vasi ths imerominies, timh, typo, poli, arithmo atomwn, 
         // anazitisi dwmatiwn sto sigkekrimeno hotel me vasi hmerominies, times, atoma
 
-        private List<Booking> FindBookingsForRangeDate(GetAvailablilityForHotelDto dto)
+        private List<Booking> FindBookingsForRangeDate(FindAvailableRoomsForHotelDto dto)
         {
             var bookings = _context.Booking.Where(p => p.StartDate.Date >= dto.StartDate.Date
                 && p.EndDate.Date <= dto.EndDate.Date)

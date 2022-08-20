@@ -13,7 +13,7 @@ namespace HotelReservation.Application.Dto.Hotels
         public string Rate { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
-        public ICollection<HotelRoomDto>? HotelRoomDtos { get; set; }
-        public ICollection<OfferDto>? OfferDtos { get; set; }
+        public List<HotelRoomDto> HotelRoomDtos { get; set; } = new List<HotelRoomDto>();
+        public List<OfferDto> OfferDtos { get; set; } = new List<OfferDto>();
     }
 }
