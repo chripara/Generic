@@ -6,6 +6,7 @@ using HotelReservation.Domain.Models.Auth;
 using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelReservation.API.Controllers
 {
@@ -77,9 +78,12 @@ namespace HotelReservation.API.Controllers
 
         [Route("GetAllBookingsForHotel")]
         [HttpPost]
-        public async Task<IActionResult> GetAllBookingsForHotel(GetBookingForHotelDto dto)
+        public async Task<IActionResult> GetAllBookingsForHotelInDate(GetBookingForHotelDto dto)
         {
-            var bookings = _context.Bookings.Include(i => i.HotelRooms).Include(i => i.HotelRooms.Hotel).Where(w => w.HotelRoom.Hotel.Name == dto.HotelName).ToList();
+            var bookings = _context.Bookings.Include(i => i.HotelRoom)
+                .Include(i => i.HotelRoom.Hotel)
+                .Where(w => w.HotelRoom.Hotel.Name == dto.HotelName)
+                .ToList();
 
             return Ok();
         }
