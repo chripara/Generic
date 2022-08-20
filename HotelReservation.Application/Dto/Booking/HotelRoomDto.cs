@@ -9,6 +9,6 @@ namespace HotelReservation.Application.Dto.Hotels
         public string Cost { get; set; }
         public string Description { get; set; }
         public HotelDto HotelDto { get; set; }
-        public ICollection<BookingDto> Bookings { get; set; }
+        public List<BookingDto> Bookings { get; set; } = new List<BookingDto>();
     }
 }

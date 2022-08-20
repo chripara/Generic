@@ -99,9 +99,7 @@ namespace HotelReservation.API.Controllers
             var hotelRooms = _context.HotelRooms.Where(w => w.HotelId == hotel.Id);
 
             var bookings = FindBookingsForRangeDate(dto);
-
-            //int days = (dto.EndDate.Date - dto.StartDate.Date).Days;
-
+            
             var availability = new AvailabilityInHotel
             {
                 StartDate = dto.StartDate,
@@ -118,7 +116,7 @@ namespace HotelReservation.API.Controllers
         [HttpPost]
         public async Task<IActionResult> FindRoomsForDate(FindRoomsForDateDto dto)
         {
-            var bookings = _context.Booking.Where(p => p.StartDate.Date >= dto.StartDate.Date
+            var bookings = _context.Bookings.Where(p => p.StartDate.Date >= dto.StartDate.Date
                 && p.EndDate.Date <= dto.EndDate.Date)
                 .Include(i => i.HotelRoom)
                 .Include(i => i.HotelRoom.Hotel)                
@@ -171,7 +169,7 @@ namespace HotelReservation.API.Controllers
                 });
             }
 
-            return Ok();
+            return Ok(availabilityInHotel);
         }
 
         [Route("SeedHotels")]
@@ -350,7 +348,7 @@ namespace HotelReservation.API.Controllers
 
         private List<Booking> FindBookingsForRangeDate(FindAvailableRoomsForHotelDto dto)
         {
-            var bookings = _context.Booking.Where(p => p.StartDate.Date >= dto.StartDate.Date
+            var bookings = _context.Bookings.Where(p => p.StartDate.Date >= dto.StartDate.Date
                 && p.EndDate.Date <= dto.EndDate.Date)
                 .Include(i => i.HotelRoom)
                 .Include(i => i.HotelRoom.Hotel)

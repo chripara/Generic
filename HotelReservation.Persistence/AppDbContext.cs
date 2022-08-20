@@ -27,7 +27,7 @@ namespace HotelReservation.Persistence
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Booking> Booking { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }

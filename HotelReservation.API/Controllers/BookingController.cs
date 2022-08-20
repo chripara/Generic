@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotelReservation.Application.Dto.Booking;
 using HotelReservation.Application.Dto.Bookings;
 using HotelReservation.Domain.Models;
 using HotelReservation.Domain.Models.Auth;
@@ -27,26 +28,21 @@ namespace HotelReservation.API.Controllers
 
         [HttpGet]
         [Route("GetBooking")]
-                public async Task<IActionResult> GetBooking(GetBookingDto dto)
+        public async Task<IActionResult> GetBooking(GetBookingDto dto)
         {
-            var booking = await _context.Booking.FindAsync(dto.Id);
+            var booking = await _context.Bookings.FindAsync(dto.Id);
             return Ok(booking);
         }
-
-        //[HttpGet]
-        //[Route("GetBookings")]
-        //public async Task<IActionResult> GetBookings(GetBookingsRequestDateDto dto)
-        //{            
-        //    var bookings = _context.Booking.Where(p => p.StartDate.Date >= dto.StartDate.Date && p.StartDate.Date <= dto.EndDate.Date).ToList();
-        //    return Ok(bookings);
-        //}
 
         [HttpDelete]
         [Route("DeleteBooking")]
         public async Task<IActionResult> DeleteBooking(DeleteBookingDto dto)
         {
-            var booking = await _context.Booking.FindAsync(dto.Id);
-            _context.Booking.Remove(booking);
+            var booking = await _context.Bookings.FindAsync(dto.Id);
+            
+            _context.Bookings.Remove(booking);
+            await _context.SaveChangesAsync();
+
             return Ok();
         }
 
@@ -54,20 +50,38 @@ namespace HotelReservation.API.Controllers
         [Route("CreateBookings")]
         public async Task<IActionResult> CreateBookings(CreateBookingDto dto)
         {
-            var var1 = _mapper.Map<Booking>(dto);
+            var newBooking = _mapper.Map<Booking>(dto);
+
+            _context.Bookings.AddAsync(newBooking);
+            await _context.SaveChangesAsync();
 
             return Ok();
         }
 
         [HttpPut]
         [Route("UpdateBooking")]
-        public async Task<IActionResult> UpdateBooking()
+        public async Task<IActionResult> UpdateBooking(UpdateBookingDto dto)
         {
+            var booking = await _context.Bookings.FindAsync(dto.Id);
+            
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            _context.Update(_mapper.Map<Booking>(dto));
+            await _context.SaveChangesAsync();
+
             return Ok();
         }
 
-        //[Route("GetAllBookingsForHotel")]
-        //[Route("GetAllBookingsForHotel")]
+        [Route("GetAllBookingsForHotel")]
+        [HttpPost]
+        public async Task<IActionResult> GetAllBookingsForHotel(GetBookingForHotelDto dto)
+        {
+            var bookings = _context.Bookings.Include(i => i.HotelRooms).Include(i => i.HotelRooms.Hotel).Where(w => w.HotelRoom.Hotel.Name == dto.HotelName).ToList();
 
+            return Ok();
+        }
     }
 }
