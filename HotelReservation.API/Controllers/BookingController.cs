@@ -87,5 +87,50 @@ namespace HotelReservation.API.Controllers
 
             return Ok();
         }
+
+        [Route("SeedBookings")]
+        [HttpPost]
+        public async Task<IActionResult> SeedBookings()
+        {
+            var hotels = _context.Hotels.Include(i => i.HotelRooms).ToList();
+
+            foreach(var hotel in hotels)
+            {
+                foreach(var hotelRoom in hotel.HotelRooms.ToList())
+                {
+                    var counterStart = 0;
+                    var counterEnd = 0;
+                    for(var i=0; i<=RandomNumInt(); i++)
+                    {
+                        var tempCountStart = RandomNumInt();
+                        counterStart += tempCountStart;
+                        counterEnd += tempCountStart + RandomNumInt();
+
+                        _context.Bookings.Add(new Booking
+                        {
+                            Description = "asdfasdf",
+                            StartDate = DateTime.Now.AddDays(counterStart),
+                            EndDate = DateTime.Now.AddDays(counterEnd),
+                            FirstName = "asdfasdf",
+                            HotelRoomId = hotelRoom.Id,
+                            LastName = "asdfasdf",
+                            Room = "asdf",
+                            UserId = 5,
+                        });
+
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+
+            return Ok();
+        }
+
+        private int RandomNumInt()
+        {
+            var randomGenerator = new Random();
+
+            return randomGenerator.Next(1,5);
+        }
     }
 }
