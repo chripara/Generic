@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using HotelReservation.Application.Dto.Booking;
-using HotelReservation.Application.Dto.Bookings;
-using HotelReservation.Application.Dto.General;
 using HotelReservation.Application.Dto.Hotels;
 using HotelReservation.Domain.Models;
 using HotelReservation.Domain.Models.Auth;
 using HotelReservation.Domain.Models.Bookings;
 using HotelReservation.Persistence;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -99,7 +96,10 @@ namespace HotelReservation.API.Controllers
             var hotelRooms = _context.HotelRooms.Where(w => w.HotelId == hotel.Id);
 
             var bookings = FindBookingsForRangeDate(dto);
-            
+
+            var bookedDatesDtos = _mapper.Map<List<Booking>, List<BookedDatesDto>>(bookings);
+            var hotelRoomDtos = _mapper.Map<List<HotelRoom>, List<HotelRoomDto>>(hotel.HotelRooms.ToList());
+
             var availability = new AvailabilityInHotel
             {
                 StartDate = dto.StartDate,
@@ -116,41 +116,46 @@ namespace HotelReservation.API.Controllers
         [HttpPost]
         public async Task<IActionResult> FindRoomsForDate(FindRoomsForDateDto dto)
         {
-            var bookings = _context.Bookings.Where(p => p.StartDate.Date >= dto.StartDate.Date
-                && p.EndDate.Date <= dto.EndDate.Date)
+            var bookings = _context.Bookings.Where(p =>
+                (p.EndDate.Date > dto.StartDate.Date && p.EndDate.Date <= dto.EndDate.Date) ||
+                (p.StartDate.Date >= dto.StartDate.Date && p.StartDate <= dto.EndDate.Date))
                 .Include(i => i.HotelRoom)
                 .Include(i => i.HotelRoom.Hotel)                
-                .Where(w => w.HotelRoom.Capacity == dto.Capacity)
                 .ToList();
 
             var hotels = _context.Hotels.Include(i=>i.HotelRooms).ToList();
+            var hotelRooms = _context.HotelRooms.Include(i=>i.Hotel).ToList();
 
-            if (dto.City != null)
+            if (dto.City != null && dto.City !="")
             {
                 bookings = bookings.Where(w => w.HotelRoom.Hotel.City == dto.City).ToList();
                 hotels = hotels.Where(w => w.City == dto.City).ToList();
+                hotelRooms = hotelRooms.Where(w => w.Hotel.City == dto.City).ToList();
             }
             
-            if (dto.Capacity != null)
+            if (dto.Capacity != null && dto.Capacity != "")
             {
                 bookings = bookings.Where(w => w.HotelRoom.Capacity == dto.Capacity).ToList();
-                hotels = hotels.Where(w => w.HotelRooms.All(a => a.Capacity == dto.Capacity)).ToList();
+                hotels = hotels.Where(w => w.HotelRooms.Any(a => a.Capacity == dto.Capacity)).ToList();
+                hotelRooms = hotelRooms.Where(w => w.Capacity == dto.Capacity).ToList();                
             }
 
             if (dto.MinPricePerDay != null)
             {
-                bookings = bookings.Where(w => double.Parse(w.HotelRoom.Cost) 
-                    >= double.Parse(dto.MinPricePerDay)).ToList();
-                hotels = hotels.Where(w => w.HotelRooms.All(w => 
-                    double.Parse(w.Cost) >= double.Parse(dto.MinPricePerDay))).ToList();
-}
+                bookings = bookings.Where(w => w.HotelRoom.Cost
+                    >= dto.MinPricePerDay).ToList();
+                hotels = hotels.Where(w => w.HotelRooms.Any(w => 
+                    w.Cost >= dto.MinPricePerDay)).ToList();
+                hotelRooms = hotelRooms.Where(w => w.Cost >= dto.MinPricePerDay).ToList();
+            }
 
             if (dto.MaxPricePerDay != null)
             {
-                bookings = bookings.Where(w => double.Parse(w.HotelRoom.Cost) 
-                    <= double.Parse(dto.MaxPricePerDay)).ToList();
-                hotels = hotels.Where(w => w.HotelRooms.All(w => 
-                    double.Parse(w.Cost) <= double.Parse(dto.MaxPricePerDay))).ToList();
+                bookings = bookings.Where(w => w.HotelRoom.Cost 
+                    <= dto.MaxPricePerDay).ToList();
+                hotels = hotels.Where(w => w.HotelRooms.Any(w => 
+                    w.Cost <= dto.MaxPricePerDay)).ToList();
+                hotelRooms = hotelRooms.Where(w => w.Cost <= dto.MaxPricePerDay).ToList();
             }
 
             var availabilityInHotel = new List<AvailabilityInHotel>();
@@ -165,7 +170,7 @@ namespace HotelReservation.API.Controllers
                     StartDate = dto.StartDate,
                     HotelName = hotel.Name,
                     HotelRoomDtos = _mapper.Map<List<HotelRoom>, List<HotelRoomDto>>(
-                        hotel.HotelRooms.ToList())
+                        hotelRooms.Where(w => w.HotelId == hotel.Id).ToList())
                 });
             }
 
@@ -247,6 +252,8 @@ namespace HotelReservation.API.Controllers
         {
             var hotels = _context.Hotels.ToList();
 
+            var random = new Random();
+
             foreach (var hotel in hotels)
             {
                 var hotelRooms = new List<HotelRoom> {
@@ -254,7 +261,7 @@ namespace HotelReservation.API.Controllers
                     {                        
                         Capacity = "1",
                         Description = "Description 1",
-                        Cost = "Cost1",
+                        Cost = random.Next(20,40),
                         RoomNumber = "RoomNumber",
                         HotelId = hotel.Id,
                     },
@@ -262,7 +269,7 @@ namespace HotelReservation.API.Controllers
                     {                        
                         Capacity = "1",
                         Description = "Description 1",
-                        Cost = "Cost1",
+                        Cost = random.Next(20,40),
                         RoomNumber = "RoomNumber",
                         HotelId = hotel.Id,
                     },
@@ -270,7 +277,7 @@ namespace HotelReservation.API.Controllers
                     {                        
                         Capacity = "1",
                         Description = "Description 1",
-                        Cost = "Cost1",
+                        Cost = random.Next(20,40),
                         RoomNumber = "RoomNumber",
                         HotelId = hotel.Id,
                     },
@@ -278,7 +285,7 @@ namespace HotelReservation.API.Controllers
                     {                        
                         Capacity = "2",
                         Description = "Description 1",
-                        Cost = "Cost1",
+                        Cost = random.Next(30,60),
                         RoomNumber = "RoomNumber",
                         HotelId = hotel.Id,
                     },
@@ -286,7 +293,7 @@ namespace HotelReservation.API.Controllers
                     {                        
                         Capacity = "2",
                         Description = "Description 1",
-                        Cost = "Cost1",
+                        Cost = random.Next(30,60),
                         RoomNumber = "RoomNumber",
                         HotelId = hotel.Id,
                     },
@@ -294,7 +301,7 @@ namespace HotelReservation.API.Controllers
                     {                        
                         Capacity = "2",
                         Description = "Description 1",
-                        Cost = "Cost1",
+                        Cost = random.Next(30,60),
                         RoomNumber = "RoomNumber",
                         HotelId = hotel.Id,
                     },
@@ -302,7 +309,7 @@ namespace HotelReservation.API.Controllers
                     {                        
                         Capacity = "2",
                         Description = "Description 1",
-                        Cost = "Cost1",
+                        Cost = random.Next(30,60),
                         RoomNumber = "RoomNumber",
                         HotelId = hotel.Id,
                     },
@@ -310,7 +317,7 @@ namespace HotelReservation.API.Controllers
                     {                        
                         Capacity = "3",
                         Description = "Description 1",
-                        Cost = "Cost1",
+                        Cost = random.Next(50,90),
                         RoomNumber = "RoomNumber",
                         HotelId = hotel.Id,
                     },
@@ -318,7 +325,7 @@ namespace HotelReservation.API.Controllers
                     {                        
                         Capacity = "3",
                         Description = "Description 1",
-                        Cost = "Cost1",
+                        Cost = random.Next(50,90),
                         RoomNumber = "RoomNumber",
                         HotelId = hotel.Id,
                     },
@@ -326,7 +333,7 @@ namespace HotelReservation.API.Controllers
                     {                        
                         Capacity = "4",
                         Description = "Description 1",
-                        Cost = "Cost1",
+                        Cost = random.Next(90,110),
                         RoomNumber = "RoomNumber",
                         HotelId = hotel.Id,
                     }
@@ -343,13 +350,46 @@ namespace HotelReservation.API.Controllers
         //[Route("GetHotels")]
         //[Route("GetHotelsWithOffers")]
 
+        [Route("ChangeCost")]
+        [HttpPost]
+        public async Task<IActionResult> ChangeCost()
+        {
+            var hotelRooms = await _context.HotelRooms.ToListAsync();
+
+            var random = new Random();
+            
+            foreach (var hotelRoom in hotelRooms)
+            {
+                switch (hotelRoom.Capacity)
+                {
+                    case "1":
+                        hotelRoom.Cost = random.Next(20, 40);
+                        break;
+                    case "2":
+                        hotelRoom.Cost = random.Next(30, 60);
+                        break;
+                    case "3":
+                        hotelRoom.Cost = random.Next(50, 90);
+                        break;
+                    case "4":
+                        hotelRoom.Cost = random.Next(90, 110);
+                        break;
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+
         // anazitisi me vasi ths imerominies, timh, typo, poli, arithmo atomwn, 
         // anazitisi dwmatiwn sto sigkekrimeno hotel me vasi hmerominies, times, atoma
 
         private List<Booking> FindBookingsForRangeDate(FindAvailableRoomsForHotelDto dto)
         {
-            var bookings = _context.Bookings.Where(p => p.StartDate.Date >= dto.StartDate.Date
-                && p.EndDate.Date <= dto.EndDate.Date)
+            var bookings = _context.Bookings.Where(p => 
+                    (p.EndDate.Date > dto.StartDate.Date && p.EndDate.Date <= dto.EndDate.Date) ||
+                    (p.StartDate.Date >= dto.StartDate.Date && p.StartDate <= dto.EndDate.Date))
                 .Include(i => i.HotelRoom)
                 .Include(i => i.HotelRoom.Hotel)
                 .Where(w => w.HotelRoom.Hotel.Name == dto.HotelName)
