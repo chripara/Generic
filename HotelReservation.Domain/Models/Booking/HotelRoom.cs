@@ -5,7 +5,7 @@
         public int Id { get; set; } 
         public string RoomNumber { get; set; }
         public string Capacity { get; set; }
-        public string Cost { get; set; }
+        public float Cost { get; set; }
         public string Description { get; set; } 
         public int HotelId { get; set; }
         public Hotel Hotel { get; set; }
