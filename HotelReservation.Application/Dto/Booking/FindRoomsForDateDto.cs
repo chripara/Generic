@@ -11,7 +11,7 @@ namespace HotelReservation.Application.Dto.Booking
     {
         public string City { get; set; }
         public string Capacity { get; set; }
-        public string MinPricePerDay { get; set; }
-        public string MaxPricePerDay { get; set; }
+        public float MinPricePerDay { get; set; }
+        public float MaxPricePerDay { get; set; }
     }
 }
