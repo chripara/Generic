@@ -13,7 +13,10 @@ namespace HotelReservation.Application.Profiles
     {
         public HotelRoomProfile()
         {
-            CreateMap<HotelRoom, HotelRoomDto>().ReverseMap();
+            CreateMap<HotelRoom, HotelRoomDto>()
+                .ForMember(f => f.Bookings, act => act.Ignore())
+                .ForMember(f => f.HotelDto, act => act.Ignore())
+                .ReverseMap();
         }
     }
 }
