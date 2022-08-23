@@ -1,4 +1,5 @@
-﻿using HotelReservation.Application.Interface;
+﻿using Destructurama.Attributed;
+using HotelReservation.Application.Interface;
 
 namespace HotelReservation.Application.Dto.Auth
 {

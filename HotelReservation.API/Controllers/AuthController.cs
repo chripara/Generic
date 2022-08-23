@@ -8,8 +8,9 @@ using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Serilog;
-using System.Net;
+using System.Text.Json;
 using System.Web;
 
 namespace HotelReservation.API.Controllers
@@ -46,28 +47,39 @@ namespace HotelReservation.API.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
-            Log.Information("RegisterDto " + FilterDto(dto)+ ;
+            Log.Information("RegisterDto: {@RegisterDto}", FilterDto(JObject.FromObject(dto)));
 
             var userByUserName = await _userManager.FindByNameAsync(dto.UserName);
             var userByEmail = await _userManager.FindByEmailAsync(dto.UserName);
             var userByPhoneNumber = _userManager.Users.FirstOrDefault(w => w.PhoneNumber == dto.PhoneNumber);
 
-            if (userByUserName != null )
+            if (userByUserName != null)
+            {
+                Log.Information("UserName is already in use.");
                 return BadRequest("UserName is already in use.");
+            }
             
             if (userByEmail != null)
+            {
+                Log.Information("Email is already in use.");
                 return BadRequest("Email is already in use.");
+            }
             
             if (userByPhoneNumber != null)
+            {
+                Log.Information("Phone number is already in use.");
                 return BadRequest("Phone number is already in use.");
+            }
 
             if (dto.Password == null)
             {
+                Log.Information("Password Empty.");
                 return BadRequest("Password Empty.");
             }
 
             if (dto.Password != dto.ConfirmPassword)
-            {   
+            {
+                Log.Information("Passwords are not a match.");
                 return BadRequest("Passwords are not a match.");
             }
             
@@ -75,6 +87,7 @@ namespace HotelReservation.API.Controllers
 
             if(!registerationIdentityResult.Succeeded)
             {
+                Log.Information("Errors {@errors}", registerationIdentityResult.Errors);
                 return BadRequest(registerationIdentityResult.Errors);
             }
 
@@ -88,6 +101,7 @@ namespace HotelReservation.API.Controllers
 
             if (emailConfirmationToken == null)
             {
+                Log.Information("Something went wrong no token generated. Please try again.");
                 return NotFound("Something went wrong no token generated. Please try again.");
             }
 
@@ -108,6 +122,7 @@ namespace HotelReservation.API.Controllers
 
             await _smsSender.SmsSenderAsync("+306955954852", "Verify your phone code:" + newUser.PhoneNumberTokenVerificationCode);
 
+            Log.Information("Please verify your email.");
             return Ok("Please verify your email.");
         }
 
@@ -115,25 +130,31 @@ namespace HotelReservation.API.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
+            Log.Information("LoginDto: {@dto}", FilterDto(JObject.FromObject(dto)));
+
             var user = await _userManager.FindByNameAsync(dto.UserName);
 
             if(user == null)
             {
+                Log.Information("Username is invalid.");
                 return Ok("Username is invalid.");
             }
 
             if(!user.EmailConfirmed)
             {
+                Log.Information("Email is not comfirmed.");
                 return Ok("Email is not comfirmed.");
             }
 
             if(!(await _userManager.CheckPasswordAsync(user, dto.Password)))
             {
+                Log.Information("Password not a match.");
                 return Ok("Password not a match.");
             }
 
             await _signInManager.SignInAsync(user, false);
 
+            Log.Information("Sign in is successfull.");
             return Ok("Sign in is successfull.");
         }
 
@@ -142,34 +163,40 @@ namespace HotelReservation.API.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return Ok("Signout succesful.");
+            
+            Log.Information("Signout successfull.");
+            return Ok("Signout successful.");
         }
 
         [HttpPost]
         [Route("ChangePassword")]
         [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto dto)
-        {
+        {            
             var username = HttpContext.User.Identity.Name;
             var user = await _userManager.FindByNameAsync(username);
 
             if(user == null)
             {
+                Log.Information("User not found.");
                 return NotFound("User not found");
             }
 
             if(!user.EmailConfirmed)
             {
+                Log.Information("User not confirmed the email.");
                 return NotFound("User not confirmed the email.");
             }
 
             if(dto.NewPassword != dto.ConfirmNewPassword)
             {
+                Log.Information("New pasword is not a match.");
                 return NotFound("New pasword is not a match.");
             }
 
             var response = await _userManager.ChangePasswordAsync(user, dto.OldPassword, dto.NewPassword);
 
+            Log.Information("Password changed status: " + response.Succeeded);
             return Ok("Password changed status: " + response.Succeeded);
         }
 
@@ -177,10 +204,13 @@ namespace HotelReservation.API.Controllers
         [Route("VerificationEmail")]
         public async Task<IActionResult> VerificationEmail([FromQuery] VerificationEmailDto dto)
         {
+            Log.Information("VerificationEmailDto: {@dto}", FilterDto(JObject.FromObject(dto)));
+
             var user = await _userManager.FindByEmailAsync(dto.Email);
 
             if(user == null)
             {
+                Log.Information("No user with that email.");
                 return NotFound("No user with that email.");
             }
 
@@ -194,6 +224,7 @@ namespace HotelReservation.API.Controllers
                 await _context.SaveChangesAsync();
             }
 
+            Log.Information("User with email: " + dto.Email + " is successfully confirmed.");
             return Ok("User with email: " + dto.Email + " is successfully confirmed.");
         }
 
@@ -201,15 +232,19 @@ namespace HotelReservation.API.Controllers
         [Route("ForgordPassword")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
+            Log.Information("ForgordPassword: {@dto}", FilterDto(JObject.FromObject(dto)));
+            
             var user = await _userManager.FindByEmailAsync(dto.Email);
 
             if (user == null)
             {
-                return NotFound("User not found");
+                Log.Information("User not found.");
+                return NotFound("User not found.");
             }
 
             if (!user.EmailConfirmed)
             {
+                Log.Information("User not confirmed the email.");
                 return NotFound("User not confirmed the email.");
             }
 
@@ -219,6 +254,7 @@ namespace HotelReservation.API.Controllers
 
             if (generatedToken == null)
             {
+                Log.Information("Something went wrong no token generated. Please try again.");
                 return NotFound("Something went wrong no token generated. Please try again.");
             }
 
@@ -235,6 +271,7 @@ namespace HotelReservation.API.Controllers
             await _emailSender.EmailSenderAsync(user.Email, user.UserName, HttpUtility.HtmlEncode(generatedToken),
                 subject, plainTextContent, htmlContent);
 
+            Log.Information("Please check your email for reset password code.");
             return Ok("Please check your email for reset password code.");
         }
 
@@ -242,10 +279,13 @@ namespace HotelReservation.API.Controllers
         [Route("ResetPassword")]
         public async Task<IActionResult> ResetPassword([FromQuery] ResetPasswordDto dto)
         {
+            Log.Information("ResetPasswordDto: {@dto}", FilterDto(JObject.FromObject(dto)));
+
             var user = await _userManager.FindByEmailAsync(dto.Email);
 
             if(user == null)
             {
+                Log.Information("User not found try again.");
                 return NotFound("User not found try again.");
             }
 
@@ -253,17 +293,20 @@ namespace HotelReservation.API.Controllers
 
             if(confirmationToken != user.ForgotPasswordConfirmationToken)
             {
+                Log.Information("Forgot password confirmation token is not a match please try again.");
                 return NotFound("Forgot password confirmation token is not a match please try again.");
             }
 
             if (user.EmailConfirmationToken != confirmationToken)
             {
-                return NotFound("Email is not confirmed");
+                Log.Information("Email is not confirmed.");
+                return NotFound("Email is not confirmed.");
             }
             user.EmailConfirmed = true;
 
             if(dto.ConfirmPassword != dto.Password)
             {
+                Log.Information("Passwords are not a match try again.");
                 return NotFound("Passwords are not a match try again.");
             }
             
@@ -272,6 +315,7 @@ namespace HotelReservation.API.Controllers
             _context.Update(user);
             await _context.SaveChangesAsync();
 
+            Log.Information("Password reset was successful: " + result);
             return Ok("Password reset was successful: " + result);
         }
 
@@ -279,15 +323,19 @@ namespace HotelReservation.API.Controllers
         [Route("VerifyPhoneNumber")]
         public async Task<IActionResult> VerifyPhoneNumber(VerifyPhoneNumberDto dto)
         {
+            Log.Information("VerifyPhoneNumberDto: {@dto}", FilterDto(JObject.FromObject(dto)));
+
             var user = await _userManager.FindByEmailAsync(dto.Email);
 
             if(user == null)
             {
-                return NotFound("User not found");
+                Log.Information("User not found.");
+                return NotFound("User not found.");
             }
 
             if(user.VerifyPhoneToken != dto.Token)
             {
+                Log.Information("Phone verification codes are not a match plz try again.");
                 return NotFound("Phone verification codes are not a match plz try again.");
             }
 
@@ -297,6 +345,7 @@ namespace HotelReservation.API.Controllers
             await _userManager.UpdateAsync(user);
             await _context.SaveChangesAsync();
 
+            Log.Information("Phone verification codes are not a match plz try again.");
             return Ok("Phone number verified.");
         }
 
@@ -305,11 +354,14 @@ namespace HotelReservation.API.Controllers
         [Route("ChangeEmail")]
         public async Task<IActionResult> ChangeEmail(ChangeEmailDto dto)
         {
+            Log.Information("ChangeEmailDto: {@dto}", FilterDto(JObject.FromObject(dto)));
+            
             var user = await _userManager.FindByEmailAsync(dto.CurrentEmail);
 
             if(user == null)
             {
-                return NotFound("User not Found");
+                Log.Information("User not Found.");
+                return NotFound("User not Found.");
             }
 
             user.NewEmail = dto.NewEmail;            
@@ -318,6 +370,7 @@ namespace HotelReservation.API.Controllers
 
             if (user.EmailConfirmationToken == null)
             {
+                Log.Information("Something went wrong no token generated. Please try again.");
                 return NotFound("Something went wrong no token generated. Please try again.");
             }
 
@@ -338,6 +391,7 @@ namespace HotelReservation.API.Controllers
             //var response2 = await _emailSender.EmailForgotPasswordSenderAsync(user.NewEmail, user.UserName,
             //    HttpUtility.HtmlEncode(user.EmailConfirmationToken));
 
+            Log.Information("Please check your new email for verification.");
             return Ok("Please check your new email for verification.");                                                                          
         }
 
@@ -345,10 +399,13 @@ namespace HotelReservation.API.Controllers
         [Route("VerifyChangedEmail")]
         public async Task<IActionResult> VerifyChangedEmail(VerificationEmailDto dto)
         {
+            Log.Information("VerificationEmailDto: {@dto}", FilterDto(JObject.FromObject(dto)));
+            
             var user = _context.Users.FirstOrDefault(x=> x.NewEmail == dto.Email);
 
             if(user == null)
             {
+                Log.Information("User not found email is not correct please try again.");
                 return NotFound("User not found email is not correct please try again.");
             }
 
@@ -356,6 +413,7 @@ namespace HotelReservation.API.Controllers
 
             if (user.EmailConfirmationToken != confirmationToken)
             {
+                Log.Information("Email verification code not found.");
                 return NotFound("Email verification code not found.");
             }
 
@@ -367,6 +425,7 @@ namespace HotelReservation.API.Controllers
 
             await _context.SaveChangesAsync();
 
+            Log.Information("New email verified successfully.");
             return Ok("New email verified successfully.");
         }
 
@@ -375,7 +434,7 @@ namespace HotelReservation.API.Controllers
         public async Task<IActionResult> TestEndpoint()
         {
             var answer = await _smsSender.SmsSenderAsync("+306955954852", "Pare auto to sms gt douylevei to twilio: " + GeneratePhoneToken(6));
-
+                        
             return Ok(answer);
         }
 
@@ -386,9 +445,15 @@ namespace HotelReservation.API.Controllers
             return randomGenerator.Next(100000,Convert.ToInt32(Math.Pow(10.0, Convert.ToDouble(digits))));
         }
 
-        private string FilterDto(IEntityDto dto)
+        private string FilterDto(JObject dto)
         {
-            return "asdf";
+            dto.Remove("Password");
+            dto.Remove("Token");
+            dto.Remove("ConfirmPassword");
+            dto.Remove("NewPassword");
+            dto.Remove("ConfirmNewPassword");
+
+            return dto.ToString();
         }
     }
 }

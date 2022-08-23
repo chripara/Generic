@@ -1,4 +1,5 @@
-﻿using HotelReservation.Application.Interface;
+﻿using Destructurama.Attributed;
+using HotelReservation.Application.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HotelReservation.Application.Dto.Auth
 {
-    public class VerifyPhoneNumberDto : IEntityDto
+    public class VerifyPhoneNumberDto
     {
         public string Token { get; set; }
         public string Email { get; set; }

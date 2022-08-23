@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotelReservation.Application.Dto.Bookings
 {
-    public class CreateBookingDto : IEntityDto
+    public class CreateBookingDto
     {
         public string Room { get; set; }
         public string FirstName { get; set; }

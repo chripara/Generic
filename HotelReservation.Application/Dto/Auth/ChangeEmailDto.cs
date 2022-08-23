@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotelReservation.Application.Dto.Auth
 {
-    public class ChangeEmailDto : IEntityDto
+    public class ChangeEmailDto
     {
         public string CurrentEmail { get; set; }
         public string NewEmail { get; set; }

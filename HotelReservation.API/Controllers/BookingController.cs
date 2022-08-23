@@ -7,6 +7,7 @@ using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Serilog;
 
 namespace HotelReservation.API.Controllers
@@ -32,7 +33,11 @@ namespace HotelReservation.API.Controllers
         [Route("GetBooking")]
         public async Task<IActionResult> GetBooking(GetBookingDto dto)
         {
+            Log.Information("GetBookingDto: {@GetBookingDto}", FilterDto(JObject.FromObject(dto)));
+
             var booking = await _context.Bookings.FindAsync(dto.Id);
+            
+            Log.Information("Bookings : {@Booking}", FilterDto(JObject.FromObject(booking)));
             return Ok(booking);
         }
 
@@ -40,30 +45,38 @@ namespace HotelReservation.API.Controllers
         [Route("DeleteBooking")]
         public async Task<IActionResult> DeleteBooking(DeleteBookingDto dto)
         {
+            Log.Information("DeleteBookingDto: {@DeleteBookingDto}", FilterDto(JObject.FromObject(dto)));
+            
             var booking = await _context.Bookings.FindAsync(dto.Id);
             
             _context.Bookings.Remove(booking);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            Log.Information("Booking Deleted.");
+            return Ok("Booking Deleted.");
         }
 
         [HttpPost]
         [Route("CreateBookings")]
         public async Task<IActionResult> CreateBookings(CreateBookingDto dto)
         {
+            Log.Information("CreateBookingDto: {@CreateBookingDto}", FilterDto(JObject.FromObject(dto)));
+            
             var newBooking = _mapper.Map<Booking>(dto);
 
             _context.Bookings.AddAsync(newBooking);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            Log.Information("Booking Created.");
+            return Ok("Booking Created.");
         }
 
         [HttpPut]
         [Route("UpdateBooking")]
         public async Task<IActionResult> UpdateBooking(UpdateBookingDto dto)
         {
+            Log.Information("UpdateBookingDto: {@UpdateBookingDto}", FilterDto(JObject.FromObject(dto)));
+            
             var booking = await _context.Bookings.FindAsync(dto.Id);
             
             if (booking == null)
@@ -81,6 +94,8 @@ namespace HotelReservation.API.Controllers
         [HttpPost]
         public async Task<IActionResult> GetAllBookingsForHotelInDate(GetBookingForHotelDto dto)
         {
+            Log.Information("GetBookingForHotelDto: {@GetBookingForHotelDto}", FilterDto(JObject.FromObject(dto)));
+            
             var bookings = _context.Bookings.Include(i => i.HotelRoom)
                 .Include(i => i.HotelRoom.Hotel)
                 .Where(w => w.HotelRoom.Hotel.Name == dto.HotelName)
@@ -134,6 +149,17 @@ namespace HotelReservation.API.Controllers
             var randomGenerator = new Random();
 
             return randomGenerator.Next(1,5);
+        }
+
+        private string FilterDto(JObject dto)
+        {
+            dto.Remove("Password");
+            dto.Remove("Token");
+            dto.Remove("ConfirmPassword");
+            dto.Remove("NewPassword");
+            dto.Remove("ConfirmNewPassword");
+            
+            return dto.ToString();
         }
     }
 }

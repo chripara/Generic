@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Destructurama.Attributed;
 using HotelReservation.Application.Interface;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HotelReservation.Application.Dto.Auth
 {
-    public class ChangePasswordDto : IEntityDto
+    public class ChangePasswordDto
     {
         public string OldPassword { get; set; }
         public string NewPassword { get; set; }

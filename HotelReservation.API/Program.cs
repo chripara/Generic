@@ -1,4 +1,7 @@
 using AutoMapper;
+using Destructurama;
+using HotelReservation.Application.Dto.Auth;
+using HotelReservation.Application.Interface;
 using HotelReservation.Application.Profiles;
 using HotelReservation.Application.Services.Email;
 using HotelReservation.Application.Services.Phone;

@@ -8,6 +8,8 @@ using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using Serilog;
 
 namespace HotelReservation.API.Controllers
 {
@@ -32,6 +34,7 @@ namespace HotelReservation.API.Controllers
         [HttpGet]
         public IActionResult GetAllHotels()
         {
+            Log.Information("GetAllHotels");
             var hotels = _context.Hotels.ToList();
 
             return Ok(hotels);
@@ -41,6 +44,7 @@ namespace HotelReservation.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetHotels([FromQuery] int id)
         {
+            Log.Information("GetHotels: {@id}", id);
             var hotel = await _context.Hotels.FindAsync(id);
 
             return Ok(hotel);
@@ -50,10 +54,12 @@ namespace HotelReservation.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateHotel(HotelDto dto)
         {
+            Log.Information("HotelDto: {@HotelDto}", FilterDto(JObject.FromObject(dto)));
             var hotel = await _context.Hotels.FindAsync(dto.Id);
 
             if (hotel == null)
             {
+                Log.Information("NotFound");
                 return NotFound();
             }
 
@@ -62,6 +68,7 @@ namespace HotelReservation.API.Controllers
             _context.Update(hotel);
             await _context.SaveChangesAsync();
 
+            Log.Information("Hotel: {@Hotel}", FilterDto(JObject.FromObject(hotel)));
             return Ok(hotel);
         }
 
@@ -69,16 +76,20 @@ namespace HotelReservation.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteHotel(int id)
         {
+            Log.Information("DeleteHotel: {@id}", id);
+            
             var hotel = await _context.Hotels.FindAsync(id);
 
             if (hotel == null)
             {
+                Log.Information("NotFound: {@id}", id);
                 return NotFound();
             }
 
             _context.Remove(hotel);
             await _context.SaveChangesAsync();
 
+            Log.Information("Hotel: {@Hotel}", FilterDto(JObject.FromObject(hotel)));
             return Ok(hotel);
         }
 
@@ -86,10 +97,13 @@ namespace HotelReservation.API.Controllers
         [HttpPost]
         public async Task<IActionResult> FindAvailableRoomsForHotel(FindAvailableRoomsForHotelDto dto)
         {
+            Log.Information("FindAvailableRoomsForHotelDto: {@FindAvailableRoomsForHotelDto}", FilterDto(JObject.FromObject(dto)));
+
             var hotel = await _context.Hotels.FirstOrDefaultAsync(f => f.Name == dto.HotelName);
 
             if (hotel == null)
             {
+                Log.Information("Hotel not found.");
                 return NotFound("Hotel not found.");
             }
 
@@ -109,6 +123,7 @@ namespace HotelReservation.API.Controllers
                 HotelRoomDtos = _mapper.Map<List<HotelRoom>, List<HotelRoomDto>>(hotel.HotelRooms.ToList())
             };
 
+            Log.Information("AvailabilityInHotel: {@AvailabilityInHotel}", FilterDto(JObject.FromObject(availability)));
             return Ok(availability);
         }
 
@@ -116,6 +131,8 @@ namespace HotelReservation.API.Controllers
         [HttpPost]
         public async Task<IActionResult> FindRoomsForDate(FindRoomsForDateDto dto)
         {
+            Log.Information("FindRoomsForDateDto: {@FindRoomsForDateDto}", FilterDto(JObject.FromObject(dto)));
+            
             var bookings = _context.Bookings.Where(p =>
                 (p.EndDate.Date > dto.StartDate.Date && p.EndDate.Date <= dto.EndDate.Date) ||
                 (p.StartDate.Date >= dto.StartDate.Date && p.StartDate <= dto.EndDate.Date))
@@ -174,6 +191,7 @@ namespace HotelReservation.API.Controllers
                 });
             }
 
+            Log.Information("AvailabilityInHotel: {@AvailabilityInHotel}", FilterDto(JObject.FromObject(availabilityInHotel)));
             return Ok(availabilityInHotel);
         }
 
@@ -399,6 +417,16 @@ namespace HotelReservation.API.Controllers
             }
 
             return bookings;
+        }
+        private string FilterDto(JObject dto)
+        {
+            dto.Remove("Password");
+            dto.Remove("Token");
+            dto.Remove("ConfirmPassword");
+            dto.Remove("NewPassword");
+            dto.Remove("ConfirmNewPassword");
+
+            return dto.ToString();
         }
     }
 }

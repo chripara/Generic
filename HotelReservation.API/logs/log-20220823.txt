@@ -18,3 +18,123 @@
 2022-08-23 16:09:21.825 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
 2022-08-23 16:11:20.048 +03:00 [INF] asdfasdf
 2022-08-23 16:11:20.052 +03:00 [INF] HTTP POST /api/Booking/GetAllBookingsForHotel responded 200 in 1436.8385 ms
+2022-08-23 16:56:46.805 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 16:56:46.848 +03:00 [INF] Hosting environment: Development
+2022-08-23 16:56:46.850 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 16:57:07.687 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 16:57:07.747 +03:00 [INF] Hosting environment: Development
+2022-08-23 16:57:07.752 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 16:58:20.113 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 16:58:20.151 +03:00 [INF] Hosting environment: Development
+2022-08-23 16:58:20.153 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 16:58:27.848 +03:00 [INF] RegisterDto: HotelReservation.Application.Dto.Auth.RegisterDto
+2022-08-23 16:58:29.207 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1611.6044 ms
+2022-08-23 17:00:14.965 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 17:00:15.014 +03:00 [INF] Hosting environment: Development
+2022-08-23 17:00:15.016 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 17:00:19.429 +03:00 [INF] RegisterDto: HotelReservation.Application.Dto.Auth.RegisterDto
+2022-08-23 17:00:21.256 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 2086.8594 ms
+2022-08-23 17:00:27.277 +03:00 [INF] RegisterDto: HotelReservation.Application.Dto.Auth.RegisterDto
+2022-08-23 17:00:27.315 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 68.7322 ms
+2022-08-23 17:01:05.649 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 17:01:05.692 +03:00 [INF] Hosting environment: Development
+2022-08-23 17:01:05.699 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 17:01:11.477 +03:00 [INF] RegisterDto: {"UserName":"string","Password":"string","ConfirmPassword":"string","Email":"string","PhoneNumber":"string","FirstName":"string","LastName":"string","Location":"string","$type":"RegisterDto"}
+2022-08-23 17:01:12.880 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1667.2862 ms
+2022-08-23 17:01:58.846 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 17:01:58.882 +03:00 [INF] Hosting environment: Development
+2022-08-23 17:01:58.887 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 17:02:03.471 +03:00 [INF] RegisterDto: HotelReservation.Application.Dto.Auth.RegisterDto
+2022-08-23 17:02:04.777 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1502.5449 ms
+2022-08-23 17:02:14.292 +03:00 [INF] RegisterDto: HotelReservation.Application.Dto.Auth.RegisterDto
+2022-08-23 17:02:14.334 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 64.0301 ms
+2022-08-23 17:03:58.134 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 17:03:58.171 +03:00 [INF] Hosting environment: Development
+2022-08-23 17:03:58.177 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 17:04:07.081 +03:00 [INF] RegisterDto: {"UserName":"string","Password":"string","ConfirmPassword":"string","Email":"string","PhoneNumber":"string","FirstName":"string","LastName":"string","Location":"string","$type":"RegisterDto"}
+2022-08-23 17:04:08.482 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1601.5300 ms
+2022-08-23 17:37:07.702 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 17:37:07.742 +03:00 [INF] Hosting environment: Development
+2022-08-23 17:37:07.744 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 17:37:13.307 +03:00 [INF] RegisterDto: {"UserName":"string","Password":"string","ConfirmPassword":"string","Email":"string","PhoneNumber":"string","FirstName":"string","LastName":"string","Location":"string","$type":"RegisterDto"}
+2022-08-23 17:37:14.692 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1588.2083 ms
+2022-08-23 17:43:02.032 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 17:43:02.073 +03:00 [INF] Hosting environment: Development
+2022-08-23 17:43:02.078 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 17:43:08.672 +03:00 [INF] RegisterDto: {"UserName":"string","Password":"string","ConfirmPassword":"string","Email":"string","PhoneNumber":"string","FirstName":"string","LastName":"string","Location":"string","$type":"RegisterDto"}
+2022-08-23 17:43:10.030 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1552.2820 ms
+2022-08-23 17:44:15.322 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 17:44:15.363 +03:00 [INF] Hosting environment: Development
+2022-08-23 17:44:15.366 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 17:44:23.153 +03:00 [INF] RegisterDto: {@dto(Password,ConfirmPassword)}
+2022-08-23 17:44:24.472 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1604.1742 ms
+2022-08-23 17:44:47.550 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 17:44:47.652 +03:00 [INF] Hosting environment: Development
+2022-08-23 17:44:47.654 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 17:44:51.665 +03:00 [INF] RegisterDto: {@RegisterDto(Password,ConfirmPassword)}
+2022-08-23 17:44:52.996 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1556.6889 ms
+2022-08-23 17:55:29.546 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 17:55:29.589 +03:00 [INF] Hosting environment: Development
+2022-08-23 17:55:29.591 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 17:55:34.314 +03:00 [INF] RegisterDto: {"UserName":"string","Password":"string","ConfirmPassword":"string","Email":"string","PhoneNumber":"string","FirstName":"string","LastName":"string","Location":"string","$type":"RegisterDto"}
+2022-08-23 17:55:35.668 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1553.1000 ms
+2022-08-23 18:11:56.052 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:11:56.088 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:11:56.090 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:12:04.054 +03:00 [INF] RegisterDto: {@RegisterDto}{"UserName":[],"Email":[],"PhoneNumber":[],"FirstName":[],"LastName":[],"Location":[]}
+2022-08-23 18:12:05.339 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1522.8283 ms
+2022-08-23 18:12:37.216 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:12:37.259 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:12:37.262 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:13:27.280 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:13:27.322 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:13:27.324 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:15:38.784 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:15:38.819 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:15:38.826 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:16:12.823 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:16:12.867 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:16:12.873 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:16:55.639 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:16:55.676 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:16:55.678 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:19:49.305 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:19:49.340 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:19:49.342 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:20:41.225 +03:00 [INF] RegisterDto: {@RegisterDto}{"UserName":[],"Email":[],"PhoneNumber":[],"FirstName":[],"LastName":[],"Location":[]}
+2022-08-23 18:21:30.528 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:21:30.566 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:21:30.568 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:21:46.741 +03:00 [INF] RegisterDto: {@RegisterDto}{"UserName":[],"Email":[],"PhoneNumber":[],"FirstName":[],"LastName":[],"Location":[]}
+2022-08-23 18:21:48.101 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 11738.7392 ms
+2022-08-23 18:23:50.512 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:23:50.548 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:23:50.553 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:26:14.961 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:26:14.996 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:26:14.998 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:26:51.387 +03:00 [INF] RegisterDto: {@RegisterDto}{
+  "UserName": "string",
+  "Email": "string",
+  "PhoneNumber": "string",
+  "FirstName": "string",
+  "LastName": "string",
+  "Location": "string"
+}
+2022-08-23 18:27:35.213 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:27:35.248 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:27:35.253 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:27:40.979 +03:00 [INF] RegisterDto: {
+  "UserName": "string",
+  "Email": "string",
+  "PhoneNumber": "string",
+  "FirstName": "string",
+  "LastName": "string",
+  "Location": "string"
+}
+2022-08-23 18:27:42.237 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1548.2743 ms
+2022-08-23 18:28:13.823 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 18:28:13.859 +03:00 [INF] Hosting environment: Development
+2022-08-23 18:28:13.864 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 18:28:20.547 +03:00 [INF] RegisterDto: [[[]],[[]],[[]],[[]],[[]],[[]]]
+2022-08-23 18:28:21.800 +03:00 [INF] HTTP POST /api/Auth/Register responded 400 in 1534.0270 ms
