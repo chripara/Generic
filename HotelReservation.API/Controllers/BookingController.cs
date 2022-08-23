@@ -7,6 +7,7 @@ using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace HotelReservation.API.Controllers
 {
@@ -84,6 +85,8 @@ namespace HotelReservation.API.Controllers
                 .Include(i => i.HotelRoom.Hotel)
                 .Where(w => w.HotelRoom.Hotel.Name == dto.HotelName)
                 .ToList();
+
+            Log.Information("asdfasdf");
 
             return Ok();
         }

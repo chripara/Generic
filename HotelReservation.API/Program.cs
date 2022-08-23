@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
+using Serilog;
+using Serilog.Events;
+using System.Diagnostics;
 
 var config = new MapperConfiguration(cfg =>
 {
@@ -17,7 +20,16 @@ var config = new MapperConfiguration(cfg =>
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .CreateBootstrapLogger();
+
+builder.Host.UseSerilog(
+    (ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)    
+);
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
@@ -81,6 +93,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseSerilogRequestLogging(options =>
+{
+
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

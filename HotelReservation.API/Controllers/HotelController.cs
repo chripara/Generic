@@ -382,9 +382,6 @@ namespace HotelReservation.API.Controllers
             return Ok();
         }
 
-        // anazitisi me vasi ths imerominies, timh, typo, poli, arithmo atomwn, 
-        // anazitisi dwmatiwn sto sigkekrimeno hotel me vasi hmerominies, times, atoma
-
         private List<Booking> FindBookingsForRangeDate(FindAvailableRoomsForHotelDto dto)
         {
             var bookings = _context.Bookings.Where(p => 

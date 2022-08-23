@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelReservation.Application.Dto.Auth;
+using HotelReservation.Application.Interface;
 using HotelReservation.Application.Services.Email;
 using HotelReservation.Application.Services.Phone;
 using HotelReservation.Domain.Models.Auth;
@@ -7,6 +8,7 @@ using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System.Net;
 using System.Web;
 
@@ -44,6 +46,8 @@ namespace HotelReservation.API.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
+            Log.Information("RegisterDto " + FilterDto(dto)+ ;
+
             var userByUserName = await _userManager.FindByNameAsync(dto.UserName);
             var userByEmail = await _userManager.FindByEmailAsync(dto.UserName);
             var userByPhoneNumber = _userManager.Users.FirstOrDefault(w => w.PhoneNumber == dto.PhoneNumber);
@@ -380,6 +384,11 @@ namespace HotelReservation.API.Controllers
             var randomGenerator = new Random();
             
             return randomGenerator.Next(100000,Convert.ToInt32(Math.Pow(10.0, Convert.ToDouble(digits))));
+        }
+
+        private string FilterDto(IEntityDto dto)
+        {
+            return "asdf";
         }
     }
 }

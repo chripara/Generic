@@ -1,6 +1,8 @@
-﻿namespace HotelReservation.Application.Dto.General
+﻿using HotelReservation.Application.Interface;
+
+namespace HotelReservation.Application.Dto.General
 {
-    public class DateRangeDto
+    public class DateRangeDto : IEntityDto
     {
         public DateTime StartDate { get; set; }
 

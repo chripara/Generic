@@ -1,6 +1,8 @@
-﻿namespace HotelReservation.Application.Dto.Hotels
+﻿using HotelReservation.Application.Interface;
+
+namespace HotelReservation.Application.Dto.Hotels
 {
-    public class AvailabilityInHotel
+    public class AvailabilityInHotel : IEntityDto
     {
         public string HotelName { get; set; }
         public List<BookedDatesDto> BookedDatesDtos { get; set; } = new List<BookedDatesDto>();

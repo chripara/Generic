@@ -1,0 +1,20 @@
+2022-08-23 15:57:23.592 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 15:57:23.630 +03:00 [INF] Hosting environment: Development
+2022-08-23 15:57:23.635 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 15:57:30.610 +03:00 [INF] asdfasdf
+2022-08-23 15:57:30.614 +03:00 [INF] HTTP POST /api/Booking/GetAllBookingsForHotel responded 200 in 1298.0937 ms
+2022-08-23 15:58:16.964 +03:00 [INF] asdfasdf
+2022-08-23 15:58:16.965 +03:00 [INF] HTTP POST /api/Booking/GetAllBookingsForHotel responded 200 in 72.8269 ms
+2022-08-23 16:01:20.674 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 16:01:20.710 +03:00 [INF] Hosting environment: Development
+2022-08-23 16:01:20.715 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 16:01:47.124 +03:00 [INF] asdfasdf
+2022-08-23 16:01:47.128 +03:00 [INF] HTTP POST /api/Booking/GetAllBookingsForHotel responded 200 in 1360.6305 ms
+2022-08-23 16:09:01.206 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 16:09:01.244 +03:00 [INF] Hosting environment: Development
+2022-08-23 16:09:01.246 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 16:09:21.776 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-23 16:09:21.817 +03:00 [INF] Hosting environment: Development
+2022-08-23 16:09:21.825 +03:00 [INF] Content root path: C:\Users\Panos\Documents\Project\HotelReservation\HotelReservation.API\
+2022-08-23 16:11:20.048 +03:00 [INF] asdfasdf
+2022-08-23 16:11:20.052 +03:00 [INF] HTTP POST /api/Booking/GetAllBookingsForHotel responded 200 in 1436.8385 ms
