@@ -101,8 +101,6 @@ namespace HotelReservation.API.Controllers
                 .Where(w => w.HotelRoom.Hotel.Name == dto.HotelName)
                 .ToList();
 
-            Log.Information("asdfasdf");
-
             return Ok();
         }
 

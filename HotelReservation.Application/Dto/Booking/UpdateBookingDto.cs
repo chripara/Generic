@@ -1,9 +1,8 @@
-﻿using HotelReservation.Application.Interface;
-using HotelReservation.Domain.Models.Auth;
+﻿using HotelReservation.Domain.Models.Auth;
 
 namespace HotelReservation.Application.Dto.Bookings
 {
-    public class UpdateBookingDto : IEntityDto
+    public class UpdateBookingDto
     {
         public int Id { get; set; }
         public string Room { get; set; }

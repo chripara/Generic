@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HotelReservation.Application.Dto.Auth;
-using HotelReservation.Application.Interface;
 using HotelReservation.Application.Services.Email;
 using HotelReservation.Application.Services.Phone;
 using HotelReservation.Domain.Models.Auth;
@@ -10,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Serilog;
-using System.Text.Json;
 using System.Web;
 
 namespace HotelReservation.API.Controllers

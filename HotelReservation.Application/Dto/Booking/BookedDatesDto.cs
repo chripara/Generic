@@ -1,5 +1,4 @@
 ﻿using HotelReservation.Application.Dto.General;
-using HotelReservation.Application.Interface;
 
 namespace HotelReservation.Application.Dto.Hotels
 {

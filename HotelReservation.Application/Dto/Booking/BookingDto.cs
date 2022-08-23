@@ -1,15 +1,9 @@
 ﻿using HotelReservation.Application.Dto.Hotels;
-using HotelReservation.Application.Interface;
 using HotelReservation.Domain.Models.Auth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelReservation.Application.Dto.Bookings
 {
-    public class BookingDto : IEntityDto
+    public class BookingDto
     {        public int Id { get; set; }
         public string Room { get; set; }
         public string FirstName { get; set; }

@@ -1,13 +1,6 @@
-﻿using HotelReservation.Application.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotelReservation.Application.Dto.Hotels
+﻿namespace HotelReservation.Application.Dto.Hotels
 {
-    public class OfferDto : IEntityDto
+    public class OfferDto
     {
         public int? Id { get; set; }
         public string Description { get; set; }        

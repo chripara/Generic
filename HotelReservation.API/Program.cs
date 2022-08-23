@@ -1,7 +1,4 @@
 using AutoMapper;
-using Destructurama;
-using HotelReservation.Application.Dto.Auth;
-using HotelReservation.Application.Interface;
 using HotelReservation.Application.Profiles;
 using HotelReservation.Application.Services.Email;
 using HotelReservation.Application.Services.Phone;
@@ -10,11 +7,9 @@ using HotelReservation.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
 using Serilog;
 using Serilog.Events;
-using System.Diagnostics;
 
 var config = new MapperConfiguration(cfg =>
 {
