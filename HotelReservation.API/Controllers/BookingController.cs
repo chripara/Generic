@@ -4,6 +4,7 @@ using HotelReservation.Application.Dto.Bookings;
 using HotelReservation.Domain.Models;
 using HotelReservation.Domain.Models.Auth;
 using HotelReservation.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,7 @@ namespace HotelReservation.API.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("DeleteBooking")]
         public async Task<IActionResult> DeleteBooking(DeleteBookingDto dto)
         {
@@ -57,6 +59,7 @@ namespace HotelReservation.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("CreateBookings")]
         public async Task<IActionResult> CreateBookings(CreateBookingDto dto)
         {
@@ -73,6 +76,7 @@ namespace HotelReservation.API.Controllers
 
         [HttpPut]
         [Route("UpdateBooking")]
+        [Authorize]
         public async Task<IActionResult> UpdateBooking(UpdateBookingDto dto)
         {
             Log.Information("UpdateBookingDto: {@UpdateBookingDto}", FilterDto(JObject.FromObject(dto)));
@@ -106,6 +110,7 @@ namespace HotelReservation.API.Controllers
 
         [Route("SeedBookings")]
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> SeedBookings()
         {
             var hotels = _context.Hotels.Include(i => i.HotelRooms).ToList();

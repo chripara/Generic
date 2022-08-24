@@ -19,7 +19,7 @@ namespace HotelReservation.API.Controllers
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _context;        
         private readonly IMapper _mapper;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
@@ -171,7 +171,7 @@ namespace HotelReservation.API.Controllers
         [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto dto)
         {            
-            var username = HttpContext.User.Identity.Name;
+            var username = HttpContext.User.Identity?.Name;
             var user = await _userManager.FindByNameAsync(username);
 
             if(user == null)
@@ -425,15 +425,6 @@ namespace HotelReservation.API.Controllers
 
             Log.Information("New email verified successfully.");
             return Ok("New email verified successfully.");
-        }
-
-        [HttpGet]
-        [Route("TestEndpoint")]
-        public async Task<IActionResult> TestEndpoint()
-        {
-            var answer = await _smsSender.SmsSenderAsync("+306955954852", "Pare auto to sms gt douylevei to twilio: " + GeneratePhoneToken(6));
-                        
-            return Ok(answer);
         }
 
         private int GeneratePhoneToken(int digits)

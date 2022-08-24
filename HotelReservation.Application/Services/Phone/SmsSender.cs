@@ -21,6 +21,8 @@ namespace HotelReservation.Application.Services.Phone
 
             TwilioClient.Init(accountSid, authToken);
 
+            //Twilio is not working Authentication is depricated.
+
             var message = MessageResource.Create(
                 body: body,
                 from: new Twilio.Types.PhoneNumber(phoneNumber),
