@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using HotelReservation.AppConstants;
+using HotelReservation.Application.AppConstants;
 using HotelReservation.Application.Dto.Auth;
 using HotelReservation.Application.Services.Email;
 using HotelReservation.Application.Services.Phone;
@@ -19,6 +21,7 @@ namespace HotelReservation.API.Controllers
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly AppDbContext _context;        
         private readonly IMapper _mapper;
         private readonly IEmailSender _emailSender;
@@ -27,12 +30,14 @@ namespace HotelReservation.API.Controllers
         public AuthController(
             SignInManager<User> signInManager,
             UserManager<User> userManager,
+            RoleManager<Role> roleManager,
             AppDbContext context,
             IMapper mapper,
             IEmailSender emailSender,
             ISmsSender smsSender
             )
         {
+            _roleManager = roleManager;
             _mapper = mapper;
             _signInManager = signInManager;
             _userManager = userManager;
@@ -95,8 +100,7 @@ namespace HotelReservation.API.Controllers
             await _userManager.AddPasswordAsync(newUser, dto.Password);
 
             var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-            var TwoFactorToken = await _userManager.GenerateTwoFactorTokenAsync(newUser, newUser.Email);
-
+            
             if (emailConfirmationToken == null)
             {
                 Log.Information("Something went wrong no token generated. Please try again.");
@@ -116,9 +120,9 @@ namespace HotelReservation.API.Controllers
             
             var response = await _emailSender.EmailSenderAsync(newUser.Email, newUser.UserName, HttpUtility.HtmlEncode(emailConfirmationToken), subject, plainTextContent, htmlContent);
 
-            newUser.PhoneNumberTokenVerificationCode = "asdasda";
+            newUser.PhoneNumberTokenVerificationCode = GeneratePhoneToken(AuthConstants.PhoneVerificationTokenDigits);
 
-            await _smsSender.SmsSenderAsync("+306955954852", "Verify your phone code:" + newUser.PhoneNumberTokenVerificationCode);
+            await _smsSender.SmsSenderAsync(AuthConstants.DefaultPhone , "Verify your phone code:" + newUser.PhoneNumberTokenVerificationCode);
 
             Log.Information("Please verify your email.");
             return Ok("Please verify your email.");
@@ -427,11 +431,60 @@ namespace HotelReservation.API.Controllers
             return Ok("New email verified successfully.");
         }
 
-        private int GeneratePhoneToken(int digits)
+        [HttpPost]
+        [Route("SeedAdminAccount")]
+        public async Task<IActionResult> SeedAdminAccount()
+        {
+            if (_roleManager.FindByNameAsync(RoleConstants.RoleAdmin).Result.Id == null)
+            {
+                await _roleManager.CreateAsync(new Role
+                {
+                    Name = RoleConstants.RoleAdmin
+                });
+            }
+
+            if (_roleManager.FindByNameAsync(RoleConstants.RoleUser).Result.Id == null)
+            {
+                await _roleManager.CreateAsync(new Role
+                {
+                    Name = RoleConstants.RoleUser
+                });
+            }
+
+            if (_userManager.FindByNameAsync("admin").Result.Id == null)
+            {
+                await _userManager.CreateAsync(new User
+                {
+                    Email = "admin@admin.ad",
+                    UserName = "admin",
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    EmailConfirmed = true,
+                    PhoneNumber = "1029384756",
+                    PhoneNumberConfirmed = true,
+                    Location = "Admin Location",
+                }, "123$Qwer");
+
+                var user = await _userManager.FindByNameAsync("admin");
+
+                await _userManager.AddToRoleAsync(user, RoleConstants.RoleAdmin);
+            }
+
+            return Ok();
+        }
+
+        private string GeneratePhoneToken(int digits)
         {
             var randomGenerator = new Random();
-            
-            return randomGenerator.Next(100000,Convert.ToInt32(Math.Pow(10.0, Convert.ToDouble(digits))));
+            var number = randomGenerator.Next(0, Convert.ToInt32(Math.Pow(10.0, Convert.ToDouble(digits)))).ToString();
+            var token = "";
+
+            for(var i=0; i<digits - number.ToString().Length; i++)
+            {
+                token += "0";
+            }
+
+            return token+number;
         }
 
         private string FilterDto(JObject dto)

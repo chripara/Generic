@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using HotelReservation.Application.AppConstants;
+using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -16,7 +17,7 @@ namespace HotelReservation.Application.Services.Email
         {
             var apiKey = _configuration["Sendgrid_API_Key"];
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("zarmerdic@gmail.com", "Generic app email verification service.");
+            var from = new EmailAddress(AuthConstants.DefaultEmail, "Generic app email verification service.");
             var to = new EmailAddress(email, username);
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
