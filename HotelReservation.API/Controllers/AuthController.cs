@@ -231,7 +231,7 @@ namespace HotelReservation.API.Controllers
         }
 
         [HttpPost]        
-        [Route("ForgordPassword")]
+        [Route("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
             Log.Information("ForgordPassword: {@dto}", FilterDto(JObject.FromObject(dto)));
