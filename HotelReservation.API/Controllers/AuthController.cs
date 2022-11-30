@@ -86,7 +86,7 @@ namespace HotelReservation.API.Controllers
                 return BadRequest("Passwords are not a match.");
             }
             
-            var registerationIdentityResult = await _userManager.CreateAsync(_mapper.Map<User>(dto));            
+            var registerationIdentityResult = await _userManager.CreateAsync(_mapper.Map<User>(dto), dto.Password);            
 
             if(!registerationIdentityResult.Succeeded)
             {
@@ -95,34 +95,35 @@ namespace HotelReservation.API.Controllers
             }
 
             _context.SaveChanges();
-
-            var newUser = await _userManager.FindByEmailAsync(dto.Email); 
-            await _userManager.AddPasswordAsync(newUser, dto.Password);
-
-            var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
             
-            if (emailConfirmationToken == null)
-            {
-                Log.Information("Something went wrong no token generated. Please try again.");
-                return NotFound("Something went wrong no token generated. Please try again.");
-            }
+            var newUser = await _userManager.FindByEmailAsync(dto.Email);
+            _userManager.AddToRoleAsync(newUser, RoleConstants.RoleUser);
+            //await _userManager.AddPasswordAsync(newUser, dto.Password);
 
-            newUser.EmailConfirmationToken = emailConfirmationToken;
-            newUser.EmailExpirationTime = DateTime.Now.AddHours(1);
-
-            _context.Update<User>(newUser);
-            await _context.SaveChangesAsync();
-
-            var encodedToken = HttpUtility.HtmlAttributeEncode(emailConfirmationToken);
-            var subject = "Verification email for generic app.";
-            var plainTextContent = "Please click to this link to verify your email: " + "https://localhost:44347/api/Auth/VerificationEmail?token=" + encodedToken;
-            var htmlContent = "<strong>Please click to this link to verify your email: " + "https://localhost:44347/api/Auth/VerificationEmail?token=" + encodedToken + "&email=" + newUser.Email + "</strong>";
+            //var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
             
-            var response = await _emailSender.EmailSenderAsync(newUser.Email, newUser.UserName, HttpUtility.HtmlEncode(emailConfirmationToken), subject, plainTextContent, htmlContent);
+            //if (emailConfirmationToken == null)
+            //{
+            //    Log.Information("Something went wrong no token generated. Please try again.");
+            //    return NotFound("Something went wrong no token generated. Please try again.");
+            //}
 
-            newUser.PhoneNumberTokenVerificationCode = GeneratePhoneToken(AuthConstants.PhoneVerificationTokenDigits);
+            //newUser.EmailConfirmationToken = emailConfirmationToken;
+            //newUser.EmailExpirationTime = DateTime.Now.AddHours(1);
 
-            await _smsSender.SmsSenderAsync(AuthConstants.DefaultPhone , "Verify your phone code:" + newUser.PhoneNumberTokenVerificationCode);
+            //_context.Update<User>(newUser);
+            //await _context.SaveChangesAsync();
+
+            //var encodedToken = HttpUtility.HtmlAttributeEncode(emailConfirmationToken);
+            //var subject = "Verification email for generic app.";
+            //var plainTextContent = "Please click to this link to verify your email: " + "https://localhost:44347/api/Auth/VerificationEmail?token=" + encodedToken;
+            //var htmlContent = "<strong>Please click to this link to verify your email: " + "https://localhost:44347/api/Auth/VerificationEmail?token=" + encodedToken + "&email=" + newUser.Email + "</strong>";
+            
+            //var response = await _emailSender.EmailSenderAsync(newUser.Email, newUser.UserName, HttpUtility.HtmlEncode(emailConfirmationToken), subject, plainTextContent, htmlContent);
+
+            //newUser.PhoneNumberTokenVerificationCode = GeneratePhoneToken(AuthConstants.PhoneVerificationTokenDigits);
+
+            //await _smsSender.SmsSenderAsync(AuthConstants.DefaultPhone , "Verify your phone code:" + newUser.PhoneNumberTokenVerificationCode);
 
             Log.Information("Please verify your email.");
             return Ok("Please verify your email.");
