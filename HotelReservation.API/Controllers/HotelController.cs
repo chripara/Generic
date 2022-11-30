@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotelReservation.AppConstants;
 using HotelReservation.Application.Dto.Booking;
 using HotelReservation.Application.Dto.Hotels;
 using HotelReservation.Domain.Models;
@@ -52,7 +53,7 @@ namespace HotelReservation.API.Controllers
         }
 
         [Route("UpdateHotel")]
-        [Authorize]
+        [Authorize(Roles = RoleConstants.RoleAdmin)]
         [HttpPut]
         public async Task<IActionResult> UpdateHotel(HotelDto dto)
         {
@@ -75,7 +76,7 @@ namespace HotelReservation.API.Controllers
         }
 
         [Route("DeleteHotel")]
-        [Authorize]
+        [Authorize(Roles = RoleConstants.RoleAdmin)]
         [HttpDelete]
         public async Task<IActionResult> DeleteHotel(int id)
         {

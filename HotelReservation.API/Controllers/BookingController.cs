@@ -24,6 +24,7 @@ namespace HotelReservation.API.Controllers
 
         public BookingController(
             AppDbContext context,
+
             IMapper mapper
             ) 
         {
@@ -33,18 +34,23 @@ namespace HotelReservation.API.Controllers
 
         [HttpGet]
         [Route("GetBooking")]
+        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleUser)]
         public async Task<IActionResult> GetBooking(GetBookingDto dto)
         {
             Log.Information("GetBookingDto: {@GetBookingDto}", FilterDto(JObject.FromObject(dto)));
 
-            var booking = await _context.Bookings.FindAsync(dto.Id);
+            var booking = await _context.Bookings.Include(i => i.User).FirstOrDefaultAsync(f => f.Id == dto.Id);
+
+            var loggedUser = User.Identity.Name;
+
+            if (booking.User.UserName != loggedUser)
             
             Log.Information("Bookings : {@Booking}", FilterDto(JObject.FromObject(booking)));
             return Ok(booking);
         }
 
         [HttpDelete]
-        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleAdmin)]
+        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleUser)]
         [Route("DeleteBooking")]
         public async Task<IActionResult> DeleteBooking(DeleteBookingDto dto)
         {
@@ -60,7 +66,7 @@ namespace HotelReservation.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleAdmin)]
+        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleUser)]
         [Route("CreateBookings")]
         public async Task<IActionResult> CreateBookings(CreateBookingDto dto)
         {
@@ -77,7 +83,7 @@ namespace HotelReservation.API.Controllers
 
         [HttpPut]
         [Route("UpdateBooking")]
-        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleAdmin)]
+        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleUser)]
         public async Task<IActionResult> UpdateBooking(UpdateBookingDto dto)
         {
             Log.Information("UpdateBookingDto: {@UpdateBookingDto}", FilterDto(JObject.FromObject(dto)));
@@ -97,6 +103,7 @@ namespace HotelReservation.API.Controllers
 
         [Route("GetAllBookingsForHotel")]
         [HttpPost]
+        [Authorize(Roles = RoleConstants.RoleAdmin)]
         public async Task<IActionResult> GetAllBookingsForHotelInDate(GetBookingForHotelDto dto)
         {
             Log.Information("GetBookingForHotelDto: {@GetBookingForHotelDto}", FilterDto(JObject.FromObject(dto)));
@@ -111,7 +118,7 @@ namespace HotelReservation.API.Controllers
 
         [Route("SeedBookings")]
         [HttpPost]
-        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleAdmin)]
+        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleUser)]
         public async Task<IActionResult> SeedBookings()
         {
             var hotels = _context.Hotels.Include(i => i.HotelRooms).ToList();
