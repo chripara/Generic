@@ -10,7 +10,7 @@ import { WelcomeScreen } from "../screens/AuthScreens/WelcomeScreen";
 
 const Stack = createNativeStackNavigator();
 
-export const AuthStack = () => (
+export const HotelStack = () => (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen
                 name="Welcome"
@@ -26,7 +26,7 @@ export const AuthStack = () => (
                 name="VerifyChangeEmail"
                 component={VerifyChangeEmailScreen}
                 options={{ headerVisible: false }}
-            />           
+            />
             <Stack.Screen
                 name="ForgotPassword"
                 component={ForgetPasswordScreen}
