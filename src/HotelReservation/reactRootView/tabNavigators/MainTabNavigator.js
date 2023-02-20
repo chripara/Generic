@@ -1,7 +1,13 @@
 import * as React from "react";
-import { Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { Text, View, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { ProfileStack } from "../stackNavigators/ProfileStack";
+import { BookingStack } from "../stackNavigators/BookingStack";
+import { HotelStack } from "../stackNavigators/HotelStack";
+import colors from "../config/colors";
+// import { ProfileIcon } from "../../assets/tabIcons/ProfileIcon";
+// import { HotelIcon } from "../../assets/tabIcons/HotelIcon";
+// import { BookingIcon } from "../../assets/tabIcons/BookingIcon";
 
 function HomeScreen() {
     return (
@@ -36,30 +42,66 @@ function SettingsScreen2() {
 const Tab = createBottomTabNavigator();
 
 export const MainTabNavigator = () => (
-    <NavigationContainer>
-        <Tab.Navigator
-        // screenOptions={({ route }) => ({
-        //   tabBarIcon: ({ focused, color, size }) => {
-        //     let iconName;
-
-        //     if (route.name === 'Home') {
-        //       iconName = focused
-        //         ? 'ios-information-circle'
-        //         : 'ios-information-circle-outline';
-        //     } else if (route.name === 'Settings') {
-        //       iconName = focused ? 'ios-list' : 'ios-list-outline';
-        //     }
-
-        //     // You can return any component that you like here!
-        //     return <Ionicons name={iconName} size={size} color={color} />;
-        //   },
-        //   tabBarActiveTintColor: 'tomato',
-        //   tabBarInactiveTintColor: 'gray',
-        // })}>
-          >
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Settings" component={SettingsScreen} />
-            <Tab.Screen name="Settings2" component={SettingsScreen2} />
+        <Tab.Navigator 
+            initialRouteName="Profile"   
+            activeColor={colors.brown}
+            barStyle={{ backgroundColor: colors.primary }}
+            screenOptions={ () => ({                
+                activeBackgroundColors: colors.brown,
+                tabBarIndicatorStyle: { 
+                    width: 50, 
+                    height: 50, 
+                    backgroundColor: colors.brown, 
+                    borderRadius: 25,
+                    opacity: 0.6
+                },
+                tabBarShowLabel: false,
+                headerShown: false,
+                tabBarStyle: { 
+                    height: 70,
+                    backgroundColor: colors.third,
+                    showLabel: false,
+                    borderBottomLeftRadius: 20,
+                    borderBottomRightRadius: 20,
+                },
+                // tabBarItemStyle:{
+                //     width: 70, 
+                //     height: 70, 
+                //     activeBackgroundColors: colors.brown,
+                //     tabBarActiveWidth: 50,
+                //     tabBarActiveHeights: 50,
+                //     borderRadius: 35
+                // }    
+            })}                         
+        >
+            <Tab.Screen 
+                name="Profile"  
+                component={ProfileStack}
+                screenOptions={{ headerShown: false }}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({ color, size }) => (
+                        <Image source={require("../../assets/mainTabIcons/ProfileIcon.png")} style={{ width: 40, height: 40 }} />
+                    )}
+                }
+            />
+            <Tab.Screen 
+                name="Booking" 
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <Image source={require("../../assets/mainTabIcons/BookingIcon.png")} style={{ width: 40, height: 40 }} />
+                    )}
+                }
+                component={BookingStack}
+            />
+            <Tab.Screen 
+                name="Hotel" 
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <Image source={require("../../assets/mainTabIcons/HotelIcon.png")} style={{ width: 40, height: 40 }} />
+                    )}
+                }
+                component={HotelStack}
+            />            
         </Tab.Navigator>
-    </NavigationContainer>
 );
