@@ -26,15 +26,6 @@ const styles = StyleSheet.create({
         borderRadius: 21,
         shadowColor: colors.black,
         shadowRadius: 10,
-        elevation: 8,
-    },
-    text: {
-        position: "relative",
-        marginVertical: "15%",
-        paddingHorizontal: "5%",
-        textAlign: "center",
-        fontFamily: "Italiana-Regular",
-        fontSize: 36,
-        color: colors.white,
-    },
+        elevation: 8
+    }
 });
