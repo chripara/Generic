@@ -2,11 +2,11 @@ import React from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
-import { EllipseButtonSecondary } from "../../components/EllipseButtonSecondary";
+import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
 import defaultStyles from "../../config/defaultStyles";
 
 export const ChangePasswordScreen = ({ navigation }) => (
-    <MainScreen backgroundColor={colors.primary}>
+    <MainScreen backgroundColor={colors.secondary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
                 <Text style={defaultStyles.text36White}>Change Password</Text>
@@ -19,7 +19,7 @@ export const ChangePasswordScreen = ({ navigation }) => (
                 <Text style={defaultStyles.text20White}>Confirm New Password:</Text>
                 <TextInput style={defaultStyles.textInput} />
             </View>
-            <EllipseButtonSecondary
+            <EllipseButtonPrimary
                 name={"Change Password"}
                 onClick={() => navigation.navigate("Welcome")}
                 marginTop={"10%"}
