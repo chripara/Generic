@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import colors from "../config/colors";
 import defaultStyles from "../config/defaultStyles";
 
-export const ArrowButton = ({ onClick, isRight, marginTop }) => {
+export const ArrowButton = ({ onClick, attitude, marginTop, size }) => {
     return (
         <TouchableOpacity
             onPress={onClick}
@@ -11,7 +11,14 @@ export const ArrowButton = ({ onClick, isRight, marginTop }) => {
         >
             <Image 
                 source={require("../../assets/generalIcons/ArrowLeft.png")}
-                style={[isRight ? styles.imageRight : styles.imageLeft]} 
+                style={
+                    [attitude === "right" && styles.imageRight,
+                    attitude === "up" && styles.imageUp,
+                    attitude === "down"  && styles.imageDown,
+                    size === "small" && styles.small,
+                    size === "medium" && styles.medium,
+                    size === "large" && styles.large] 
+                } 
             />
         </TouchableOpacity>
     );
@@ -33,13 +40,23 @@ const styles = StyleSheet.create({
         elevation: 8
     },
     imageRight: {
-      height: 30,
-      width: 30,
       transform: [{rotate: '180deg'}],
     },
-    imageLeft: {
+    imageUp: {
+    },
+    imageDown: {
+      transform: [{rotate: '270deg'}],
+    },
+    small: {
       height: 30,
       width: 30,
-      //transform: [{rotate: '180deg'}],
+    },
+    medium: {
+      height: 20,
+      width: 20,
+    },
+    large: {
+      height: 15,
+      width: 15,
     }
 });
