@@ -1,4 +1,3 @@
-import { Platform } from "react-native";
 import colors from "./colors";
 
 export default {
@@ -39,6 +38,18 @@ export default {
         fontFamily: "Italiana-Regular",
         fontSize: 16,
         color: colors.white,
+    },
+    text16Gray: {
+        textAlign: "center",
+        fontFamily: "Italiana-Regular",
+        fontSize: 16,
+        color: colors.gray,
+    },
+    text12Black: {
+        textAlign: "center",
+        fontFamily: "Italiana-Regular",
+        fontSize: 12,
+        color: colors.black
     },
     textInput: {
         textAlign: "center",
