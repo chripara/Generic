@@ -14,8 +14,10 @@ export const CalendarInput = ({ date, setDate }) => {
         <View>
             <View style={styles.container}>
                 <Text 
-                    style={{...defaultStyles.textInput, textAlignVertical: 'center'}} 
-                >{date.getDate()} - {date.getMonth()+1} - {date.getFullYear()}</Text>
+                    style={defaultStyles.textInput} 
+                >
+                    {date.getDate()} - {date.getMonth()+1} - {date.getFullYear()}
+                </Text>
                 <TouchableOpacity
                     onPress={() => {
                         setCalendarActive(!isCalendarActive)
