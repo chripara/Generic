@@ -20,16 +20,14 @@ export const Calendar = ({ date, setDate }) => {
             tempDate.setDate(1);
             tempDate.setMonth(date.getMonth());
             tempDate.setFullYear(tempDate.getFullYear() - 1);
-            setDate(tempDate);
-            console.log("Date ff:" + tempDate);
+            setDate(tempDate);            
         }
         if(change === "+")
         {
             tempDate.setDate(1);
             tempDate.setMonth(date.getMonth());
             tempDate.setFullYear(tempDate.getFullYear() + 1);
-            setDate(tempDate);
-            console.log("Date ff:" + tempDate);
+            setDate(tempDate);            
         }            
     }
     
@@ -39,16 +37,14 @@ export const Calendar = ({ date, setDate }) => {
             tempDate.setDate(1);
             tempDate.setFullYear(tempDate.getFullYear());
             tempDate.setMonth(date.getMonth() - 1);
-            setDate(tempDate);    
-            console.log("Date ff:" + tempDate);
+            setDate(tempDate);                
         }
         if(change === "+")
         {
             tempDate.setDate(1);
             tempDate.setFullYear(tempDate.getFullYear());
             tempDate.setMonth(date.getMonth() + 1);
-            setDate(tempDate); 
-            console.log("Date ff:" + tempDate);
+            setDate(tempDate);             
         }
     }    
 
@@ -56,9 +52,7 @@ export const Calendar = ({ date, setDate }) => {
         tempDate.setDate(1);
         firstDayOfMonth = tempDate.getDay();        
         currentEndOfMonth = 0;
-        dates[firstDayOfMonth] = 1;
-        console.log(tempDate);
-        console.log(tempDate.getMonth());
+        dates[firstDayOfMonth] = 1;                
         if(tempDate.getMonth() - 1 === 1 ){
 
             for(var i = firstDayOfMonth-1 ; i >= 0 ; i--)
@@ -125,7 +119,6 @@ export const Calendar = ({ date, setDate }) => {
             dates[i] = i - firstDayOfMonth - currentEndOfMonth + 1; 
         }
 
-        console.log(dates);
     }
 
     const monthNames = ["Jan", "Febr", "March", "April", "May", "June",
@@ -140,8 +133,7 @@ export const Calendar = ({ date, setDate }) => {
                         attitude={"left"}
                         size={"medium"} 
                         onClick={() => {
-                            changeMonth("-");
-                            console.log("Date f:" + date);
+                            changeMonth("-");                            
                         }}
                     />
                     <Text style={defaultStyles.text20White}>{monthNames[date.getMonth()]}</Text>
@@ -149,8 +141,7 @@ export const Calendar = ({ date, setDate }) => {
                         attitude={"right"}
                         size={"medium"}
                         onClick={() => {
-                            changeMonth("+");
-                            console.log("Date f:" + date);
+                            changeMonth("+");                            
                         }}
                     />
                 </View>
@@ -159,8 +150,7 @@ export const Calendar = ({ date, setDate }) => {
                         attitude={"left"}
                         size={"medium"}
                         onClick={() => {
-                            changeYear("-");
-                            console.log("Date f:" + date);
+                            changeYear("-");                            
                         }}
                     />
                     <Text style={defaultStyles.text20White}>{date.getFullYear()}</Text>
@@ -168,8 +158,7 @@ export const Calendar = ({ date, setDate }) => {
                         attitude={"right"}
                         size={"medium"}
                         onClick={() => {
-                            changeYear("+");
-                            console.log("Date f:" + date);
+                            changeYear("+");                            
                     }}
                     />
                 </View>

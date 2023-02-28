@@ -1,38 +1,34 @@
 import {React,useState } from 'react';
-import { TextInput, TouchableOpacity, View, StyleSheet, Image } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Image } from 'react-native';
 import colors from '../config/colors';
 import defaultStyles from '../config/defaultStyles';
-import CalendarPicker from 'react-native-calendar-picker';
+import { Calendar } from './Calendar';
+
+const width = Dimensions.get('window').width;
 
 export const CalendarInput = ({ date, setDate }) => {
 
-    //const [isCalendarActive, setCalendarActive] = useState(false);
-
-    const openCalendar = () => {
-        <CalendarPicker onDateChange={setDate}/>
-    }
-
-    const handleSetDate = (value) => {
-        return(
-            setDate(value)
-        );
-    }
-
+    const [isCalendarActive, setCalendarActive] = useState(false);
+        
     return (
         <View>
             <View style={styles.container}>
-                <TextInput 
-                    style={defaultStyles.textInput} 
-                    value={date}
-                    onChangeText={date => setDate(date)}
-                />
-                <TouchableOpacity >
-                {/* onClick={setCalendarActive(!isCalendarActive)} */}
+                <Text 
+                    style={{...defaultStyles.textInput, textAlignVertical: 'center'}} 
+                >{date.getDate()} - {date.getMonth()+1} - {date.getFullYear()}</Text>
+                <TouchableOpacity
+                    onPress={() => {
+                        setCalendarActive(!isCalendarActive)
+                        console.log(isCalendarActive)}}>
                     <Image source={require('../../assets/generalIcons/calendar.png')} style={styles.image} />
                 </TouchableOpacity>                
-            </View>
-            {/* { isCalendarActive &&  */}
-            <CalendarPicker onDateChange={setDate(date.toString())}/> 
+            </View>   
+            {
+                isCalendarActive &&      
+                <View style={styles.calendarView}>            
+                    <Calendar date={date} setDate={setDate}/>
+                </View>
+            }   
         </View>
     );
 };
@@ -42,15 +38,7 @@ const styles = StyleSheet.create({
         width: "90%",
         height: 45,
         flexDirection: 'row',
-        // backgroundColor: colors.light,
-        // zIndex: 1,
-        justifyContent: "center",
-        //alignSelf: "center",
-        // alignItems: "center"
-        // borderRadius: 21,
-        // shadowColor: colors.black,
-        // shadowRadius: 10,
-        // elevation: 8
+        justifyContent: "center"        
     },
     image: {
         position: 'absolute',
@@ -58,5 +46,14 @@ const styles = StyleSheet.create({
         right: 5,
         width: 25,
         height: 25
+    },
+    calendarView: {
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginTop: width * 0.12,
+        zIndex: 1,
+        elevation: 1
     }
 });

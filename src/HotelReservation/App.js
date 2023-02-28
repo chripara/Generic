@@ -68,7 +68,7 @@ export default function App() {
 
         return (
             <View style={{ alignItems: 'center', marginTop: 100 }}>
-                <Calendar date={date} setDate={setDate} />
+                <CalendarInput date={date} setDate={setDate} />
                 <Text>{date.toString()}</Text>
             </View>
             // <NavigationContainer>

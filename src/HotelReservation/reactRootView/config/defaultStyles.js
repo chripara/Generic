@@ -54,7 +54,7 @@ export default {
     textInput: {
         textAlign: "center",
         fontFamily: "Italiana-Regular",
-        fontSize: 16,
+        fontSize: 20,
         color: colors.white,
         backgroundColor: colors.light,
         borderRadius: 6,
