@@ -2,12 +2,9 @@ import * as React from "react";
 import { Text, View, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ProfileStack } from "../stackNavigators/ProfileStack";
-import { BookingStack } from "../stackNavigators/BookingStack";
+import { BookingTabNavigator } from "../tabNavigators/BookingTabNavigator";
 import { HotelStack } from "../stackNavigators/HotelStack";
 import colors from "../config/colors";
-// import { ProfileIcon } from "../../assets/tabIcons/ProfileIcon";
-// import { HotelIcon } from "../../assets/tabIcons/HotelIcon";
-// import { BookingIcon } from "../../assets/tabIcons/BookingIcon";
 
 function HomeScreen() {
     return (
@@ -92,7 +89,7 @@ export const MainTabNavigator = () => (
                         <Image source={require("../../assets/mainTabIcons/BookingIcon.png")} style={{ width: 40, height: 40 }} />
                     )}
                 }
-                component={BookingStack}
+                component={BookingTabNavigator}
             />
             <Tab.Screen 
                 name="Hotel" 
