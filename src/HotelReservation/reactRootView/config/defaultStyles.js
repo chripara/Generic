@@ -52,12 +52,14 @@ export default {
         color: colors.black
     },
     textInput: {
-        textAlign: "center",
+        textAlign: "left",
         fontFamily: "Italiana-Regular",
         fontSize: 20,
-        color: colors.white,
+        color: colors.black,
         backgroundColor: colors.light,
         borderRadius: 6,
+        paddingHorizontal: 6,
+        textAlignVertical: 'center',
         height: 40,
         width: "100%",
         marginTop: "1%",
