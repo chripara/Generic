@@ -43,17 +43,18 @@ const styles = StyleSheet.create({
       transform: [{rotate: '180deg'}],
     },
     imageUp: {
+      transform: [{rotate: '90deg'}],
     },
     imageDown: {
       transform: [{rotate: '270deg'}],
     },
     small: {
-      height: 30,
-      width: 30,
-    },
-    medium: {
       height: 20,
       width: 20,
+    },
+    medium: {
+      height: 30,
+      width: 30,
     },
     large: {
       height: 15,
