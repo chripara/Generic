@@ -67,13 +67,13 @@ export default function App() {
     } else {
 
         return (
-            <View style={{ alignItems: 'center', marginTop: 100 }}>
-                <CalendarInput date={date} setDate={setDate} />
-                <Text>{date.toString()}</Text>
-            </View>
-            // <NavigationContainer>
-            //     <MainTabNavigator />                         
-            // </NavigationContainer>
+            // <View style={{ alignItems: 'center', marginTop: 100 }}>
+            //     <CalendarInput date={date} setDate={setDate} />
+            //     <Text>{date.toString()}</Text>
+            // </View>
+            <NavigationContainer>
+                <MainTabNavigator />                         
+            </NavigationContainer>
         )
     }
 }
