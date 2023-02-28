@@ -29,7 +29,9 @@ export const List = ({ contentPair, numberOfPairs }) => {
                             <Card contentPair={pairs} hasDescription={true} numberOfPairs={6} /> 
                         </View>
                         <View style={styles.changeHotelCard}>
-                            <ArrowButton 
+                            <ArrowButton                                 
+                                size={"medium"}
+                                attitude={"left"}
                                 onClick={() => {
                                     currIndex.current.scrollTo({ x: width * (index-1) });
                                     // this.scroll.scrollTo({ x: width * index });
@@ -37,6 +39,8 @@ export const List = ({ contentPair, numberOfPairs }) => {
                             />
                             <Text style={defaultStyles.text36White}>#{index+1}</Text>
                             <ArrowButton isRight={true} 
+                                size={"medium"}
+                                attitude={"right"}
                                 onClick={() => {
                                     currIndex.current.scrollTo({ x: width * (index+1) });
                                 }}
@@ -65,7 +69,7 @@ const styles = StyleSheet.create({
         marginVertical: 5
     },
     changeHotelCard: {
-        width: width*0.7,
+        width: width*0.75,
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'space-between',
