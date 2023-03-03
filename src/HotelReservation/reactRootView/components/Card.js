@@ -7,25 +7,26 @@ const width = Dimensions.get('window').width;
 
 export const Card = ({ contentPair, numberOfPairs, hasDescription }) => {
 
-    const scrollViewRef = useRef();
-
+    const scrollViewRef = useRef(); 
     var scrollYDistance = 0;
-    const step = 10;
+    const step = 20;
 
-    const changeScrollViewContent = (change) => {
+    const changeScrollViewContent = (change, text) => {
         if(change === "up") {
-            scrollViewRef.current.scrollTo({
-                y: scrollYDistance + step 
+            scrollViewRef.current.scrollTo({                
+                y: scrollYDistance 
             })
-            scrollYDistance = scrollYDistance + step 
-            console.log(scrollYDistance);
+            if(scrollYDistance > 0){
+                scrollYDistance -= step }
+            //console.log(scrollYDistance);
         }
         if(change === "down"){
-            scrollViewRef.current.scrollTo({
-                y: scrollYDistance - step 
+            scrollViewRef.current.scrollTo({                
+                y: scrollYDistance 
             })
-            scrollYDistance = scrollYDistance - step 
-            console.log(scrollYDistance);
+            if((text.length /36-7)*20 > scrollYDistance){
+                scrollYDistance += step }
+            //console.log(scrollYDistance);
         }
     }
 
@@ -38,23 +39,32 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription }) => {
                         {
                             (index === 5 && hasDescription )
                             ?                        
-                                <View style={{height: 115, width: width*0.7}}>
-                                    <ScrollView 
-                                        style={{height: 115, width: width*0.65}}
+                                <View style={{height: 105, width: width*0.7}}>
+                                    <ScrollView
+                                        style={{height: 105, width: width*0.65}}
                                         ref={scrollViewRef}
                                     >
-                                        <Text style={{ ...styles.textBorder, ...defaultStyles.text16Black, ...styles.descriptionStyle}}>{content.text}</Text>
+                                        <Text style={{ 
+                                            ...styles.textBorder,
+                                            ...defaultStyles.text16Black
+                                            }}>
+                                                {content.text}                                                
+                                        </Text>
                                     </ScrollView>
                                     <View style={styles.arrowsView}>
-                                        <ArrowButton 
+                                        <ArrowButton
                                             attitude={"up"}
                                             size={"small"}
-                                            onClick={changeScrollViewContent("up")}
+                                            onClick={() => {
+                                                changeScrollViewContent("up", content.text)
+                                            }}
                                         />
                                         <ArrowButton 
                                             attitude={"down"}
                                             size={"small"}
-                                            onClick={changeScrollViewContent("down")}
+                                            onClick={() => {
+                                                changeScrollViewContent("down", content.text)
+                                            }}
                                         />
                                     </View>    
                                 </View>
@@ -83,9 +93,6 @@ const styles = StyleSheet.create({
     textBorder: {
         marginVertical: 5
     },
-    descriptionStyle: {
-        height: 115
-    },
     withoutDescription: {
         height: 22
     },
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
         height: 115,
         justifyContent: 'space-between',
         position: 'absolute',
-        top: width * 0.01,
-        right:  - width * 0.001
+        top: - width * 0.01,
+        right: - width * 0.001
     }
 });
