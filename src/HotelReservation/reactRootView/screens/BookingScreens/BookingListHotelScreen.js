@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
@@ -139,16 +139,30 @@ const content = [
     ]
 ];
 
-export const BookingListHotelScreen = ({ navigation }) => (
+export const BookingListHotelScreen = ({ navigation }) => {
+    
+    const [state, setState] = useState(content);
+
+    const deleteFunc = (index) => {
+        content.splice(index, 1);
+        console.log('asdfasdasdfasdfasasddfasdfasdfadfasdff');
+        console.log(content.length);
+        
+        setState(content);
+        console.log(content);
+        console.log(state);
+    }
+
+    return(
     <MainScreen backgroundColor={colors.secondary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
-                    <Text style={defaultStyles.text36White}>Bookings</Text>                
+                <Text style={defaultStyles.text36White}>Bookings</Text>                
             </View>
-            <List contentPair={content} numberOfPairs={5}  />
+            <List contentPair={state} numberOfPairs={5} hasDelete={true} deleteFunc={deleteFunc}/>
         </View>
     </MainScreen>
-);
+)};
 
 const styles = StyleSheet.create({
     container: {

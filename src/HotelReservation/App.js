@@ -10,7 +10,6 @@ import { MainTabNavigator } from "./reactRootView/tabNavigators/MainTabNavigator
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Calendar } from "./reactRootView/components/Calendar";
 import { CalendarInput } from "./reactRootView/components/CalendarInput";
-import { Example } from "./reactRootView/components/Example";
 
 // function HomeScreen() {
 //     return (
