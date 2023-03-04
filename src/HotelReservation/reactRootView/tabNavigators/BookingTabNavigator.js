@@ -4,6 +4,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ProfileStack } from "../stackNavigators/ProfileStack";
 import { BookingStack } from "../stackNavigators/BookingStack";
 import { BookingListHotelScreen } from "../screens/BookingScreens/BookingListHotelScreen";
+import { BookingCreateScreen } from "../screens/BookingScreens/BookingCreateScreen";
+import { BookingUpdateScreen } from "../screens/BookingScreens/BookingUpdateScreen";
 import { HotelStack } from "../stackNavigators/HotelStack";
 import colors from "../config/colors";
 
@@ -53,11 +55,11 @@ export const BookingTabNavigator = () => (
                     tabBarIcon: ({ color, size }) => (
                         <Image 
                             source={require("../../assets/tabIcons/add.png")} 
-                            style={{ width: 40, height: 40 }} 
+                            style={{ width: 40, height: 40 }}
                         />
                     )}
                 }
-                component={BookingStack}
+                component={BookingCreateScreen}
             />
             <Tab.Screen 
                 name="Update" 
@@ -69,16 +71,7 @@ export const BookingTabNavigator = () => (
                         />
                     )}
                 }
-                component={HotelStack}
-            />  
-            <Tab.Screen 
-                name="Delete" 
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <Image source={require("../../assets/tabIcons/delete.png")} style={{ width: 40, height: 40 }} />
-                    )}
-                }
-                component={HotelStack}
-            />            
+                component={BookingUpdateScreen}
+            />         
         </Tab.Navigator>
 );

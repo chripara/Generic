@@ -72,7 +72,7 @@ export const MainTabNavigator = () => (
             })}                         
         >
             <Tab.Screen 
-                name="Profile"  
+                name="ProfileStack"  
                 component={ProfileStack}
                 screenOptions={{ headerShown: false }}
                 options={{
