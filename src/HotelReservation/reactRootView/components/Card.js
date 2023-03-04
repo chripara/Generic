@@ -2,42 +2,48 @@ import { React, useRef } from  'react';
 import { Text, View, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import defaultStyles from "../config/defaultStyles";
 import { ArrowButton } from './ArrowButton';
+import { DeleteIcon } from './DeleteIcon';
 
 const width = Dimensions.get('window').width;
 
-export const Card = ({ contentPair, numberOfPairs, hasDescription }) => {
+export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, hasDelete }) => {
 
-    const scrollViewRef = useRef(); 
+    const scrollViewRef = useRef();
     var scrollYDistance = 0;
     const step = 20;
 
     const changeScrollViewContent = (change, text) => {
-        if(change === "up") {
+        if(change === "up"){
             scrollViewRef.current.scrollTo({                
                 y: scrollYDistance 
             })
             if(scrollYDistance > 0){
-                scrollYDistance -= step }
-            //console.log(scrollYDistance);
+                scrollYDistance -= step }            
         }
         if(change === "down"){
             scrollViewRef.current.scrollTo({                
                 y: scrollYDistance 
             })
-            if((text.length /36-7)*20 > scrollYDistance){
-                scrollYDistance += step }
-            //console.log(scrollYDistance);
+            if((text.length /36-6)*20 > scrollYDistance){
+                scrollYDistance += step }            
         }
     }
 
     return(
         <View style={{  ...styles.container, ...hasDescription ? { height: numberOfPairs*65+80 } : { height: numberOfPairs*65 } }}>
+            {
+                hasDelete
+                &&
+                <View style={{ position: 'absolute', top: 17, right: 17 }}>
+                    <DeleteIcon onClick={deleteFunc}/>
+                </View>
+            }            
             {contentPair.map((content, index) => {
                 return (
                     <View>
                         <Text style={{ ...styles.textBorder, ...defaultStyles.text16White}}>{content.title}</Text>
                         {
-                            (index === 5 && hasDescription )
+                            (index === numberOfPairs - 1 && hasDescription )
                             ?                        
                                 <View style={{height: 105, width: width*0.7}}>
                                     <ScrollView

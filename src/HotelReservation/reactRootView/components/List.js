@@ -6,17 +6,19 @@ import { Card } from './Card';
 
 const width = Dimensions.get('window').width;
 
-export const List = ({ contentPair, numberOfPairs }) => {
+export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc }) => {
 
     const currIndex = useRef();
-    
-    // currIndex.current.scrollToEnd();
 
+    // const deleteFunc = (index) => {
+        
+    // }
+    
     return (
         <ScrollView 
             horizontal={true}
             showsHorizontalScrollIndicator={false} 
-            style={{ height: numberOfPairs*70+220 }}
+            style={{ height: numberOfPairs*70+220, }}
             contentContainerStyle={styles.scrollViewContainer}
             scrollEnabled={false}
             ref={currIndex}
@@ -26,15 +28,20 @@ export const List = ({ contentPair, numberOfPairs }) => {
                 <View style={{justifyContent: 'center', alignItems: 'center', width: width}}>        
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <View  style={{ ...styles.container, flexDirection: 'column' }}>
-                            <Card contentPair={pairs} hasDescription={true} numberOfPairs={6} /> 
-                        </View>
+                            { 
+                                hasDelete
+                                ?
+                                <Card contentPair={pairs} hasDescription={true} numberOfPairs={6} hasDelete={true} deleteFunc={() => deleteFunc(index)}/> 
+                                :
+                                <Card contentPair={pairs} hasDescription={true} numberOfPairs={6}/> 
+                            }
+                        </View>                        
                         <View style={styles.changeHotelCard}>
                             <ArrowButton                                 
                                 size={"medium"}
                                 attitude={"left"}
                                 onClick={() => {
                                     currIndex.current.scrollTo({ x: width * (index-1) });
-                                    // this.scroll.scrollTo({ x: width * index });
                                 }}
                             />
                             <Text style={defaultStyles.text36White}>#{index+1}</Text>
@@ -51,8 +58,7 @@ export const List = ({ contentPair, numberOfPairs }) => {
         )
         })}
         </ScrollView>
-        )
-
+    )
 };
 
 
