@@ -36,7 +36,7 @@ export const ProfileScreen = ({ navigation }) => (
             <View style={styles.viewText}>
                 <Text style={defaultStyles.text36White}>Profile</Text>                
             </View>
-            <Card contentPair={content} numberOfPairs={5}/>           
+            <Card contentPair={content} numberOfPairs={5} deleteFunc={undefined}/>           
             <EllipseButtonPrimary
                 marginTop={"8%"}
                 name={"Logout"}
