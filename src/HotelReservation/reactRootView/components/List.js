@@ -11,9 +11,11 @@ export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc }) => {
     const currIndex = useRef();
     
     const [randoNum, setRandoNum] = useState(0);
+    
     const handleDeleteFromList = (index) => {
         deleteFunc(index);
         setRandoNum(Math.random());
+        currIndex.current.scrollTo({ x: width * (index-1) });    
     }
 
     return (

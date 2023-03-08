@@ -145,10 +145,7 @@ export const BookingListHotelScreen = ({ navigation }) => {
 
     const deleteFunc = (index) => {
         content.splice(index, 1);
-        console.log('asdfasdasdfasdfasasddfasdfasdfadfasdff');
-        console.log('length: ', state.length);
-        setState(content);
-        console.log('index: ', index);
+        setState(content);        
     }
  
     return(
