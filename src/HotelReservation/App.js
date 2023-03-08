@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MainTabNavigator } from "./reactRootView/tabNavigators/MainTabNavigator";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Calendar } from "./reactRootView/components/Calendar";
-import { CalendarInput } from "./reactRootView/components/CalendarInput";
+import { DualSelector } from "./reactRootView/components/DualSelector";
 
 // function HomeScreen() {
 //     return (
@@ -101,7 +101,14 @@ export default function App() {
 
         return (
             // <View style={{ alignItems: 'center', marginTop: 100 }}>
-            //     <Example contentPair={contents} deleteFunc={deleteFunc}/>
+            //     <DualSelector rightPage={
+            //         <View> 
+            //             <EllipseButtonSecondary name={"asdf"}/>
+            //             <Text>asdfsadfaasadfasdf</Text>
+            //         </View>
+            //         } 
+            //     leftPage={
+            //     <Text>asd11123412344413fqewrgqereg4adfaasadfasdf</Text>}/>
             // </View>
             <NavigationContainer>
                 <MainTabNavigator />
