@@ -18,14 +18,14 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
                 y: scrollYDistance 
             })
             if(scrollYDistance > 0){
-                scrollYDistance -= step }            
+                scrollYDistance -= step }
         }
         if(change === "down"){
             scrollViewRef.current.scrollTo({                
-                y: scrollYDistance 
+                y: scrollYDistance
             })
             if((text.length /36-6)*20 > scrollYDistance){
-                scrollYDistance += step }            
+                scrollYDistance += step }
         }
     }
 
@@ -34,7 +34,7 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
             {
                 hasDelete
                 &&
-                <View style={{ position: 'absolute', top: 17, right: 17 }}>
+                <View style={{ position: 'absolute', top: 20, right: 17 }}>
                     <DeleteIcon onClick={deleteFunc}/>
                 </View>
             }            
@@ -83,7 +83,6 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
         </View>   
     )
 };
-
 
 const styles = StyleSheet.create({
     container: {

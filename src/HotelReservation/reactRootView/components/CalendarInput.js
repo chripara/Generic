@@ -37,7 +37,6 @@ export const CalendarInput = ({ date, setDate }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: "90%",
         height: 45,
         flexDirection: 'row',
         justifyContent: "center"        
