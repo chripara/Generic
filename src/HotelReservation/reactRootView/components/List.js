@@ -10,11 +10,11 @@ export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc }) => {
     
     const currIndex = useRef();
     
-    const [randoNum, setRandoNum] = useState(0);
+    const [randomNum, setRandomNum] = useState(0);
     
     const handleDeleteFromList = (index) => {
         deleteFunc(index);
-        setRandoNum(Math.random());
+        setRandomNum(Math.random());
         currIndex.current.scrollTo({ x: width * (index-1) });    
     }
 
@@ -34,9 +34,9 @@ export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc }) => {
                         { 
                             hasDelete
                             ?
-                            <Card contentPair={pairs} hasDescription={true} numberOfPairs={6} hasDelete={true} deleteFunc={() => handleDeleteFromList(index)}/> 
+                            <Card contentPair={pairs} hasDescription={true} numberOfPairs={numberOfPairs} hasDelete={true} deleteFunc={() => handleDeleteFromList(index)}/> 
                             :
-                            <Card contentPair={pairs} hasDescription={true} numberOfPairs={6}/> 
+                            <Card contentPair={pairs} hasDescription={true} numberOfPairs={numberOfPairs}/> 
                         }
                     </View>
                     <View style={styles.changeHotelCard}>

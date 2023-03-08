@@ -30,7 +30,7 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
     }
 
     return(
-        <View style={{  ...styles.container, ...hasDescription ? { height: numberOfPairs*65+80 } : { height: numberOfPairs*65 } }}>
+        <View style={{ ...styles.container, ...hasDescription ? { height: numberOfPairs*65+80 } : { height: numberOfPairs*65 } }}>
             {
                 hasDelete
                 &&
@@ -68,7 +68,7 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
                                         <ArrowButton 
                                             attitude={"down"}
                                             size={"small"}
-                                            onClick={() => {
+                                            onClick={() => { 
                                                 changeScrollViewContent("down", content.text)
                                             }}
                                         />
