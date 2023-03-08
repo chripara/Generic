@@ -146,13 +146,11 @@ export const BookingListHotelScreen = ({ navigation }) => {
     const deleteFunc = (index) => {
         content.splice(index, 1);
         console.log('asdfasdasdfasdfasasddfasdfasdfadfasdff');
-        console.log(content.length);
-        
+        console.log('length: ', state.length);
         setState(content);
-        console.log(content);
-        console.log(state);
+        console.log('index: ', index);
     }
-
+ 
     return(
     <MainScreen backgroundColor={colors.secondary}>
         <View style={styles.container}>
@@ -166,8 +164,7 @@ export const BookingListHotelScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: "3%",
+        flex: 1
     },
     viewText: {
         position: "relative",

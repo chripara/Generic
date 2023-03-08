@@ -53,12 +53,45 @@ import { CalendarInput } from "./reactRootView/components/CalendarInput";
 //     </NavigationContainer>
 // );
 
+const content = [
+    {
+        title: "Hotel:",
+        text: "Lake Place Inn 3",            
+    },
+    {
+        title: "Hotel Address:",
+        text: "36 Parker StreetOxnard, CA 93035",   
+    },
+    {
+        title: "Room Number:",
+        text: "506",   
+    },
+    {
+        title: "Dates:",
+        text: "30-03-2023 - 05-04-2024",   
+    },
+    {
+        title: "Cost:",
+        text: "300 €",   
+    }];
+
 export default function App() {
 
-    const [date, setDate] = useState(new Date());
-    const counter22 = 0;
-    var tempDate = new Date();
-
+    // const [contents, setContent] = useState(content);
+    // const counter22 = 0;
+    // var tempDate = new Date();
+    // // console.log(content);
+    // const deleteFunc = (index) => {
+    //     content.splice(index, 1);
+    //     // console.log('asdfasdasdfasdfasasddfasdfasdfadfasdff');
+    //     // console.log('length: ', length);
+    //     // setState(content);
+    //     setContent([...contents]);
+    //     setContent(content);
+    //     console.log('index: ', index);
+    //     console.log('contents: ', contents);
+    // }
+    
     const [fontsLoaded] = useFonts({
         "Italiana-Regular": require("./assets/fonts/Italiana-Regular.ttf"),
     });
@@ -68,11 +101,10 @@ export default function App() {
 
         return (
             // <View style={{ alignItems: 'center', marginTop: 100 }}>
-            //     <CalendarInput date={date} setDate={setDate} />
-            //     {/* <Example/> */}
+            //     <Example contentPair={contents} deleteFunc={deleteFunc}/>
             // </View>
             <NavigationContainer>
-                <MainTabNavigator />                         
+                <MainTabNavigator />
             </NavigationContainer>
         )
     }
