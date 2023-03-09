@@ -6,12 +6,13 @@ import { Calendar } from './Calendar';
 
 const width = Dimensions.get('window').width;
 
-export const CalendarInput = ({ date, setDate }) => {
+export const CalendarInput = ({ date, setDate, hasCalendarActive, setHasCalendarActive, disableAllCalendars }) => {
 
-    const [isCalendarActive, setCalendarActive] = useState(false);
+    // const [isCalendarActive, setCalendarActive] = useState(false);
         
     return (
         <View>
+            {console.log(hasCalendarActive)}
             <View style={styles.container}>
                 <Text 
                     style={defaultStyles.textInput} 
@@ -19,14 +20,16 @@ export const CalendarInput = ({ date, setDate }) => {
                     {date.getDate()} - {date.getMonth()+1} - {date.getFullYear()}
                 </Text>
                 <TouchableOpacity
-                    onPress={() => {
-                        setCalendarActive(!isCalendarActive)
-                        console.log(isCalendarActive)}}>
+                    onPress={() => {                       
+                        disableAllCalendars();
+                        if(!hasCalendarActive)
+                            setHasCalendarActive(true);
+                        console.log(hasCalendarActive);}}>
                     <Image source={require('../../assets/generalIcons/calendar.png')} style={styles.image} />
                 </TouchableOpacity>                
             </View>   
             {
-                isCalendarActive &&      
+                hasCalendarActive &&      
                 <View style={styles.calendarView}>            
                     <Calendar date={date} setDate={setDate}/>
                 </View>
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         marginTop: width * 0.12,
-        zIndex: 1,
+        zIndex: 10,
         elevation: 1
     }
 });
