@@ -45,9 +45,9 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
                         {
                             (index === numberOfPairs - 1 && hasDescription )
                             ?                        
-                                <View style={{height: 105, width: width*0.7}}>
+                                <View style={{height: 105, width: width * 0.7}}>
                                     <ScrollView
-                                        style={{height: 105, width: width*0.65}}
+                                        style={{height: 105, width: width * 0.65}}
                                         ref={scrollViewRef}
                                     >
                                         <Text style={{ 
