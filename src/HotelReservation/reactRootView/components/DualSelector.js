@@ -5,7 +5,7 @@ import defaultStyles from "../config/defaultStyles";
 
 const width = Dimensions.get('window').width;
 
-export const DualSelector = ({ leftPage, rightPage}) => {
+export const DualSelector = ({ leftPage, rightPage }) => {
     const [isRight, setIsRight] = useState(false);
 
     const changePage = () => {
