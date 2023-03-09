@@ -3,7 +3,7 @@ import { Text, View, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ProfileStack } from "../stackNavigators/ProfileStack";
 import { BookingTabNavigator } from "../tabNavigators/BookingTabNavigator";
-import { HotelStack } from "../stackNavigators/HotelStack";
+import { HotelTabNavigator } from "../tabNavigators/HotelTabNavigator";
 import colors from "../config/colors";
 
 function HomeScreen() {
@@ -98,7 +98,7 @@ export const MainTabNavigator = () => (
                         <Image source={require("../../assets/mainTabIcons/HotelIcon.png")} style={{ width: 40, height: 40 }} />
                     )}
                 }
-                component={HotelStack}
+                component={HotelTabNavigator}
             />            
         </Tab.Navigator>
 );

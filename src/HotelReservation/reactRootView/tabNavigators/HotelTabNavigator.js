@@ -59,7 +59,7 @@ export const HotelTabNavigator = () => {
                     />
                 )}
             }
-            component={HotelListScreen}
+            component={HotelSearchScreen}
         />           
     </Tab.Navigator>
     )
