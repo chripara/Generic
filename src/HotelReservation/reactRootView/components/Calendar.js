@@ -6,7 +6,7 @@ import colors  from '../config/colors';
 
 const width = Dimensions.get('window').width;
 
-export const Calendar = ({ date, setDate }) => {
+export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
     var tempDate = new Date();
     tempDate.setMonth(date.getMonth());
     tempDate.setFullYear(date.getFullYear());
@@ -180,36 +180,42 @@ export const Calendar = ({ date, setDate }) => {
                             tempDate.setDate(dates[0]) ;
                             setDate(tempDate);
                             }}>
+                                {hasBookings && (dates[0] > 7) && <View style={{...styles.viewCircleStyles}} />}
                             <Text style={{...styles.cubeStyle, ...(dates[0] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[0]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[1] > 7} onPress={() => {
                             tempDate.setDate(dates[1]) ;
                             setDate(tempDate);
                             }}>
+                                {hasBookings && (dates[1] > 7) && <View style={{...styles.viewCircleStyles}} />}
                             <Text style={{...styles.cubeStyle, ...(dates[1] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[1]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[2] > 7} onPress={() => {
                             tempDate.setDate(dates[2]) ;
                             setDate(tempDate);
                             }}>
+                                {hasBookings && (dates[2] > 7) && <View style={{...styles.viewCircleStyles}} />}
                             <Text style={{...styles.cubeStyle, ...(dates[2] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[2]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[3] > 7} onPress={() => {
                             tempDate.setDate(dates[3]) ;
                             setDate(tempDate);
                             }}>
+                                {hasBookings && (dates[3] > 7) && <View style={{...styles.viewCircleStyles}} />}
                             <Text style={{...styles.cubeStyle, ...(dates[3] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[3]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[4] > 7} onPress={() => {
                             tempDate.setDate(dates[4]) ;
                             setDate(tempDate);
                             }}>
+                                {hasBookings && (dates[4] > 7) && <View style={{...styles.viewCircleStyles}} />}
                             <Text style={{...styles.cubeStyle, ...(dates[4] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[4]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[5] > 7} onPress={() => {
                             tempDate.setDate(dates[5]) ;
                             setDate(tempDate);
                             }}>
+                                {hasBookings && (dates[5] > 7) && <View style={{...styles.viewCircleStyles}} />}
                             <Text style={{...styles.cubeStyle, ...(dates[5] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[5]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
@@ -401,8 +407,6 @@ export const Calendar = ({ date, setDate }) => {
     );
 }
 
-
-
 const styles = StyleSheet.create({
     container: {
         width: width * 0.62,
@@ -447,5 +451,13 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
         width: 30,
         height: 30
+    },
+    viewCircleStyles: {
+        position: 'relative',
+        width: 12,
+        height: 12,
+        borderRadius: 6,
+        opacity: 0.4,
+        backgroundColor: 'green'
     }
 });
