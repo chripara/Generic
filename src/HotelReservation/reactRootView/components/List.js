@@ -6,7 +6,7 @@ import { Card } from './Card';
 
 const width = Dimensions.get('window').width;
 
-export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc }) => {
+export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc, hasDescription }) => {
     
     const currIndex = useRef();
     
@@ -22,7 +22,7 @@ export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc }) => {
         <ScrollView 
             horizontal={true}
             showsHorizontalScrollIndicator={false} 
-            style={{ height: numberOfPairs*70+220, width: width}}
+            style={{ ...hasDescription ? {height: numberOfPairs*75 + 80} :{ height: numberOfPairs*75} , width: width}}
             contentContainerStyle={styles.scrollViewContainer}
             scrollEnabled={false}
             ref={currIndex}
@@ -34,9 +34,9 @@ export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc }) => {
                         { 
                             hasDelete
                             ?
-                            <Card contentPair={pairs} hasDescription={true} numberOfPairs={numberOfPairs} hasDelete={true} deleteFunc={() => handleDeleteFromList(index)}/> 
+                            <Card contentPair={pairs} numberOfPairs={numberOfPairs} hasDescription={true} hasDelete={true} deleteFunc={() => handleDeleteFromList(index)}/> 
                             :
-                            <Card contentPair={pairs} hasDescription={true} numberOfPairs={numberOfPairs}/> 
+                            <Card contentPair={pairs} numberOfPairs={numberOfPairs}/> 
                         }
                     </View>
                     <View style={styles.changeHotelCard}>
