@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Dimensions } from "react-native";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import defaultStyles from "../../config/defaultStyles";
 import { List } from "../../components/List";
+
+const width = Dimensions.get('window').width;
 
 const content = [
     [
@@ -25,7 +27,7 @@ const content = [
             text: "31572",   
         },
         {
-            title: "PhoneNumber:",
+            title: "Phone Number:",
             text: "941-812-2553",   
         },
         {
@@ -59,7 +61,7 @@ const content = [
             text: "31572",   
         },
         {
-            title: "PhoneNumber:",
+            title: "Phone Number:",
             text: "941-812-2553",   
         },
         {
@@ -93,7 +95,7 @@ const content = [
             text: "31572",   
         },
         {
-            title: "PhoneNumber:",
+            title: "Phone Number:",
             text: "941-812-2553",   
         },
         {
@@ -127,7 +129,7 @@ const content = [
             text: "31572",   
         },
         {
-            title: "PhoneNumber:",
+            title: "Phone Number:",
             text: "941-812-2553",   
         },
         {
@@ -144,7 +146,7 @@ const content = [
         }
     ]
 ]    
-
+ 
 export const HotelListScreen = ({ navigation }) => {
 
     const [state, setState] = useState(content);
@@ -160,15 +162,14 @@ export const HotelListScreen = ({ navigation }) => {
                 <View style={styles.viewText}>
                     <Text style={defaultStyles.text36White}>Hotels</Text>
                 </View>
-                <List contentPair={content} numberOfPairs={8} hasDelete={true} deleteFunc={deleteFunc}/>
+                <List contentPair={content} numberOfPairs={8} hasDelete={true} deleteFunc={deleteFunc} hasDescription={true}/>
                 <View style={{ marginBottom: 20 }}>
-                    <EllipseButtonPrimary name={"Select Hotel"} onClick={() => {console.log("aasdfasdf")}} marginTop={-50}/> 
+                    <EllipseButtonPrimary name={"Select Hotel"} onClick={() => {console.log("aasdfasdf")}} marginTop={width * 0.03}/> 
                 </View>
             </View>
         </MainScreen>
     )
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -176,7 +177,6 @@ const styles = StyleSheet.create({
     },
     viewText: {
         position: "relative",
-        marginBottom: "-10%",
         paddingHorizontal: "5%",
     },
 });

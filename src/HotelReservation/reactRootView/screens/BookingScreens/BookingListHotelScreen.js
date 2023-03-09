@@ -154,7 +154,7 @@ export const BookingListHotelScreen = ({ navigation }) => {
             <View style={styles.viewText}>
                 <Text style={defaultStyles.text36White}>Bookings</Text>                
             </View>
-            <List contentPair={state} numberOfPairs={5} hasDelete={true} deleteFunc={deleteFunc}/>
+            <List contentPair={state} numberOfPairs={6} hasDelete={true} deleteFunc={deleteFunc} hasDescription={true}/>
         </View>
     </MainScreen>
 )};
