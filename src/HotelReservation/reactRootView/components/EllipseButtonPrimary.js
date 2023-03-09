@@ -1,7 +1,9 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, Text, Dimensions } from "react-native";
 import colors from "../config/colors";
 import defaultStyles from "../config/defaultStyles";
+
+const width = Dimensions.get('window').width;
 
 export const EllipseButtonPrimary = ({ onClick, name, marginTop }) => {
     return (
@@ -16,7 +18,7 @@ export const EllipseButtonPrimary = ({ onClick, name, marginTop }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: "75%",
+        width: width * 0.7,
         height: 45,
         backgroundColor: colors.primary,
         zIndex: 1,
