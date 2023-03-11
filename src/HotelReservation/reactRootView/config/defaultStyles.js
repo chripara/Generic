@@ -14,6 +14,18 @@ export default {
         fontSize: 20,
         color: colors.black,
     },
+    text24Black: {
+        textAlign: "center",
+        fontFamily: "Italiana-Regular",
+        fontSize: 24,
+        color: colors.black,
+    },
+    text24White: {
+        textAlign: "center",
+        fontFamily: "Italiana-Regular",
+        fontSize: 24,
+        color: colors.white,
+    },
     text14White: {
         textAlign: "right",
         fontFamily: "Italiana-Regular",
