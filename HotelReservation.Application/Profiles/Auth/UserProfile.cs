@@ -8,7 +8,8 @@ namespace HotelReservation.Application.Profiles
     {
         public UserProfile()
         {
-            var map = CreateMap<RegisterDto, User>().ReverseMap();
+            CreateMap<RegisterDto, User>().ReverseMap();
+            CreateMap<UserDto, User>().ReverseMap();
         }
     }
 }
