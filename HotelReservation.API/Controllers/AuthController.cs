@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HotelReservation.AppConstants;
-using HotelReservation.Application.AppConstants;
 using HotelReservation.Application.Dto.Auth;
 using HotelReservation.Application.Services.Email;
 using HotelReservation.Application.Services.Phone;
@@ -431,20 +430,21 @@ namespace HotelReservation.API.Controllers
             Log.Information("New email verified successfully.");
             return Ok("New email verified successfully.");
         }
-
+        
         [HttpPost]
         [Route("SeedAdminAccount")]
         public async Task<IActionResult> SeedAdminAccount()
         {
-            if (_roleManager.FindByNameAsync(RoleConstants.RoleAdmin).Result.Id == null)
+           
+            if (_roleManager.FindByNameAsync(RoleConstants.RoleAdmin).Result == null)
             {
                 await _roleManager.CreateAsync(new Role
                 {
                     Name = RoleConstants.RoleAdmin
                 });
             }
-
-            if (_roleManager.FindByNameAsync(RoleConstants.RoleUser).Result.Id == null)
+            
+            if (_roleManager.FindByNameAsync(RoleConstants.RoleUser).Result == null)
             {
                 await _roleManager.CreateAsync(new Role
                 {
@@ -452,7 +452,7 @@ namespace HotelReservation.API.Controllers
                 });
             }
 
-            if (_userManager.FindByNameAsync("admin").Result.Id == null)
+            if (_userManager.FindByNameAsync("admin").Result == null)
             {
                 await _userManager.CreateAsync(new User
                 {
@@ -465,9 +465,9 @@ namespace HotelReservation.API.Controllers
                     PhoneNumberConfirmed = true,
                     Location = "Admin Location",
                 }, "123$Qwer");
-
+            
                 var user = await _userManager.FindByNameAsync("admin");
-
+            
                 await _userManager.AddToRoleAsync(user, RoleConstants.RoleAdmin);
             }
 

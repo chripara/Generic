@@ -37,7 +37,7 @@ namespace HotelReservation.API.Controllers
         public IActionResult GetAllHotels()
         {
             Log.Information("GetAllHotels");
-            var hotels = _context.Hotels.ToList();
+            var hotels = _mapper.Map<List<HotelDto>>(_context.Hotels.ToList());
 
             return Ok(hotels);
         }

@@ -3,6 +3,7 @@ using HotelReservation.AppConstants;
 using HotelReservation.Application.AppConstants;
 using HotelReservation.Application.Dto.Booking;
 using HotelReservation.Application.Dto.Bookings;
+using HotelReservation.Application.Dto.General;
 using HotelReservation.Domain.Models;
 using HotelReservation.Domain.Models.Auth;
 using HotelReservation.Persistence;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json.Linq;
 using Serilog;
 
@@ -21,13 +23,15 @@ namespace HotelReservation.API.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
 
         public BookingController(
             AppDbContext context,
-
+            UserManager<User> userManager,
             IMapper mapper
             ) 
         {
+            _userManager = userManager;
             _mapper = mapper;
             _context = context; 
         }
@@ -35,18 +39,21 @@ namespace HotelReservation.API.Controllers
         [HttpGet]
         [Route("GetBooking")]
         [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleUser)]
-        public async Task<IActionResult> GetBooking(GetBookingDto dto)
+        public async Task<IActionResult> GetBooking([FromQuery] GetBookingDto dto)
         {
             Log.Information("GetBookingDto: {@GetBookingDto}", FilterDto(JObject.FromObject(dto)));
 
             var booking = await _context.Bookings.Include(i => i.User).FirstOrDefaultAsync(f => f.Id == dto.Id);
+            var bookingDto = _mapper.Map<GetBookingsDto>(booking);
 
             var loggedUser = User.Identity.Name;
 
             if (booking.User.UserName != loggedUser)
             
-            Log.Information("Bookings : {@Booking}", FilterDto(JObject.FromObject(booking)));
-            return Ok(booking);
+            Log.Information("Bookings : {@GetBookingsDto} \n Requested by User: {@Username}", FilterDto(JObject.FromObject(bookingDto)), loggedUser);
+
+            
+            return Ok(bookingDto);
         }
 
         [HttpDelete]
@@ -57,6 +64,11 @@ namespace HotelReservation.API.Controllers
             Log.Information("DeleteBookingDto: {@DeleteBookingDto}", FilterDto(JObject.FromObject(dto)));
             
             var booking = await _context.Bookings.FindAsync(dto.Id);
+            
+            if (booking == null)
+            {
+                return NotFound();
+            }
             
             _context.Bookings.Remove(booking);
             await _context.SaveChangesAsync();
@@ -74,11 +86,23 @@ namespace HotelReservation.API.Controllers
             
             var newBooking = _mapper.Map<Booking>(dto);
 
-            _context.Bookings.AddAsync(newBooking);
-            await _context.SaveChangesAsync();
+            var bookingsForHotelRoom = await _context.HotelRooms.Include(i => i.Bookings)
+                .FirstOrDefaultAsync(f => f.Id == dto.HotelRoomId);
 
-            Log.Information("Booking Created.");
-            return Ok("Booking Created.");
+            if (IsDatesAvailable(bookingsForHotelRoom.Bookings.ToList(), new DateRangeDto
+                {
+                    EndDate = dto.EndDate,
+                    StartDate = dto.StartDate
+                }))
+            {
+                await _context.Bookings.AddAsync(newBooking);
+                await _context.SaveChangesAsync();
+
+                Log.Information("Booking Created.");
+                return Ok("Booking Created.");
+            }
+
+            return BadRequest();
         }
 
         [HttpPut]
@@ -94,17 +118,66 @@ namespace HotelReservation.API.Controllers
             {
                 return NotFound();
             }
+            
+            var bookingsForHotelRoom = await _context.HotelRooms.Include(i => i.Bookings)
+                .FirstOrDefaultAsync(f => f.Id == booking.HotelRoomId);
 
-            _context.Update(_mapper.Map<Booking>(dto));
-            await _context.SaveChangesAsync();
+            if (IsDatesAvailable(bookingsForHotelRoom.Bookings.ToList(), new DateRangeDto
+                {
+                    EndDate = dto.EndDate,
+                    StartDate = dto.StartDate
+                }))
+            {
+                _context.Update(_mapper.Map<Booking>(dto));
+                await _context.SaveChangesAsync();
 
-            return Ok();
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [Route("GetMyBookings")]
+        [HttpGet]
+        [Authorize(Roles = RoleConstants.RoleAdmin)]
+        public async Task<IActionResult> GetMyBookings()
+        {
+            var loggedUser = await  _context.Users.Include(i=> i.Bookings)
+                .Include(i=>i.Bookings).FirstOrDefaultAsync(f => f.UserName == User.Identity.Name);
+
+            //var bookings = _mapper.Map<List<GetBookingsDto>>(loggedUser.Bookings.ToList());
+
+            var getMyBookings = new List<GetMyBookingsDto>();
+            foreach (var booking in loggedUser.Bookings.ToList())
+            {
+                var bookingsWithHotelAndHotelRooms =
+                    await _context.Bookings
+                        .Include(i => i.HotelRoom)
+                        .Include(i => i.HotelRoom.Hotel)
+                        .FirstOrDefaultAsync(f => f.Id == booking.Id);
+                
+                getMyBookings.Add(
+                    new GetMyBookingsDto
+                    {
+                        Description = booking.Description,
+                        Id = booking.Id,
+                        EndDate = booking.EndDate,
+                        StartDate = booking.StartDate,
+                        Hotel = bookingsWithHotelAndHotelRooms.HotelRoom.Hotel.Name,
+                        Cost = bookingsWithHotelAndHotelRooms.HotelRoom.Cost.ToString(),
+                        HotelAddress = bookingsWithHotelAndHotelRooms.HotelRoom.Hotel.Address,
+                        RoomNumber = bookingsWithHotelAndHotelRooms.HotelRoom.RoomNumber
+                    }
+                    );
+            }
+            
+            return Ok(getMyBookings);
         }
 
         [Route("GetAllBookingsForHotel")]
-        [HttpPost]
+        [HttpGet]
         [Authorize(Roles = RoleConstants.RoleAdmin)]
-        public async Task<IActionResult> GetAllBookingsForHotelInDate(GetBookingForHotelDto dto)
+        public async Task<IActionResult> GetAllBookingsForHotelInDate([FromQuery] GetBookingForHotelDto dto)
         {
             Log.Information("GetBookingForHotelDto: {@GetBookingForHotelDto}", FilterDto(JObject.FromObject(dto)));
             
@@ -129,11 +202,12 @@ namespace HotelReservation.API.Controllers
                 {
                     var counterStart = 0;
                     var counterEnd = 0;
-                    for(var i=0; i<=RandomNumInt(); i++)
+                    var tempCountStart = RandomNumInt();
+                    
+                    for(var i=0; i<=3; i++)
                     {
-                        var tempCountStart = RandomNumInt();
-                        counterStart += tempCountStart;
-                        counterEnd += tempCountStart + RandomNumInt();
+                        counterStart += i * 3 + 1;
+                        counterEnd += i * 3 + 1 + tempCountStart ;
 
                         _context.Bookings.Add(new Booking
                         {
@@ -144,10 +218,11 @@ namespace HotelReservation.API.Controllers
                             HotelRoomId = hotelRoom.Id,
                             LastName = "asdfasdf",
                             Room = "asdf",
-                            UserId = 5,
+                            UserId = 1,
                         });
 
                         await _context.SaveChangesAsync();
+                        tempCountStart = RandomNumInt();
                     }
                 }
             }
@@ -155,11 +230,33 @@ namespace HotelReservation.API.Controllers
             return Ok();
         }
 
+        private bool IsDatesAvailable(List<Booking> bookings, DateRangeDto dto)
+        {
+            var isDatesAvailable = true;
+            foreach (var booking in bookings)
+            {
+                if(booking.StartDate.Date < dto.EndDate.Date && booking.EndDate.Date >= dto.EndDate.Date)
+                {
+                    isDatesAvailable = false;
+                }
+                if(booking.StartDate.Date <= dto.StartDate.Date && booking.EndDate.Date > dto.StartDate.Date)
+                {
+                    isDatesAvailable = false;
+                }
+                if(booking.StartDate.Date > dto.StartDate.Date && booking.EndDate.Date < dto.EndDate.Date)
+                {
+                    isDatesAvailable = false;
+                }
+            }
+
+            return isDatesAvailable;
+        }
+        
         private int RandomNumInt()
         {
             var randomGenerator = new Random();
 
-            return randomGenerator.Next(1,5);
+            return randomGenerator.Next(1,3);
         }
 
         private string FilterDto(JObject dto)
