@@ -1,9 +1,11 @@
+using System.Reflection;
 using AutoMapper;
 using HotelReservation.Application.Profiles;
 using HotelReservation.Application.Services.Email;
 using HotelReservation.Application.Services.Phone;
 using HotelReservation.Domain.Models.Auth;
 using HotelReservation.Persistence;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,8 +30,8 @@ builder.Host.UseSerilog(
     (ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)    
 );
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
 
 builder.Services.AddDbContext<AppDbContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

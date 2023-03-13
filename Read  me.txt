@@ -1,0 +1,9 @@
+For Dotnet: 
+install dotnet packages:
+Dotnet CLI .Net SDK x64 6.0+
+.NET Framework 4.8
+.NET Core CLI (dotnet-ef)
+
+For Migrations:
+Create migrations: dotnet ef migrations add InitialCreate -s .\HotelReservation.API\ -p .\HotelReservation.Persistence\
+Update Database: dotnet-ef database update -s .\HotelReservation.API\ -p .\HotelReservation.Persistence\
