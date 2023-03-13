@@ -166,7 +166,6 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
 
     const handleColor = (date) => {
         if(isBookedDate(date)){
-            console.log(true);
             return({backgroundColor:  'red'})
         }
         return({backgroundColor:  'green'})        

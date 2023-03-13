@@ -141,8 +141,6 @@ export const HotelSearchScreen = ({ navigation }) => {
     const [state, setState] = useState(0);
     const [date, setDate] = useState(new Date());
 
-    console.log(date);
-
     const handleFindAvailableRooms = (isLeft) => {
         if(isLeft){
             setLeftPage(false);
@@ -170,7 +168,7 @@ export const HotelSearchScreen = ({ navigation }) => {
                                 <EllipseButtonPrimary 
                                     name={"Find Available Rooms"} 
                                     marginTop={width * 0.3} 
-                                    onClick={() => {console.log('asdfasdfasdfasdf'); handleFindAvailableRooms(true);}}
+                                    onClick={() => {handleFindAvailableRooms(true);}}
                                 />
                             </View>
                             :    
