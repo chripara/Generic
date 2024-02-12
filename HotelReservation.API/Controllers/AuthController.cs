@@ -44,7 +44,24 @@ namespace HotelReservation.API.Controllers
             _emailSender = emailSender;
             _smsSender = smsSender;
         }
-                
+
+        private class Test1
+        {
+            public string Test { get; set; }
+        }
+
+        [HttpGet]
+        [Route("Test")]
+        public async Task<IActionResult> Test()
+        {
+            var test = new Test1
+            {
+                Test = "Test"
+            };
+            
+            return new JsonResult(test);
+        }  
+
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register(RegisterDto dto)

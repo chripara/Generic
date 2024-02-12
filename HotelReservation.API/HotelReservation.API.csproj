@@ -25,4 +25,8 @@
     <ProjectReference Include="..\HotelReservation.Application\HotelReservation.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
 </Project>

@@ -5,7 +5,8 @@ import { View, StyleSheet, Text } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import defaultStyles from "../../config/defaultStyles";
-
+import axios  from 'axios';
+import axiosCalls from '../../axiosCalls/axiosCalls';
 
 const content = [
     {
@@ -30,6 +31,39 @@ const content = [
     }
 ]
 
+// export default {
+//     getData: () =>
+//     axios({
+//         'method':'GET',
+//         'url':'https://localhost:7142/api/Auth/Test',
+//         'headers': {
+//             'content-type':'application/json'
+//         }
+//     })
+// }
+
+const handleTestGet = () => {
+    var request = axios.get('https://localhost:7142/api/Auth/Test')
+    .then((response) => {
+        console.log('Response: ', response);
+    })
+    .catch(function (error) {
+        console.log(error.toJSON());
+    })
+    .finally((res) => {
+        console.log(res);
+        console.log("finally");
+    });
+    
+    console.log("Req: ", request);
+   
+    // var req = fetch('https://localhost:7142/api/Auth/Test');
+    // var data = req.then(response => response.json());
+
+    // console.log("Data: ", data);
+        return 0;
+}
+
 export const ProfileScreen = ({ navigation }) => (    
     <MainScreen backgroundColor={colors.secondary}>
         <View style={styles.container}>
@@ -40,7 +74,7 @@ export const ProfileScreen = ({ navigation }) => (
             <EllipseButtonPrimary
                 marginTop={"8%"}
                 name={"Logout"}
-                onClick={() => navigation.navigate("Logout")}
+                onClick={() => axiosCalls.getData()}
             />
             <EllipseButtonPrimary
                 marginTop={"5%"}
