@@ -6,4 +6,9 @@ Dotnet CLI .Net SDK x64 6.0+
 
 For Migrations:
 Create migrations: dotnet ef migrations add InitialCreate -s .\HotelReservation.API\ -p .\HotelReservation.Persistence\
-Update Database: dotnet-ef database update -s .\HotelReservation.API\ -p .\HotelReservation.Persistence\
+Update Database Windows: dotnet-ef database update -s .\HotelReservation.API\ -p .\HotelReservation.Persistence\
+Update Database Ubuntu: dotnet-ef database update -s ./HotelReservation.API/ -p ./HotelReservation.Persistence/
+
+Publishing React Native:
+keytool -genkey -v -keystore your_key_name.keystore -alias your_key_alias -keyalg RSA -keysize 2048 -validity 10000
+Password: Qwer!234

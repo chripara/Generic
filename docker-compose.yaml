@@ -1,0 +1,27 @@
+﻿version: "3.4"  # optional since v1.27.0
+services:    
+
+  sql_server2022:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: sql_server2022
+    networks:
+      - backend
+    ports: # not actually needed, because the two services are on the same network
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=A&VeryComplex123Password
+  web_api:
+    image: hr2:latest
+    container_name: hrLatest
+    networks:
+      - backend
+    ports:
+      - "5000:80"
+    depends_on:
+      - sql_server2022
+    links:
+      - sql_server2022
+networks:
+  backend:
+    driver: bridge
