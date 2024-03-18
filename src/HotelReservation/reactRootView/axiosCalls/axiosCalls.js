@@ -1,24 +1,22 @@
 import axios from "axios";
-const baseUrl = 'https://localhost:7142/api';
+const baseUrl = 'http://192.168.1.200:5000/api';
 
 // Passing configuration object to axios
-axios({
-  method: 'get',
-  url: `${baseUrl}/`,
-}).then((response, req) => {
-    console.log("response,  req: ", response, req);
-});
+// axios({
+//   method: 'get',
+//   url: `${baseUrl}/`,
+// }).then((response, req) => {
+//     console.log("response,  req: ", response, req);
+// });
 
-
-// Invoking get method to perform a GET request
-axios.get(`${baseUrl}/Auth/Test`).then((response, request) => {
-    console.log("response,  req: ", response, request);
-//   console.log(response.data);
-});
-
+// // Invoking get method to perform a GET request
+// axios.get(`${baseUrl}/Auth/Test`).then((response, request) => {
+//     console.log("response,  req: ", response, request);
+// //   console.log(response.data);
+// });
 
 const instance = axios.create({
-    baseURL: 'https://192.168.1.101:7142/api',
+    baseURL: 'http://192.168.1.200:5000/api',
     headers: {
         'content-type':'application/json',
     },
@@ -27,14 +25,14 @@ const instance = axios.create({
 export default {
 
     getTestData: () =>
-    {
+    (
         axios({
             method: 'get',
             url: `${baseUrl}/Auth/Test`,
-          }).then((response,req) => {
-            console.log("response,  req: ", response, req);
-          });
-    },
+          }).then((response) => {
+            console.log("response: ", response.data)
+          })
+    ),
     getData: () =>
     instance({
         'method':'GET',

@@ -34,7 +34,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie();
 
 builder.Services.AddDbContext<AppDbContext>(o =>
-    o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection2")));
+    o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection3")));
 
 builder.Services.AddIdentity<User,Role>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddDefaultTokenProviders()
@@ -86,6 +86,30 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Console.WriteLine("Is SQL Server {0}", db.Database.IsSqlServer());
+        Console.WriteLine("Can connect {0}", 1);
+        Console.WriteLine("Can connect {0}", 2);
+        Console.WriteLine("Can connect {0}", 3);
+        //db.Database.OpenConnection();
+        //Console.WriteLine("Can connect {0}", db.Database.CanConnect());
+        // db.Database.Migrate();
+        //db.Database.CloseConnection();
+        // Console.WriteLine("Can connect {0}", db.Database.CanConnect());
+        // db.Database.Migrate();
+        await db.Database.MigrateAsync();        
+    }
+    catch(System.Exception e) 
+    {
+        Console.WriteLine(e);
+    }    
+}
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())

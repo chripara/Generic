@@ -1,5 +1,7 @@
 import { Button, Text, View } from "react-native";
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+import axiosCalls from './reactRootView/axiosCalls/axiosCalls';
 import { useFonts } from "expo-font";
 import { AuthStack } from "./reactRootView/stackNavigators/AuthStack";
 import { Card } from "./reactRootView/components/Card";
@@ -93,35 +95,37 @@ export default function App() {
     // }
 
     
-  useEffect(() => {
-    fetch("https://127.0.0.1:7142/api/Auth/Test", {
-        method: "GET",  
-        // acceptLanguage: "en",
-        // APIVersion: "v2",
-        // authorization: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2Nzg5NjU0ODksImV4cCI6MTY3ODk2OTA4OSwiaXNzIjoiaHR0cHM6Ly9pY2RhY2Nlc3NtYW5hZ2VtZW50Lndoby5pbnQiLCJhdWQiOlsiaHR0cHM6Ly9pY2RhY2Nlc3NtYW5hZ2VtZW50Lndoby5pbnQvcmVzb3VyY2VzIiwiaWNkYXBpIl0sImNsaWVudF9pZCI6ImQyNDc1YjgxLTBmNjgtNDE2NS05ODQzLWU3MWRlYjBkYWUyNl82NmU5OTA2Ni1hNDEzLTRhNjYtYWY4NC1iYzE3ZjI1MzFlODkiLCJzY29wZSI6WyJpY2RhcGlfYWNjZXNzIl19.Ouj9zMLSKBw2oAL-XoHEXRlguz1sOH5XcKRqDz-EkcJeBE7vSPlgUuHGxI3SZCzv0DxJKeykzArhct0YL0YIHO3Z9e1-ou5p0J5lxvIaluQ5CvlBwPHSc5c6iyS29i6pT0xKbnp8fHeDZY7yNaRTivkbPiFyR2wwYqsYakOGBpYycv_xXCpKAtia_HVF2pw82i91dzLOjSkcPtuJEPFc4bRRSoUfZEHhD5mnE-t7K2xOQ1qhhaD42cucGdhIkmmyZ7micB3E7RyHzjM94MfFfFpvY3QqVB55lzw2lx-szYEujpvTl4WbJPsZE7CIbw_8Nksf5OU2Y9O3jRmke4t6mg'
-    })
-      .then(response => 
-        {
-            console.log("useEffect211");        
-            console.log(response);
-            console.log("useEffect222");        
-        })
-      .then(
-        (json) => {
-            console.log("useEffect111")
-            console.log(json);
-            console.log("useEffect111")
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-            console.log(JSON.stringify(error));          
-            console.log("useEffect3s")
-        }
-      )
-      console.log("useEffect")
-  }, [])
+//   useEffect(() => {
+    // fetch("https://127.0.0.1:7142/api/Auth/Test", {
+    //     method: "GET",  
+    //     // acceptLanguage: "en",
+    //     // APIVersion: "v2",
+    //     // authorization: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2Nzg5NjU0ODksImV4cCI6MTY3ODk2OTA4OSwiaXNzIjoiaHR0cHM6Ly9pY2RhY2Nlc3NtYW5hZ2VtZW50Lndoby5pbnQiLCJhdWQiOlsiaHR0cHM6Ly9pY2RhY2Nlc3NtYW5hZ2VtZW50Lndoby5pbnQvcmVzb3VyY2VzIiwiaWNkYXBpIl0sImNsaWVudF9pZCI6ImQyNDc1YjgxLTBmNjgtNDE2NS05ODQzLWU3MWRlYjBkYWUyNl82NmU5OTA2Ni1hNDEzLTRhNjYtYWY4NC1iYzE3ZjI1MzFlODkiLCJzY29wZSI6WyJpY2RhcGlfYWNjZXNzIl19.Ouj9zMLSKBw2oAL-XoHEXRlguz1sOH5XcKRqDz-EkcJeBE7vSPlgUuHGxI3SZCzv0DxJKeykzArhct0YL0YIHO3Z9e1-ou5p0J5lxvIaluQ5CvlBwPHSc5c6iyS29i6pT0xKbnp8fHeDZY7yNaRTivkbPiFyR2wwYqsYakOGBpYycv_xXCpKAtia_HVF2pw82i91dzLOjSkcPtuJEPFc4bRRSoUfZEHhD5mnE-t7K2xOQ1qhhaD42cucGdhIkmmyZ7micB3E7RyHzjM94MfFfFpvY3QqVB55lzw2lx-szYEujpvTl4WbJPsZE7CIbw_8Nksf5OU2Y9O3jRmke4t6mg'
+    // })
+    //   .then(response => 
+    //     {
+    //         console.log("useEffect211");        
+    //         console.log(response);
+    //         console.log("useEffect222");        
+    //     })
+    //   .then(
+    //     (json) => {
+    //         console.log("useEffect111")
+    //         console.log(json);
+    //         console.log("useEffect111")
+    //     },
+    //     // Note: it's important to handle errors here
+    //     // instead of a catch() block so that we don't swallow
+    //     // exceptions from actual bugs in components.
+    //     (error) => {
+    //         console.log(JSON.stringify(error));          
+    //         console.log("useEffect3s")
+    //     }
+    //   )
+    //   console.log("useEffect")
+//   }, [])
+
+    const axiosInstance = axios.create({ baseURL: 'http://192.168.1.200:5000' });
 
     
     const [fontsLoaded] = useFonts({
@@ -133,14 +137,15 @@ export default function App() {
 
         return (
             <View style={{ alignItems: 'center', marginTop: 100 }}>
+                <EllipseButtonSecondary name={"asdf"} onClick={axiosCalls.getTestData}/>
                 <DualSelector rightPage={
                     <View> 
-                        <EllipseButtonSecondary name={"asdf"}/>
+                        <EllipseButtonSecondary name={"asdf"} onClick={axiosCalls.getTestData}/>
                         <Text>asdfsadfaasadfasdf</Text>
                     </View>
                     }  
                 leftPage={
-                <Text>asd11123412344413fqewrgqereg4adfaasadfasdf</Text>}/>
+                <Text>asd1112341sadfasdf</Text>}/>
             </View>
             // <NavigationContainer>
             //     <MainTabNavigator />
