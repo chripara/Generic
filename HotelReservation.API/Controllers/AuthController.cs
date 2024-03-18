@@ -251,7 +251,7 @@ namespace HotelReservation.API.Controllers
         [Route("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
-            Log.Information("ForgordPassword: {@dto}", FilterDto(JObject.FromObject(dto)));
+            Log.Information("ForgotPassword: {@dto}", FilterDto(JObject.FromObject(dto)));
             
             var user = await _userManager.FindByEmailAsync(dto.Email);
 
@@ -515,5 +515,8 @@ namespace HotelReservation.API.Controllers
 
             return dto.ToString();
         }
+        
+        //TODO: Connection string logs change 
+        //TODO: Keep only 1 Connection string or commends for specificcations
     }
 }
