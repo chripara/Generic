@@ -63,6 +63,12 @@ export default {
         fontSize: 12,
         color: colors.black
     },
+    text10Red: {
+        textAlign: "center",
+        fontFamily: "Italiana-Regular",
+        fontSize: 10,
+        color: colors.error
+    },
     textInput: {
         textAlign: "left",
         fontFamily: "Italiana-Regular",
