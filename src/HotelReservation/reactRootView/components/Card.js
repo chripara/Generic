@@ -1,6 +1,6 @@
 import { React, useRef } from  'react';
 import { Text, View, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import defaultStyles from "../config/defaultStyles";
+import fontStyles from "../config/StyleSheets/fontStyles";
 import { ArrowButton } from './ArrowButton';
 import { DeleteIcon } from './DeleteIcon';
 
@@ -41,7 +41,7 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
             {contentPair.map((content, index) => {
                 return (
                     <View>
-                        <Text style={{ ...styles.textBorder, ...defaultStyles.text16White}}>{content.title}</Text>
+                        <Text style={{ ...styles.textBorder, ...fontStyles.text20White}}>{content.title}</Text>
                         {
                             (index === numberOfPairs - 1 && hasDescription )
                             ?                        
@@ -52,7 +52,7 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
                                     >
                                         <Text style={{ 
                                             ...styles.textBorder,
-                                            ...defaultStyles.text16Black
+                                            ...fontStyles.text20Black
                                             }}>
                                                 {content.text}                                                
                                         </Text>
@@ -75,7 +75,7 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
                                     </View>    
                                 </View>
                             :                            
-                                <Text style={{ ...styles.textBorder, ...defaultStyles.text16Black, ...styles.withoutDescription}}>{content.text}</Text> 
+                                <Text style={{ ...styles.textBorder, ...fontStyles.text20Black, ...styles.withoutDescription}}>{content.text}</Text> 
                         }
                     </View>                
                 )

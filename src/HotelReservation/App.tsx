@@ -1,5 +1,6 @@
 import { Button, Text, View } from "react-native";
 import { useState, useEffect } from 'react';
+import axiosAuthCalls from './reactRootView/axiosCalls/AuthCalls/axiosAuthCalls';
 import axios from 'axios';
 import axiosCalls from './reactRootView/axiosCalls/axiosCalls';
 import { useFonts } from "expo-font";
@@ -12,6 +13,8 @@ import { MainTabNavigator } from "./reactRootView/tabNavigators/MainTabNavigator
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Calendar } from "./reactRootView/components/Calendar";
 import { DualSelector } from "./reactRootView/components/DualSelector";
+import ISignUpInterface from "./reactRootView/interfaces/Auth/ISignUpInterface"
+import { TextInputWithValidation } from "./reactRootView/components/TextInputWithValidation";
 
 // function HomeScreen() {
 //     return (
@@ -79,6 +82,36 @@ const content = [
 
 export default function App() {
 
+    // const [rawBody, setRawBody] = useState<ISignUpInterface>(
+    //     {
+    //         userName: 'string',
+    //         password: 'string',
+    //         confirmPassword: 'string',
+    //         email: 'string',
+    //         phoneNumber: 'string', 
+    //         firstName: 'string',
+    //         lastName: 'string',
+    //         location: 'string'
+    //     } as ISignUpInterface);
+
+    //     const random = 
+    //     {
+    //         "userName": "sasdasdd22", 
+    //         "password": "stringQ!1",
+    //         "confirmPassword": "stringQ!1",
+    //         "email": "string22@sa.s",
+    //         "phoneNumber": "4216794611", 
+    //         "firstName": "string",
+    //         "lastName": "string",
+    //         "location": "string"
+    //     } as ISignUpInterface
+        
+    // const handleContent = (obj: ISignUpInterface) => {
+    //     setRawBody(obj);
+    //     //setRawBody(random);
+    //     console.log("handleContent: ", rawBody);
+    // }
+
     // const [contents, setContent] = useState(content);
     // const counter22 = 0;
     // var tempDate = new Date();
@@ -93,9 +126,8 @@ export default function App() {
     //     console.log('index: ', index);
     //     console.log('contents: ', contents);
     // }
-
     
-//   useEffect(() => {
+    //   useEffect(() => {
     // fetch("https://127.0.0.1:7142/api/Auth/Test", {
     //     method: "GET",  
     //     // acceptLanguage: "en",
@@ -123,33 +155,53 @@ export default function App() {
     //     }
     //   )
     //   console.log("useEffect")
-//   }, [])
-
-    const axiosInstance = axios.create({ baseURL: 'http://192.168.1.200:5000' });
-
+    //   }, [])
     
+    const [errors, setErrors] = useState<string[]>();
+        
+    // const [exmp, setExmpl] = useState<IExample>();
     const [fontsLoaded] = useFonts({
         "Italiana-Regular": require("./assets/fonts/Italiana-Regular.ttf"),
     });
     if (!fontsLoaded) {
-        return <Text> Fonts are not loaded Successfully!!</Text>;
+        return <Text style={{marginTop: "10%"}}> Fonts are not loaded Successfully!!</Text>;
     } else {
+        
+        return (           
+            
+            // <View style={{ alignItems: 'center', marginTop: 10 }}>
+             //     <EllipseButtonSecondary name={"asdf"} onClick={() => 
+                    //    axiosAuthCalls.postSignUpCall(rawBody)
+            //     } marginTop={0}/>                   
+                    
+            //     <DualSelector rightPage={
+            //         <View> 
+            //             <EllipseButtonSecondary name={"asdf"} onClick={axiosCalls.getTestData} marginTop={0}/>
+            //             <Text>asdfsadfaasadfasdf</Text>
+            //         </View>
+            //         }  
+            //     leftPage={ 
+            //      <Text>asd1112341sadfasdf</Text>              
+            //         <TextInputWithValidation errors={errors} 
+            //             handleTextValue={(value) => {console.log(value);
+            //                 console.log(errors);
+            //             if(value.length>20 && errors.length === 1)
+            //             {
+            //                 setErrors( errors => [...errors, "Error 2"])
+            //             }
+            //             else if(value.length>10 && errors === undefined)
+            //             {
+            //                 setErrors( errors => ["Error 1"])
+            //             }
+                        
+            //         }}
+            //             // setExmpl(errors, (value) => {console.log(value))}}
+            //             />
+            // </View> 
 
-        return (
-            <View style={{ alignItems: 'center', marginTop: 100 }}>
-                <EllipseButtonSecondary name={"asdf"} onClick={axiosCalls.getTestData}/>
-                <DualSelector rightPage={
-                    <View> 
-                        <EllipseButtonSecondary name={"asdf"} onClick={axiosCalls.getTestData}/>
-                        <Text>asdfsadfaasadfasdf</Text>
-                    </View>
-                    }  
-                leftPage={
-                <Text>asd1112341sadfasdf</Text>}/>
-            </View>
-            // <NavigationContainer>
-            //     <MainTabNavigator />
-            // </NavigationContainer>
+            <NavigationContainer>
+                <AuthStack />
+            </NavigationContainer>
         )
     }
 }

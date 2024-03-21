@@ -15,15 +15,18 @@ const baseUrl = 'http://192.168.1.200:5000/api';
 // //   console.log(response.data);
 // });
 
-const instance = axios.create({
-    baseURL: 'http://192.168.1.200:5000/api',
+// const instance = axios.create({
+//     baseURL: 'http://192.168.1.200:5000/api',
+//     headers: {
+//         'content-type':'application/json',
+//     },
+// });
+
+export default {
+    baseUrl: 'http://192.168.1.200:5000/api',
     headers: {
         'content-type':'application/json',
     },
-});
-
-export default {
-
     getTestData: () =>
     (
         axios({

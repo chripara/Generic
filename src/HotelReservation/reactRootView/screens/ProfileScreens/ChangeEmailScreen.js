@@ -3,19 +3,19 @@ import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
-import defaultStyles from "../../config/defaultStyles";
+import fontStyles from "../../config/StyleSheets/fontStyles";
 
 export const ChangeEmailScreen = ({ navigation }) => (
     <MainScreen backgroundColor={colors.secondary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text36White}>Change Email</Text>
+                <Text style={fontStyles.text48White}>Change Email</Text>
             </View>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text20White}>Current Email:</Text>
-                <TextInput style={defaultStyles.textInput} />
-                <Text style={defaultStyles.text20White}>New Email:</Text>
-                <TextInput style={defaultStyles.textInput} />
+                <Text style={fontStyles.text24White}>Current Email:</Text>
+                <TextInput style={fontStyles.textInput} />
+                <Text style={fontStyles.text24White}>New Email:</Text>
+                <TextInput style={fontStyles.textInput} />
             </View>
             <EllipseButtonPrimary
                 name={"Change Email"}

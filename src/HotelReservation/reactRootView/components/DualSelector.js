@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, TouchableOpacity, StyleSheet, Dimensions, View, Text } from 'react-native';
 import colors from '../config/colors';
-import defaultStyles from "../config/defaultStyles";
+import fontStyles from "../config/StyleSheets/fontStyles";
 
 const width = Dimensions.get('window').width;
 
@@ -24,7 +24,7 @@ export const DualSelector = ({ leftPage, rightPage }) => {
                         }}
                     onPress={() => setIsRight(false)}
                 >
-                    <Text style={{ ...styles.textStyle, ...defaultStyles.text16White}}>Search room for hotel</Text>
+                    <Text style={{ ...styles.textStyle, ...fontStyles.text20White}}>Search room for hotel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ 
@@ -35,7 +35,7 @@ export const DualSelector = ({ leftPage, rightPage }) => {
                         }}
                     onPress={() => setIsRight(true)}
                     >
-                    <Text style={{ ...styles.textStyle, ...defaultStyles.text16White}}>Search room for Date</Text>
+                    <Text style={{ ...styles.textStyle, ...fontStyles.text20White}}>Search room for Date</Text>
                 </TouchableOpacity>
             </View>
             <ScrollView contentContainerStyle={styles.scrollViewContainer}>

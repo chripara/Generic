@@ -2,17 +2,17 @@ import React from "react";
 import { View, StyleSheet, Text, Image, Dimensions } from "react-native";
 import { EllipseButtonSecondary } from "../../components/EllipseButtonSecondary";
 import colors from "../../config/colors";
-import defaultStyles from "../../config/defaultStyles";
+import fontStyles from "../../config/StyleSheets/fontStyles";
 import { MainScreen } from "../MainScreen";
 
 export const WelcomeScreen = ({ navigation }) => (
     <MainScreen backgroundColor={colors.primary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text36White}>Welcome</Text>
-                <Text style={defaultStyles.text36White}>to</Text>
-                <Text style={defaultStyles.text36White}>Hotel</Text>
-                <Text style={defaultStyles.text36White}>Reservation</Text>
+                <Text style={fontStyles.text48White}>Welcome</Text>
+                <Text style={fontStyles.text48White}>to</Text>
+                <Text style={fontStyles.text48White}>Hotel</Text>
+                <Text style={fontStyles.text48White}>Reservation</Text>
             </View>
             <Image
                 style={styles.image}

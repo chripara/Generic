@@ -4,7 +4,7 @@ import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
 import { CalendarInput } from "../../components/CalendarInput";
-import defaultStyles from "../../config/defaultStyles";
+import fontStyles from "../../config/StyleSheets/fontStyles";
 
 const width = Dimensions.get('window').width;
 
@@ -23,28 +23,28 @@ export const BookingCreateScreen = ({ navigation }) => {
         <MainScreen backgroundColor={colors.secondary}>
             <View style={styles.container}>
                 <View style={styles.viewText}>
-                    <Text style={defaultStyles.text36White}>Bookings</Text>
+                    <Text style={fontStyles.text48White}>Bookings</Text>
                 </View>
                 <View style={styles.viewText}>
-                    <Text style={defaultStyles.text20White}>Hotel Name:</Text>
-                    <TextInput style={defaultStyles.textInput} />
-                    <Text style={defaultStyles.text20White}>Room:</Text>
-                    <TextInput style={defaultStyles.textInput} />
-                    <Text style={defaultStyles.text20White}>Cost:</Text>
-                    <TextInput style={defaultStyles.textInput} />
-                    <Text style={defaultStyles.text20White}>Check In:</Text>
+                    <Text style={fontStyles.text24White}>Hotel Name:</Text>
+                    <TextInput style={fontStyles.textInput} />
+                    <Text style={fontStyles.text24White}>Room:</Text>
+                    <TextInput style={fontStyles.textInput} />
+                    <Text style={fontStyles.text24White}>Cost:</Text>
+                    <TextInput style={fontStyles.textInput} />
+                    <Text style={fontStyles.text24White}>Check In:</Text>
                     <CalendarInput date={checkInDate} setDate={setCheckInDate} 
                         hasCalendarActive={hasCalendarActiveCheckInDate} 
                         setHasCalendarActive={setHasCalendarActiveCheckInDate} 
                         disableAllCalendars={disableAllCalendars}
                     />
-                    <Text style={defaultStyles.text20White}>Check Out:</Text>
+                    <Text style={fontStyles.text24White}>Check Out:</Text>
                     <CalendarInput date={checkOutDate} setDate={setCheckOutDate} 
                         hasCalendarActive={hasCalendarActiveCheckOutDate} 
                         setHasCalendarActive={setHasCalendarActiveCheckOutDate} 
                         disableAllCalendars={disableAllCalendars}
                     />
-                    <Text style={defaultStyles.text20White}>Description:</Text>
+                    <Text style={fontStyles.text24White}>Description:</Text>
                     <TextInput style={styles.textInput} multiline={true}/>
                 </View>
                 <EllipseButtonPrimary

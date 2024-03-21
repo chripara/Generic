@@ -1,6 +1,6 @@
 import { useRef, useState } from  'react';
 import { Text, View, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import defaultStyles from "../config/defaultStyles";
+import fontStyles from "../config/StyleSheets/fontStyles";
 import { ArrowButton } from './ArrowButton';
 import { Card } from './Card';
 
@@ -47,7 +47,7 @@ export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc, hasDes
                                 currIndex.current.scrollTo({ x: width * (index-1) });
                             }}
                         />
-                        <Text style={defaultStyles.text36White}>#{index+1}</Text>
+                        <Text style={fontStyles.text48White}>#{index+1}</Text>
                         <ArrowButton isRight={true} 
                             size={"medium"}
                             attitude={"right"}

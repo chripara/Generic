@@ -3,7 +3,7 @@ import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
-import defaultStyles from "../../config/defaultStyles";
+import fontStyles from "../../config/StyleSheets/fontStyles";
 
 
 const content = [
@@ -33,19 +33,19 @@ export const EditProfileScreen = ({ navigation }) => (
     <MainScreen backgroundColor={colors.secondary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text36White}>Edit Profile</Text>                
+                <Text style={fontStyles.text48White}>Edit Profile</Text>                
             </View>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text20White}>FirstName:</Text>
-                <TextInput style={defaultStyles.textInput} />
-                <Text style={defaultStyles.text20White}>LastName:</Text>
-                <TextInput style={defaultStyles.textInput} />
-                <Text style={defaultStyles.text20White}>Location:</Text>
-                <TextInput style={defaultStyles.textInput} />
-                <Text style={defaultStyles.text20White}>Email:</Text>
-                <TextInput style={defaultStyles.textInput} />
-                <Text style={defaultStyles.text20White}>Phone Number:</Text>
-                <TextInput style={defaultStyles.textInput} />
+                <Text style={fontStyles.text24White}>FirstName:</Text>
+                <TextInput style={fontStyles.textInput} />
+                <Text style={fontStyles.text24White}>LastName:</Text>
+                <TextInput style={fontStyles.textInput} />
+                <Text style={fontStyles.text24White}>Location:</Text>
+                <TextInput style={fontStyles.textInput} />
+                <Text style={fontStyles.text24White}>Email:</Text>
+                <TextInput style={fontStyles.textInput} />
+                <Text style={fontStyles.text24White}>Phone Number:</Text>
+                <TextInput style={fontStyles.textInput} />
             </View>
             <EllipseButtonPrimary
                 marginTop={"3%"}

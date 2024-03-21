@@ -9,5 +9,6 @@ export default {
     white: "#FFFFFF",
     light: "#D9D9D9",
     dark: "#322514",
-    error: '#ff0000'    
+    error: '#ff0000',
+    darkRed: '#DC0E0A'
   };

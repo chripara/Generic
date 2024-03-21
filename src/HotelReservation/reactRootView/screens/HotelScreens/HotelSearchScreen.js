@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TextInput, Dimensions } from "react-native";
 import { MainScreen } from "../MainScreen";
 import { DualSelector } from "../../components/DualSelector";
 import colors from "../../config/colors";
-import defaultStyles from "../../config/defaultStyles";
+import fontStyles from "../../config/StyleSheets/fontStyles";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
 import { List } from "../../components/List";
 import { StackActions } from "@react-navigation/native";
@@ -155,16 +155,16 @@ export const HotelSearchScreen = ({ navigation }) => {
         <MainScreen backgroundColor={colors.secondary}>
             <View style={styles.container}>
                 <View style={styles.viewText}>
-                    <Text style={defaultStyles.text36White}>Hotels</Text>
+                    <Text style={fontStyles.text48White}>Hotels</Text>
                 </View>
                 <DualSelector 
                     leftPage={
                         leftPage ?
                             <View style={styles.viewFormStyle}>
-                                <Text style={defaultStyles.text20White}>Hotel Name:</Text>
-                                <TextInput style={defaultStyles.textInput} />
-                                <Text style={defaultStyles.text20White}>Capacity:</Text>
-                                <TextInput style={defaultStyles.textInput} />
+                                <Text style={fontStyles.text24White}>Hotel Name:</Text>
+                                <TextInput style={fontStyles.textInput} />
+                                <Text style={fontStyles.text24White}>Capacity:</Text>
+                                <TextInput style={fontStyles.textInput} />
                                 <EllipseButtonPrimary 
                                     name={"Find Available Rooms"} 
                                     marginTop={width * 0.3} 
@@ -181,14 +181,14 @@ export const HotelSearchScreen = ({ navigation }) => {
                     rightPage={
                         rightPage ?
                             <View style={styles.viewFormStyle}>
-                                <Text style={defaultStyles.text20White}>City:</Text>
-                                <TextInput style={defaultStyles.textInput} />
-                                <Text style={defaultStyles.text20White}>Capacity:</Text>
-                                <TextInput style={defaultStyles.textInput} />
-                                <Text style={defaultStyles.text20White}>Minimum Price Per Day:</Text>
-                                <TextInput style={defaultStyles.textInput} />
-                                <Text style={defaultStyles.text20White}>Maximum Price Per Day:</Text>
-                                <TextInput style={defaultStyles.textInput} />
+                                <Text style={fontStyles.text24White}>City:</Text>
+                                <TextInput style={fontStyles.textInput} />
+                                <Text style={fontStyles.text24White}>Capacity:</Text>
+                                <TextInput style={fontStyles.textInput} />
+                                <Text style={fontStyles.text24White}>Minimum Price Per Day:</Text>
+                                <TextInput style={fontStyles.textInput} />
+                                <Text style={fontStyles.text24White}>Maximum Price Per Day:</Text>
+                                <TextInput style={fontStyles.textInput} />
                                 <EllipseButtonPrimary 
                                     name={"Find Available Rooms"} 
                                     marginTop={width * 0.05} 
@@ -198,25 +198,25 @@ export const HotelSearchScreen = ({ navigation }) => {
                             :
                             <View>
                                 <View style={styles.viewText}>
-                                    <Text style={defaultStyles.text24Black}>Lake Place Inn</Text>
+                                    <Text style={fontStyles.text28Black}>Lake Place Inn</Text>
                                 </View>
                                 <View style={styles.cardStyle}>                    
                                     <View style={styles.horizontalViewStyle}>
                                         <View style={styles.verticalViewStyle}>
-                                            <Text style={defaultStyles.text16White}>Cost / day</Text>
-                                            <Text style={defaultStyles.text20Black}>50 €</Text>
+                                            <Text style={fontStyles.text20White}>Cost / day</Text>
+                                            <Text style={fontStyles.text24Black}>50 €</Text>
                                         </View>
                                         <View style={styles.verticalViewStyle}>
-                                            <Text style={defaultStyles.text16White}>Room No.</Text>
-                                            <Text style={defaultStyles.text20Black}>A11</Text>
+                                            <Text style={fontStyles.text20White}>Room No.</Text>
+                                            <Text style={fontStyles.text24Black}>A11</Text>
                                         </View>
                                         <View style={styles.verticalViewStyle}>
-                                            <Text style={defaultStyles.text16White}>Capacity</Text>
-                                            <Text style={defaultStyles.text20Black}>4 person</Text>
+                                            <Text style={fontStyles.text20White}>Capacity</Text>
+                                            <Text style={fontStyles.text24Black}>4 person</Text>
                                         </View>
                                     </View>
                                     <View style={{height: 40, justifyContent: 'center'}}>
-                                        <Text style={defaultStyles.text24White}>Availability</Text>
+                                        <Text style={fontStyles.text28White}>Availability</Text>
                                     </View>
                                     <Calendar date={date} setDate={setDate} hasBookings={true}/>
                                     <EllipseButtonPrimary name={"Create  Booking"} marginTop={20}/>

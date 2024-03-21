@@ -1,18 +1,12 @@
-import colors from "./colors";
+import colors from "../colors";
 
 export default {
     colors,
-    text36White: {
+    text48White: {
         textAlign: "center",
         fontFamily: "Italiana-Regular",
-        fontSize: 36,
+        fontSize: 48,
         color: colors.white,
-    },
-    text20Black: {
-        textAlign: "center",
-        fontFamily: "Italiana-Regular",
-        fontSize: 20,
-        color: colors.black,
     },
     text24Black: {
         textAlign: "center",
@@ -20,59 +14,71 @@ export default {
         fontSize: 24,
         color: colors.black,
     },
-    text24White: {
+    text28Black: {
         textAlign: "center",
+        fontFamily: "Italiana-Regular",
+        fontSize: 28,
+        color: colors.black,
+    },
+    text28White: {
+        textAlign: "center",
+        fontFamily: "Italiana-Regular",
+        fontSize: 28,
+        color: colors.white,
+    },
+    text18White: {
+        textAlign: "right",
+        fontFamily: "Italiana-Regular",
+        fontSize: 18,
+        color: colors.white,
+    },
+    text24White: {
+        textAlign: "left",
         fontFamily: "Italiana-Regular",
         fontSize: 24,
         color: colors.white,
+        paddingLeft: "4%",
     },
-    text14White: {
-        textAlign: "right",
+    text20Black: {
+        textAlign: "center",
         fontFamily: "Italiana-Regular",
-        fontSize: 14,
-        color: colors.white,
+        fontSize: 20,
+        color: colors.black,
     },
     text20White: {
-        textAlign: "left",
+        textAlign: "center",
         fontFamily: "Italiana-Regular",
         fontSize: 20,
         color: colors.white,
-        paddingLeft: "4%",
+    },
+    text20Gray: {
+        textAlign: "center",
+        fontFamily: "Italiana-Regular",
+        fontSize: 20,
+        color: colors.gray,
     },
     text16Black: {
         textAlign: "center",
         fontFamily: "Italiana-Regular",
         fontSize: 16,
-        color: colors.black,
-    },
-    text16White: {
-        textAlign: "center",
-        fontFamily: "Italiana-Regular",
-        fontSize: 16,
-        color: colors.white,
-    },
-    text16Gray: {
-        textAlign: "center",
-        fontFamily: "Italiana-Regular",
-        fontSize: 16,
-        color: colors.gray,
-    },
-    text12Black: {
-        textAlign: "center",
-        fontFamily: "Italiana-Regular",
-        fontSize: 12,
         color: colors.black
     },
-    text10Red: {
+    text14DarkRed: {
         textAlign: "center",
         fontFamily: "Italiana-Regular",
-        fontSize: 10,
-        color: colors.error
+        fontSize: 14,
+        color: colors.darkRed
+    },
+    text14White: {
+        textAlign: "left",
+        fontFamily: "Italiana-Regular",
+        fontSize: 14,
+        color: colors.white
     },
     textInput: {
         textAlign: "left",
         fontFamily: "Italiana-Regular",
-        fontSize: 20,
+        fontSize: 24,
         color: colors.black,
         backgroundColor: colors.light,
         borderRadius: 6,

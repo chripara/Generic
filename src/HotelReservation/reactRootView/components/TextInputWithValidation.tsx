@@ -1,35 +1,36 @@
 import React from "react";
-import { TextInput, Text, View, StyleSheet,KeyboardType } from "react-native";
+import { TextInput, Text, View, StyleSheet,KeyboardTypeOptions } from "react-native";
 import colors from "../config/colors";
 import { useState } from "react";
-import defaultStyles from "../config/defaultStyles";
+import fontStyles from "../config/StyleSheets/fontStyles";
 import uuid from 'react-native-uuid';
 
 interface IProps{
     secureTextEntry?: Boolean,
-    keyboardType?: KeyboardType, 
+    keyboardType?: KeyboardTypeOptions, 
     errors: string[], 
     handleTextValue: (value: string)  => void
 }
 
-export const TextInputWithValidation = ({ secureTextEntry, keyboardType, errors, handleTextValue }) => {
+export const TextInputWithValidation = ({ secureTextEntry, keyboardType, errors, handleTextValue }: IProps) => {
     //, handleTextValue: (value: string) => void }) => {
 
     const [isAnyError, setIsAnyError] = useState(false);
     
+    //console.log('errors: ', errors)
+    
     return(
-        <View>
-            { 
-                errors !== undefined ?
-                
+        <View>            
+            {
+                errors && errors.length && errors.length > 0 ?
                 errors.map((error) => { 
                     if(error){                    
-                        console.log(isAnyError);
-                        console.log(error);
+                        //console.log('errors1: ', isAnyError);
+                        //console.log('errors2: ', error);
                         //handleErrorBorder();
                     return(
-                        <View key={uuid.v4()}>
-                            <Text style={defaultStyles.text10Red}>{error}</Text>
+                        <View key={uuid.v4()} >
+                            <Text style={fontStyles.text14White}>{error}</Text>
                         </View>
                     )
                     }   
@@ -37,9 +38,9 @@ export const TextInputWithValidation = ({ secureTextEntry, keyboardType, errors,
             <TextInput 
                 secureTextEntry={secureTextEntry} 
                 keyboardType={keyboardType} 
-                style={errors !== undefined  ? 
-                    [{...defaultStyles.textInput}, {...styles.errorBorder}] : 
-                    defaultStyles.textInput }
+                style={(errors && errors.length && errors.length > 0) ?
+                    [{...fontStyles.textInput}, {...styles.errorBorder}] : 
+                    fontStyles.textInput }
                 onChangeText={handleTextValue} 
             />
         </View>
@@ -49,7 +50,7 @@ export const TextInputWithValidation = ({ secureTextEntry, keyboardType, errors,
 
 const styles = StyleSheet.create({
     errorBorder: {
-            borderColor: colors.error,
-            borderWidth: 2,        
+            borderColor: colors.darkRed,
+            borderWidth: 5,        
         },
     });

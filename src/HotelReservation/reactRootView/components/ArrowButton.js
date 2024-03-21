@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import colors from "../config/colors";
-import defaultStyles from "../config/defaultStyles";
+import fontStyles from "../config/StyleSheets/fontStyles";
 
 export const ArrowButton = ({ onClick, attitude, marginTop, size }) => {
     return (

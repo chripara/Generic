@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Dimensions } from "react-native";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
-import defaultStyles from "../../config/defaultStyles";
+import fontStyles from "../../config/StyleSheets/fontStyles";
 import { List } from "../../components/List";
 
 const width = Dimensions.get('window').width;
@@ -160,7 +160,7 @@ export const HotelListScreen = ({ navigation }) => {
         <MainScreen backgroundColor={colors.secondary}>
             <View style={styles.container}>
                 <View style={styles.viewText}>
-                    <Text style={defaultStyles.text36White}>Hotels</Text>
+                    <Text style={fontStyles.text48White}>Hotels</Text>
                 </View>
                 <List contentPair={content} numberOfPairs={8} hasDelete={true} deleteFunc={deleteFunc} hasDescription={true}/>
                 <View style={{ marginBottom: 20 }}>

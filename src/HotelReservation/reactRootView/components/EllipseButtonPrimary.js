@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text, Dimensions } from "react-native";
 import colors from "../config/colors";
-import defaultStyles from "../config/defaultStyles";
+import fontStyles from "../config/StyleSheets/fontStyles";
 
 const width = Dimensions.get('window').width;
 
@@ -11,7 +11,7 @@ export const EllipseButtonPrimary = ({ onClick, name, marginTop }) => {
             onPress={onClick}
             style={{ ...styles.container, marginTop: marginTop }}
         >
-            <Text style={defaultStyles.text20White}>{name}</Text>
+            <Text style={fontStyles.text24White}>{name}</Text>
         </TouchableOpacity>
     );
 };

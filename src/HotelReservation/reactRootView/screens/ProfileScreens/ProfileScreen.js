@@ -4,7 +4,7 @@ import { Card } from "../../components/Card";
 import { View, StyleSheet, Text } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
-import defaultStyles from "../../config/defaultStyles";
+import fontStyles from "../../config/StyleSheets/fontStyles";
 import axios  from 'axios';
 import axiosCalls from '../../axiosCalls/axiosCalls';
 
@@ -68,7 +68,7 @@ export const ProfileScreen = ({ navigation }) => (
     <MainScreen backgroundColor={colors.secondary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text36White}>Profile</Text>                
+                <Text style={fontStyles.text48White}>Profile</Text>                
             </View>
             <Card contentPair={content} numberOfPairs={5} deleteFunc={undefined}/>           
             <EllipseButtonPrimary

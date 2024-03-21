@@ -1,7 +1,7 @@
 import {React,useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Image } from 'react-native';
 import colors from '../config/colors';
-import defaultStyles from '../config/defaultStyles';
+import fontStyles from '../config/StyleSheets/fontStyles';
 import { Calendar } from './Calendar';
 
 const width = Dimensions.get('window').width;
@@ -15,7 +15,7 @@ export const CalendarInput = ({ date, setDate, hasCalendarActive, setHasCalendar
             {console.log(hasCalendarActive)}
             <View style={styles.container}>
                 <Text 
-                    style={defaultStyles.textInput} 
+                    style={fontStyles.textInput} 
                 >
                     {date.getDate()} - {date.getMonth()+1} - {date.getFullYear()}
                 </Text>

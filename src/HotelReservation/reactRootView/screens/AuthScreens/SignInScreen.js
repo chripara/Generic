@@ -3,21 +3,21 @@ import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import { EllipseButtonSecondary } from "../../components/EllipseButtonSecondary";
-import defaultStyles from "../../config/defaultStyles";
+import fontStyles from "../../config/StyleSheets/fontStyles";
 
 export const SignInScreen = ({ navigation }) => (
     <MainScreen backgroundColor={colors.primary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text36White}>Sign In</Text>
+                <Text style={fontStyles.text48White}>Sign In</Text>
             </View>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text20White}>Username:</Text>
-                <TextInput style={defaultStyles.textInput} />
-                <Text style={defaultStyles.text20White}>Password:</Text>
-                <TextInput style={defaultStyles.textInput} />
+                <Text style={fontStyles.text24White}>Username:</Text>
+                <TextInput style={fontStyles.textInput} />
+                <Text style={fontStyles.text24White}>Password:</Text>
+                <TextInput style={fontStyles.textInput} />
                 <Text
-                    style={defaultStyles.text14White}
+                    style={fontStyles.text18White}
                     onPress={() => navigation.navigate("Auth")}
                 >
                     Forgot Password?
@@ -41,6 +41,5 @@ const styles = StyleSheet.create({
         position: "relative",
         marginVertical: "10%",
         paddingHorizontal: "5%",
-    },
-    clickableText: {},
+    }
 });

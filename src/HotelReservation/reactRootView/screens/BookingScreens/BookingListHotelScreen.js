@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
-import defaultStyles from "../../config/defaultStyles";
+import fontStyles from "../../config/StyleSheets/fontStyles";
 import { List } from "../../components/List";
 
 const content = [
@@ -152,7 +152,7 @@ export const BookingListHotelScreen = ({ navigation }) => {
     <MainScreen backgroundColor={colors.secondary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text36White}>Bookings</Text>                
+                <Text style={fontStyles.text48White}>Bookings</Text>                
             </View>
             <List contentPair={state} numberOfPairs={6} hasDelete={true} deleteFunc={deleteFunc} hasDescription={true}/>
         </View>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     },
     viewText: {
         position: "relative",
-        marginVertical: "3%",
+        marginVertical: "3%", // why 3% instea of 2% 
         paddingHorizontal: "5%",
     },
 });

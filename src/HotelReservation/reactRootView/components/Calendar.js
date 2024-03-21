@@ -1,6 +1,6 @@
 import { useState } from  'react';
 import { Text, View, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import defaultStyles from "../config/defaultStyles";
+import fontStyles from "../config/StyleSheets/fontStyles";
 import { ArrowButton } from './ArrowButton';
 import colors  from '../config/colors';
 
@@ -186,7 +186,7 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                             changeMonth("-");                            
                         }}
                     />
-                    <Text style={defaultStyles.text20White}>{monthNames[date.getMonth()]}</Text>
+                    <Text style={fontStyles.text24White}>{monthNames[date.getMonth()]}</Text>
                     <ArrowButton 
                         attitude={"right"}
                         size={"small"}
@@ -203,7 +203,7 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                             changeYear("-");                            
                         }}
                     />
-                    <Text style={defaultStyles.text20White}>{date.getFullYear()}</Text>
+                    <Text style={fontStyles.text24White}>{date.getFullYear()}</Text>
                     <ArrowButton 
                         attitude={"right"}
                         size={"small"}
@@ -214,13 +214,13 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                 </View>
             </View>
             <View style={styles.calendarWeekText}>
-                <Text style={defaultStyles.text20Black}>S</Text>
-                <Text style={defaultStyles.text20Black}>M</Text>
-                <Text style={defaultStyles.text20Black}>T</Text>
-                <Text style={defaultStyles.text20Black}>W</Text>
-                <Text style={defaultStyles.text20Black}>T</Text>
-                <Text style={defaultStyles.text20Black}>F</Text>
-                <Text style={defaultStyles.text20Black}>S</Text>
+                <Text style={fontStyles.text24Black}>S</Text>
+                <Text style={fontStyles.text24Black}>M</Text>
+                <Text style={fontStyles.text24Black}>T</Text>
+                <Text style={fontStyles.text24Black}>W</Text>
+                <Text style={fontStyles.text24Black}>T</Text>
+                <Text style={fontStyles.text24Black}>F</Text>
+                <Text style={fontStyles.text24Black}>S</Text>
             </View>
             <View style={styles.calendarSelectionDate}>
                 {calculateDates()}
@@ -235,7 +235,7 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                                     (dates[0] < 7) && 
                                     <View style={{...styles.viewCircleStyles, ...handleColor(dates[0])}} />
                                 }
-                            <Text style={{...styles.cubeStyle, ...(dates[0] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[0]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[0] > 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[0]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[1] > 7} onPress={() => {
                             tempDate.setDate(dates[1]) ;
@@ -246,7 +246,7 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                                     (dates[1] < 7) && 
                                     <View style={{...styles.viewCircleStyles, ...handleColor(dates[1])}} />
                                 }
-                            <Text style={{...styles.cubeStyle, ...(dates[1] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[1]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[1] > 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[1]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[2] > 7} onPress={() => {
                             tempDate.setDate(dates[2]) ;
@@ -257,7 +257,7 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                                     (dates[2] < 7) && 
                                     <View style={{...styles.viewCircleStyles, ...handleColor(dates[2])}} />
                                 }
-                            <Text style={{...styles.cubeStyle, ...(dates[2] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[2]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[2] > 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[2]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[3] > 7} onPress={() => {
                             tempDate.setDate(dates[3]) ;
@@ -268,7 +268,7 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                                     (dates[3] < 7) && 
                                     <View style={{...styles.viewCircleStyles, ...handleColor(dates[3])}} />
                                 }
-                            <Text style={{...styles.cubeStyle, ...(dates[3] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[3]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[3] > 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[3]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[4] > 7} onPress={() => {
                             tempDate.setDate(dates[4]) ;
@@ -279,7 +279,7 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                                     (dates[4] < 7) && 
                                     <View style={{...styles.viewCircleStyles, ...handleColor(dates[4])}} />
                                 }
-                            <Text style={{...styles.cubeStyle, ...(dates[4] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[4]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[4] > 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[4]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[5] > 7} onPress={() => {
                             tempDate.setDate(dates[5]) ;
@@ -290,14 +290,14 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                                     (dates[5] < 7) && 
                                     <View style={{...styles.viewCircleStyles, ...handleColor(dates[5])}} />
                                 }
-                            <Text style={{...styles.cubeStyle, ...(dates[5] > 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[5]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[5] > 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[5]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[6]) ; 
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[6])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[6]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[6]}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.rowStyles}>
@@ -306,49 +306,49 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[7])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[7]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[7]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[8]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[8])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[8]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[8]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[9]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[9])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[9]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[9]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[10]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[10])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[10]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[10]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[11]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[11])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[11]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[11]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[12]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[12])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[12]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[12]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[13]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[13])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[13]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[13]}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.rowStyles}>
@@ -357,49 +357,49 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[14])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[14]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[14]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[15]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[15])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[15]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[15]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[16]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[16])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[16]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[16]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[17]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[17])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[17]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[17]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[18]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[18])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[18]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[18]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[19]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[19])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[19]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[19]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             tempDate.setDate(dates[20]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[20])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[20]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[20]}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.rowStyles}>
@@ -408,49 +408,49 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[21])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[21]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[21]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity  onPress={() => {
                             tempDate.setDate(dates[22]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[22])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[22]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[22]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity  onPress={() => {
                             tempDate.setDate(dates[23]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[23])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[23]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[23]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity  onPress={() => {
                             tempDate.setDate(dates[24]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[24])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[24]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[24]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity  onPress={() => {
                             tempDate.setDate(dates[25]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[25])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[25]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[25]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity  onPress={() => {
                             tempDate.setDate(dates[26]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[26])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[26]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[26]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity  onPress={() => {
                             tempDate.setDate(dates[27]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && <View style={{...styles.viewCircleStyles, ...handleColor(dates[27])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[27]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[27]}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.rowStyles}>
@@ -459,49 +459,49 @@ export const Calendar = ({ date, setDate, bookings, hasBookings }) => {
                             setDate(tempDate);
                             }}>
                                 {hasBookings && dates[28] > 7 && <View style={{...styles.viewCircleStyles, ...handleColor(dates[28])}} />}
-                            <Text style={{...styles.cubeStyle, ...defaultStyles.text16Black}}>{dates[28]}</Text>
+                            <Text style={{...styles.cubeStyle, ...fontStyles.text20Black}}>{dates[28]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[29] < 7} onPress={() => {
                             tempDate.setDate(dates[29]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && dates[29] > 7 && <View style={{...styles.viewCircleStyles, ...handleColor(dates[29])}} />}
-                            <Text style={{...styles.cubeStyle, ...(dates[29] < 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[29]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[29] < 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[29]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[30] < 7} onPress={() => {
                             tempDate.setDate(dates[30]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && dates[30] > 7 && <View style={{...styles.viewCircleStyles, ...handleColor(dates[30])}} />}
-                            <Text style={{...styles.cubeStyle, ...(dates[30] < 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[30]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[30] < 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[30]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[31] < 7} onPress={() => {
                             tempDate.setDate(dates[31]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && dates[31] > 7 && <View style={{...styles.viewCircleStyles, ...handleColor(dates[31])}} />}
-                            <Text style={{...styles.cubeStyle, ...(dates[31] < 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[31]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[31] < 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[31]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[32] < 7} onPress={() => {
                             tempDate.setDate(dates[32]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && dates[32] > 7 && <View style={{...styles.viewCircleStyles, ...handleColor(dates[32])}} />}
-                            <Text style={{...styles.cubeStyle, ...(dates[32] < 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[32]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[32] < 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[32]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[33] < 7} onPress={() => {
                             tempDate.setDate(dates[33]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && dates[33] > 7 && <View style={{...styles.viewCircleStyles, ...handleColor(dates[33])}} />}
-                            <Text style={{...styles.cubeStyle, ...(dates[33] < 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[33]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[33] < 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[33]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity disabled={dates[34] < 7} onPress={() => {
                             tempDate.setDate(dates[34]) ;
                             setDate(tempDate);
                             }}>
                                 {hasBookings && dates[34] > 7 && <View style={{...styles.viewCircleStyles, ...handleColor(dates[34])}} />}
-                            <Text style={{...styles.cubeStyle, ...(dates[34] < 7) ? defaultStyles.text16Gray : defaultStyles.text16Black}}>{dates[34]}</Text>
+                            <Text style={{...styles.cubeStyle, ...(dates[34] < 7) ? fontStyles.text20Gray : fontStyles.text20Black}}>{dates[34]}</Text>
                         </TouchableOpacity>
                     </View>     
                </View>

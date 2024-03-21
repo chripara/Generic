@@ -3,20 +3,20 @@ import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import { EllipseButtonSecondary } from "../../components/EllipseButtonSecondary";
-import defaultStyles from "../../config/defaultStyles";
+import fontStyles from "../../config/StyleSheets/fontStyles";
 
 export const VerifyChangeEmailScreen = ({ navigation }) => (
     <MainScreen backgroundColor={colors.primary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text36White}>Verify Change</Text>
-                <Text style={defaultStyles.text36White}>Number</Text>
+                <Text style={fontStyles.text48White}>Verify Change</Text>
+                <Text style={fontStyles.text48White}>Number</Text>
             </View>
             <View style={styles.viewText}>
-                <Text style={defaultStyles.text20White}>Code:</Text>
-                <TextInput style={defaultStyles.textInput} />
-                <Text style={defaultStyles.text20White}>Email:</Text>
-                <TextInput style={defaultStyles.textInput} />
+                <Text style={fontStyles.text24White}>Code:</Text>
+                <TextInput style={fontStyles.textInput} />
+                <Text style={fontStyles.text24White}>Email:</Text>
+                <TextInput style={fontStyles.textInput} />
             </View>
             <EllipseButtonSecondary
                 name={"Verify Email"}
@@ -36,6 +36,5 @@ const styles = StyleSheet.create({
         position: "relative",
         marginVertical: "10%",
         paddingHorizontal: "5%",
-    },
-    clickableText: {},
+    }
 });
