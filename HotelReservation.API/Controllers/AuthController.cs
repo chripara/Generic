@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using System.Web;
+using Microsoft.VisualBasic;
 
 namespace HotelReservation.API.Controllers
 {
@@ -69,7 +70,7 @@ namespace HotelReservation.API.Controllers
             Log.Information("RegisterDto: {@RegisterDto}", FilterDto(JObject.FromObject(dto)));
 
             var userByUserName = await _userManager.FindByNameAsync(dto.UserName);
-            var userByEmail = await _userManager.FindByEmailAsync(dto.UserName);
+            var userByEmail = await _userManager.FindByEmailAsync(dto.UserName); //TODO: change to emailaddress...
             var userByPhoneNumber = _userManager.Users.FirstOrDefault(w => w.PhoneNumber == dto.PhoneNumber);
 
             if (userByUserName != null)
@@ -156,7 +157,7 @@ namespace HotelReservation.API.Controllers
             if(user == null)
             {
                 Log.Information("Username is invalid.");
-                return Ok("Username is invalid.");
+                return Ok("Username is invalid."); 
             }
 
             if(!user.EmailConfirmed)
@@ -235,7 +236,7 @@ namespace HotelReservation.API.Controllers
 
             var confirmationToken = HttpUtility.HtmlDecode(dto.Token).Replace(" ", "+");
 
-            if (user.EmailConfirmationToken == confirmationToken)
+            if (user.EmailConfirmationToken.Equals(confirmationToken))
             {
                 user.EmailConfirmed = true;
 
@@ -258,13 +259,13 @@ namespace HotelReservation.API.Controllers
             if (user == null)
             {
                 Log.Information("User not found.");
-                return NotFound("User not found.");
+                return NotFound("User not found."); //TODO: Remove that for security reasons
             }
 
             if (!user.EmailConfirmed)
             {
                 Log.Information("User not confirmed the email.");
-                return NotFound("User not confirmed the email.");
+                return NotFound("User not confirmed the email."); //TODO: Remove that for security reasons
             }
 
             await _userManager.RemovePasswordAsync(user);
@@ -274,7 +275,7 @@ namespace HotelReservation.API.Controllers
             if (generatedToken == null)
             {
                 Log.Information("Something went wrong no token generated. Please try again.");
-                return NotFound("Something went wrong no token generated. Please try again.");
+                return NotFound("Something went wrong no token generated. Please try again."); //TODO: Remove that for security reasons
             }
 
             user.ForgotPasswordConfirmationToken = generatedToken;
@@ -293,6 +294,23 @@ namespace HotelReservation.API.Controllers
             Log.Information("Please check your email for reset password code.");
             return Ok("Please check your email for reset password code.");
         }
+
+        [HttpPost]
+        [Route("GenerateVerCodePassword")]
+        public async Task<IActionResult> GenerateVerCodePassword()
+        {
+            var user = await _userManager.FindByNameAsync("stg");
+
+            var passCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            user.EmailConfirmationToken = "qwer"; //await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+            
+            return Ok(user);
+        }
+        
 
         [HttpPost]
         [Route("ResetPassword")]
@@ -516,7 +534,9 @@ namespace HotelReservation.API.Controllers
             return dto.ToString();
         }
         
-        //TODO: Connection string logs change 
-        //TODO: Keep only 1 Connection string or commends for specificcations
+        //TODO: All generation of verify codes are disabled should be enabled for Testing.  
+        //TODO: All Ok responses in case of an error is wrong should change to bad request response.
+        //TODO: Change logs to register in a DB Program.cs.
+        //TODO: Keep only 1 Connection string or commends for specifications.
     }
 }
