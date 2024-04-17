@@ -1,4 +1,6 @@
-﻿namespace HotelReservation.Application.Dto.Auth
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HotelReservation.Application.Dto.Auth
 {
     public class RegisterDto
     {

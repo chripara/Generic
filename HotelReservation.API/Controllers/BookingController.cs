@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HotelReservation.AppConstants;
-using HotelReservation.Application.AppConstants;
 using HotelReservation.Application.Dto.Booking;
 using HotelReservation.Application.Dto.Bookings;
 using HotelReservation.Application.Dto.General;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using Newtonsoft.Json.Linq;
 using Serilog;
 
@@ -52,7 +50,6 @@ namespace HotelReservation.API.Controllers
             
             Log.Information("Bookings : {@GetBookingsDto} \n Requested by User: {@Username}", FilterDto(JObject.FromObject(bookingDto)), loggedUser);
 
-            
             return Ok(bookingDto);
         }
 
@@ -62,10 +59,10 @@ namespace HotelReservation.API.Controllers
         public async Task<IActionResult> DeleteBooking(DeleteBookingDto dto)
         {
             Log.Information("DeleteBookingDto: {@DeleteBookingDto}", FilterDto(JObject.FromObject(dto)));
+            // var username = HttpContext.User.Identity?.Name;
+            var booking = await _context.Bookings.Include(i => i.User).FirstOrDefaultAsync(f=> f.Id == dto.Id);
             
-            var booking = await _context.Bookings.FindAsync(dto.Id);
-            
-            if (booking == null)
+            if (booking == null || HttpContext.User.Identity?.Name != booking.User.UserName)
             {
                 return NotFound();
             }
@@ -83,9 +80,13 @@ namespace HotelReservation.API.Controllers
         public async Task<IActionResult> CreateBookings(CreateBookingDto dto)
         {
             Log.Information("CreateBookingDto: {@CreateBookingDto}", FilterDto(JObject.FromObject(dto)));
+            var currentUser =
+                await _context.Users.FirstOrDefaultAsync(f => f.UserName == HttpContext.User.Identity.Name);
             
             var newBooking = _mapper.Map<Booking>(dto);
 
+            newBooking.UserId = currentUser.Id;
+            
             var bookingsForHotelRoom = await _context.HotelRooms.Include(i => i.Bookings)
                 .FirstOrDefaultAsync(f => f.Id == dto.HotelRoomId);
 
@@ -114,7 +115,7 @@ namespace HotelReservation.API.Controllers
             
             var booking = await _context.Bookings.FindAsync(dto.Id);
             
-            if (booking == null)
+            if (booking == null || HttpContext.User.Identity?.Name != booking.User.UserName)
             {
                 return NotFound();
             }
@@ -128,7 +129,8 @@ namespace HotelReservation.API.Controllers
                     StartDate = dto.StartDate
                 }))
             {
-                _context.Update(_mapper.Map<Booking>(dto));
+                var updateBooking = _mapper.Map<Booking>(dto);
+                _context.Update(updateBooking);
                 await _context.SaveChangesAsync();
 
                 return Ok();
@@ -139,7 +141,7 @@ namespace HotelReservation.API.Controllers
 
         [Route("GetMyBookings")]
         [HttpGet]
-        [Authorize(Roles = RoleConstants.RoleAdmin)]
+        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleUser)]
         public async Task<IActionResult> GetMyBookings()
         {
             var loggedUser = await  _context.Users.Include(i=> i.Bookings)
@@ -168,9 +170,10 @@ namespace HotelReservation.API.Controllers
                         HotelAddress = bookingsWithHotelAndHotelRooms.HotelRoom.Hotel.Address,
                         RoomNumber = bookingsWithHotelAndHotelRooms.HotelRoom.RoomNumber
                     }
-                    );
+                );
             }
             
+            Log.Information("HotelDto: {@HotelDto}", JArray.FromObject(getMyBookings));
             return Ok(getMyBookings);
         }
 
@@ -185,13 +188,15 @@ namespace HotelReservation.API.Controllers
                 .Include(i => i.HotelRoom.Hotel)
                 .Where(w => w.HotelRoom.Hotel.Name == dto.HotelName)
                 .ToList();
-
-            return Ok();
+            
+            var listOfBookings = _mapper.Map<BookingDto>(bookings);           
+            Log.Information("GetBookingForHotelDto: {@GetBookingForHotelDto}", JArray.FromObject(listOfBookings));
+            return Ok(listOfBookings);
         }
 
         [Route("SeedBookings")]
         [HttpPost]
-        [Authorize(Roles = RoleConstants.RoleAdmin + "," + RoleConstants.RoleUser)]
+        [Authorize(Roles = RoleConstants.RoleAdmin)]
         public async Task<IActionResult> SeedBookings()
         {
             var hotels = _context.Hotels.Include(i => i.HotelRooms).ToList();
@@ -204,10 +209,10 @@ namespace HotelReservation.API.Controllers
                     var counterEnd = 0;
                     var tempCountStart = RandomNumInt();
                     
-                    for(var i=0; i<=3; i++)
-                    {
-                        counterStart += i * 3 + 1;
-                        counterEnd += i * 3 + 1 + tempCountStart ;
+                    // for(var i=0; i<=3; i++)
+                    // {
+                        counterStart += 1 * 3 + 1;
+                        counterEnd += 1 * 3 + 1 + tempCountStart ;
 
                         _context.Bookings.Add(new Booking
                         {
@@ -218,18 +223,18 @@ namespace HotelReservation.API.Controllers
                             HotelRoomId = hotelRoom.Id,
                             LastName = "asdfasdf",
                             Room = "asdf",
-                            UserId = 1,
+                            UserId = 1 //
                         });
 
                         await _context.SaveChangesAsync();
-                        tempCountStart = RandomNumInt();
-                    }
+                        //tempCountStart = RandomNumInt();
+                    //}
                 }
             }
 
             return Ok();
         }
-
+ 
         private bool IsDatesAvailable(List<Booking> bookings, DateRangeDto dto)
         {
             var isDatesAvailable = true;

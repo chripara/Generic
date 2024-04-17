@@ -1,4 +1,4 @@
-using System.Reflection;
+ using System.Reflection;
 using AutoMapper;
 using HotelReservation.Application.Profiles;
 using HotelReservation.Application.Services.Email;
@@ -27,7 +27,10 @@ Log.Logger = new LoggerConfiguration()
     .CreateBootstrapLogger();
 
 builder.Host.UseSerilog(
-    (ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)    
+    (ctx, lc) => lc
+        // .WriteTo();
+        .ReadFrom.Configuration(ctx.Configuration)
+        
 );
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -60,7 +63,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     // User settings.
     options.User.AllowedUserNameCharacters =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_+=-";
-    options.User.RequireUniqueEmail = true;    
+    options.User.RequireUniqueEmail = true;
 });
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -87,29 +90,29 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-
-using (var scope = app.Services.CreateScope())
-{
-    try
-    {
-        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        Console.WriteLine("Is SQL Server {0}", db.Database.IsSqlServer());
-        Console.WriteLine("Can connect {0}", 1);
-        Console.WriteLine("Can connect {0}", 2);
-        Console.WriteLine("Can connect {0}", 3);
-        //db.Database.OpenConnection();
-        //Console.WriteLine("Can connect {0}", db.Database.CanConnect());
-        // db.Database.Migrate();
-        //db.Database.CloseConnection();
-        // Console.WriteLine("Can connect {0}", db.Database.CanConnect());
-        // db.Database.Migrate();
-        await db.Database.MigrateAsync();        
-    }
-    catch(System.Exception e) 
-    {
-        Console.WriteLine(e);
-    }    
-}
+//
+// using (var scope = app.Services.CreateScope())
+// {
+//     try
+//     {
+//         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//         Console.WriteLine("Is SQL Server {0}", db.Database.IsSqlServer());
+//         Console.WriteLine("Can connect {0}", 1);
+//         Console.WriteLine("Can connect {0}", 2);
+//         Console.WriteLine("Can connect {0}", 3);
+//         //db.Database.OpenConnection();
+//         //Console.WriteLine("Can connect {0}", db.Database.CanConnect());
+//         // db.Database.Migrate();
+//         //db.Database.CloseConnection();
+//         // Console.WriteLine("Can connect {0}", db.Database.CanConnect());
+//         // db.Database.Migrate();
+//         await db.Database.MigrateAsync();        
+//     }
+//     catch(System.Exception e) 
+//     {
+//         Console.WriteLine(e);
+//     }    
+// }
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
@@ -121,7 +124,7 @@ using (var scope = app.Services.CreateScope())
 app.UseHttpsRedirection();
 app.UseSerilogRequestLogging(options =>
 {
-
+    
 });
 
 app.UseCors(options => options  

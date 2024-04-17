@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using System.Web;
+using HotelReservation.Application.AppConstants;
 using Microsoft.VisualBasic;
 
 namespace HotelReservation.API.Controllers
@@ -63,6 +64,8 @@ namespace HotelReservation.API.Controllers
             return new JsonResult(test);
         }  
 
+        //Auto verify create acc to bypass email and sms verification proccess
+        //email and sms verification works but it is a demo without the external services.
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register(RegisterDto dto)
@@ -70,7 +73,7 @@ namespace HotelReservation.API.Controllers
             Log.Information("RegisterDto: {@RegisterDto}", FilterDto(JObject.FromObject(dto)));
 
             var userByUserName = await _userManager.FindByNameAsync(dto.UserName);
-            var userByEmail = await _userManager.FindByEmailAsync(dto.UserName); //TODO: change to emailaddress...
+            var userByEmail = await _userManager.FindByEmailAsync(dto.Email); 
             var userByPhoneNumber = _userManager.Users.FirstOrDefault(w => w.PhoneNumber == dto.PhoneNumber);
 
             if (userByUserName != null)
@@ -111,36 +114,40 @@ namespace HotelReservation.API.Controllers
                 return BadRequest(registerationIdentityResult.Errors);
             }
 
-            _context.SaveChanges();
-            
             var newUser = await _userManager.FindByEmailAsync(dto.Email);
-            _userManager.AddToRoleAsync(newUser, RoleConstants.RoleUser);
-            //await _userManager.AddPasswordAsync(newUser, dto.Password);
+            // _userManager.AddToRoleAsync(newUser, RoleConstants.RoleUser);
+            newUser.EmailConfirmed = true;
+            newUser.PhoneNumberConfirmed = true;
+            _context.Update(newUser);
+            await _context.SaveChangesAsync();
+            // await _userManager.AddPasswordAsync(newUser, dto.Password);
 
             //var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+            //; "asdfasdf"; //for testing
             
-            //if (emailConfirmationToken == null)
-            //{
-            //    Log.Information("Something went wrong no token generated. Please try again.");
-            //    return NotFound("Something went wrong no token generated. Please try again.");
-            //}
+            // if (emailConfirmationToken == null)
+            // {
+            //     Log.Information("Something went wrong no token generated. Please try again.");
+            //     return NotFound("Something went wrong no token generated. Please try again.");
+            // }
+            //_context.SaveChanges();
 
-            //newUser.EmailConfirmationToken = emailConfirmationToken;
-            //newUser.EmailExpirationTime = DateTime.Now.AddHours(1);
+            // newUser.EmailConfirmationToken = emailConfirmationToken;
+            // _context.SaveChanges();
+            // newUser.EmailExpirationTime = DateTime.Now.AddHours(24);
+            // _context.SaveChanges();
 
-            //_context.Update<User>(newUser);
-            //await _context.SaveChangesAsync();
+            // _context.SaveChanges();
 
-            //var encodedToken = HttpUtility.HtmlAttributeEncode(emailConfirmationToken);
-            //var subject = "Verification email for generic app.";
-            //var plainTextContent = "Please click to this link to verify your email: " + "https://localhost:44347/api/Auth/VerificationEmail?token=" + encodedToken;
-            //var htmlContent = "<strong>Please click to this link to verify your email: " + "https://localhost:44347/api/Auth/VerificationEmail?token=" + encodedToken + "&email=" + newUser.Email + "</strong>";
-            
-            //var response = await _emailSender.EmailSenderAsync(newUser.Email, newUser.UserName, HttpUtility.HtmlEncode(emailConfirmationToken), subject, plainTextContent, htmlContent);
-
-            //newUser.PhoneNumberTokenVerificationCode = GeneratePhoneToken(AuthConstants.PhoneVerificationTokenDigits);
-
-            //await _smsSender.SmsSenderAsync(AuthConstants.DefaultPhone , "Verify your phone code:" + newUser.PhoneNumberTokenVerificationCode);
+            // var encodedToken = HttpUtility.HtmlAttributeEncode(emailConfirmationToken);
+            // var subject = "Verification email for generic app.";
+            // var plainTextContent = "Please click to this link to verify your email: " + "https://localhost:44347/api/Auth/VerificationEmail?token=" + encodedToken;
+            // var htmlContent = "<strong>Please click to this link to verify your email: " + "https://localhost:44347/api/Auth/VerificationEmail?token=" + encodedToken + "&email=" + newUser.Email + "</strong>";
+            //
+            // var response = await _emailSender.EmailSenderAsync(newUser.Email, newUser.UserName, HttpUtility.HtmlEncode(emailConfirmationToken), subject, plainTextContent, htmlContent);
+            // newUser.PhoneNumberTokenVerificationCode = GeneratePhoneToken(AuthConstants.PhoneVerificationTokenDigits);
+            //
+            // await _smsSender.SmsSenderAsync(AuthConstants.DefaultPhone , "Verify your phone code:" + newUser.PhoneNumberTokenVerificationCode);
 
             Log.Information("Please verify your email.");
             return Ok("Please verify your email.");
@@ -157,25 +164,25 @@ namespace HotelReservation.API.Controllers
             if(user == null)
             {
                 Log.Information("Username is invalid.");
-                return Ok("Username is invalid."); 
+                return BadRequest("Username is invalid."); 
             }
 
             if(!user.EmailConfirmed)
             {
                 Log.Information("Email is not comfirmed.");
-                return Ok("Email is not comfirmed.");
+                return BadRequest("Email is not comfirmed.");
             }
 
             if(!(await _userManager.CheckPasswordAsync(user, dto.Password)))
             {
                 Log.Information("Password not a match.");
-                return Ok("Password not a match.");
+                return BadRequest("Password not a match.");
             }
 
             await _signInManager.SignInAsync(user, false);
 
-            Log.Information("Sign in is successfull.");
-            return Ok("Sign in is successfull.");
+            Log.Information("Sign in is successful with User {0}.",user.UserName);
+            return Ok("Sign in is successful.");
         }
 
         [HttpGet]
@@ -184,7 +191,7 @@ namespace HotelReservation.API.Controllers
         {
             await _signInManager.SignOutAsync();
             
-            Log.Information("Signout successfull.");
+            Log.Information("Signout successful.");
             return Ok("Signout successful.");
         }
 
@@ -239,6 +246,7 @@ namespace HotelReservation.API.Controllers
             if (user.EmailConfirmationToken.Equals(confirmationToken))
             {
                 user.EmailConfirmed = true;
+                user.EmailConfirmationToken = "";
 
                 _context.Update(user);
                 await _context.SaveChangesAsync();
@@ -294,27 +302,10 @@ namespace HotelReservation.API.Controllers
             Log.Information("Please check your email for reset password code.");
             return Ok("Please check your email for reset password code.");
         }
-
-        [HttpPost]
-        [Route("GenerateVerCodePassword")]
-        public async Task<IActionResult> GenerateVerCodePassword()
-        {
-            var user = await _userManager.FindByNameAsync("stg");
-
-            var passCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-            user.EmailConfirmationToken = "qwer"; //await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-            _context.Update(user);
-            await _context.SaveChangesAsync();
-            
-            return Ok(user);
-        }
-        
-
+ 
         [HttpPost]
         [Route("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromQuery] ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto dto) 
         {
             Log.Information("ResetPasswordDto: {@dto}", FilterDto(JObject.FromObject(dto)));
 
@@ -334,9 +325,9 @@ namespace HotelReservation.API.Controllers
                 return NotFound("Forgot password confirmation token is not a match please try again.");
             }
 
-            if (user.EmailConfirmationToken != confirmationToken)
+            if (user.Email != dto.Email)
             {
-                Log.Information("Email is not confirmed.");
+                Log.Information("Email is not confirmed."); 
                 return NotFound("Email is not confirmed.");
             }
             user.EmailConfirmed = true;
@@ -534,9 +525,5 @@ namespace HotelReservation.API.Controllers
             return dto.ToString();
         }
         
-        //TODO: All generation of verify codes are disabled should be enabled for Testing.  
-        //TODO: All Ok responses in case of an error is wrong should change to bad request response.
-        //TODO: Change logs to register in a DB Program.cs.
-        //TODO: Keep only 1 Connection string or commends for specifications.
     }
 }

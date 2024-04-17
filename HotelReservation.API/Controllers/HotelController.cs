@@ -39,6 +39,7 @@ namespace HotelReservation.API.Controllers
             Log.Information("GetAllHotels");
             var hotels = _mapper.Map<List<HotelDto>>(_context.Hotels.ToList());
 
+            Log.Information("Hotel: {@Hotel}", JArray.FromObject(hotels));
             return Ok(hotels);
         }
 
@@ -49,6 +50,7 @@ namespace HotelReservation.API.Controllers
             Log.Information("GetHotels: {@id}", id);
             var hotel = await _context.Hotels.FindAsync(id);
 
+            Log.Information("Hotel: {@Hotel}", FilterDto(JObject.FromObject(hotel)));
             return Ok(hotel);
         }
 
@@ -103,15 +105,15 @@ namespace HotelReservation.API.Controllers
         {
             Log.Information("FindAvailableRoomsForHotelDto: {@FindAvailableRoomsForHotelDto}", FilterDto(JObject.FromObject(dto)));
 
-            var hotel = await _context.Hotels.FirstOrDefaultAsync(f => f.Name == dto.HotelName);
+            var hotel = await _context.Hotels
+                .Include(i => i.HotelRooms)
+                .FirstOrDefaultAsync(f => f.Name == dto.HotelName); //include HotelRooms
 
             if (hotel == null)
             {
                 Log.Information("Hotel not found.");
                 return NotFound("Hotel not found.");
             }
-
-            var hotelRooms = _context.HotelRooms.Where(w => w.HotelId == hotel.Id);
 
             var bookings = FindBookingsForRangeDate(dto);
 
@@ -127,7 +129,7 @@ namespace HotelReservation.API.Controllers
                 HotelRoomDtos = _mapper.Map<List<HotelRoom>, List<HotelRoomDto>>(hotel.HotelRooms.ToList())
             };
 
-            Log.Information("AvailabilityInHotel: {@AvailabilityInHotel}", FilterDto(JObject.FromObject(availability)));
+            Log.Information("AvailabilityInHotel: {@AvailabilityInHotel}", JArray.FromObject(availability));
             return Ok(availability);
         }
 
@@ -147,21 +149,21 @@ namespace HotelReservation.API.Controllers
             var hotels = _context.Hotels.Include(i=>i.HotelRooms).ToList();
             var hotelRooms = _context.HotelRooms.Include(i=>i.Hotel).ToList();
 
-            if (dto.City != null && dto.City !="")
+            if (string.IsNullOrEmpty(dto.City))
             {
                 bookings = bookings.Where(w => w.HotelRoom.Hotel.City == dto.City).ToList();
                 hotels = hotels.Where(w => w.City == dto.City).ToList();
                 hotelRooms = hotelRooms.Where(w => w.Hotel.City == dto.City).ToList();
             }
             
-            if (dto.Capacity != null && dto.Capacity != "")
+            if (string.IsNullOrEmpty(dto.Capacity))
             {
                 bookings = bookings.Where(w => w.HotelRoom.Capacity == dto.Capacity).ToList();
                 hotels = hotels.Where(w => w.HotelRooms.Any(a => a.Capacity == dto.Capacity)).ToList();
                 hotelRooms = hotelRooms.Where(w => w.Capacity == dto.Capacity).ToList();                
             }
 
-            if (dto.MinPricePerDay != null)
+            if (dto.MinPricePerDay.HasValue)
             {
                 bookings = bookings.Where(w => w.HotelRoom.Cost
                     >= dto.MinPricePerDay).ToList();
@@ -169,8 +171,8 @@ namespace HotelReservation.API.Controllers
                     w.Cost >= dto.MinPricePerDay)).ToList();
                 hotelRooms = hotelRooms.Where(w => w.Cost >= dto.MinPricePerDay).ToList();
             }
-
-            if (dto.MaxPricePerDay != null)
+            
+            if (dto.MaxPricePerDay.HasValue)
             {
                 bookings = bookings.Where(w => w.HotelRoom.Cost 
                     <= dto.MaxPricePerDay).ToList();
@@ -178,7 +180,7 @@ namespace HotelReservation.API.Controllers
                     w.Cost <= dto.MaxPricePerDay)).ToList();
                 hotelRooms = hotelRooms.Where(w => w.Cost <= dto.MaxPricePerDay).ToList();
             }
-
+            
             var availabilityInHotel = new List<AvailabilityInHotel>();
 
             foreach(var hotel in hotels)
@@ -195,7 +197,9 @@ namespace HotelReservation.API.Controllers
                 });
             }
 
-            Log.Information("AvailabilityInHotel: {@AvailabilityInHotel}", FilterDto(JObject.FromObject(availabilityInHotel)));
+            var asdas = JObject.FromObject(availabilityInHotel);
+            var av = FilterDto(JObject.FromObject(availabilityInHotel));
+            Log.Information("AvailabilityInHotel: {@AvailabilityInHotel}", JArray.FromObject(availabilityInHotel));
             return Ok(availabilityInHotel);
         }
 
@@ -370,10 +374,6 @@ namespace HotelReservation.API.Controllers
             return Ok("Hotel rooms created.");
         }
 
-        //[Route("GetDetailsForHotel")]
-        //[Route("GetHotels")]
-        //[Route("GetHotelsWithOffers")]
-
         [Route("ChangeCost")]
         [Authorize]
         [HttpPost]
@@ -407,6 +407,8 @@ namespace HotelReservation.API.Controllers
             return Ok();
         }
 
+        //TODO: AvailabilityInHotel for Logs 500.
+        
         private List<Booking> FindBookingsForRangeDate(FindAvailableRoomsForHotelDto dto)
         {
             var bookings = _context.Bookings.Where(p => 

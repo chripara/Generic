@@ -12,6 +12,7 @@ namespace HotelReservation.Application.Profiles
             CreateMap<Booking, CreateBookingDto>().ReverseMap();
             CreateMap<Booking, GetBookingsDto>().ReverseMap();
             CreateMap<Booking, UpdateBookingDto>().ReverseMap();
+            CreateMap<Booking, UpdateBookingDto>().ReverseMap();
             CreateMap<Booking, DeleteBookingDto>().ReverseMap();
             CreateMap<Booking, BookedDatesDto>().ForMember(f => f.RoomNumber, mf => mf.MapFrom(p => p.HotelRoom.RoomNumber));
         }

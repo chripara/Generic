@@ -13,7 +13,7 @@ namespace HotelReservation.Domain.Mappings.Bookings
                 .HasForeignKey(x => x.HotelId);
 
             builder.Property(p => p.RoomNumber).HasMaxLength(10);
-            builder.Property(p => p.Capacity).HasMaxLength(10);
+            builder.Property(p => p.Capacity).HasMaxLength(4);
             builder.Property(p => p.Cost).HasMaxLength(10);
             builder.Property(p => p.Description).HasMaxLength(2000);            
         }
