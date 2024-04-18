@@ -30,9 +30,9 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
     }
 
     return(
-        <View style={{ ...styles.container, ...hasDescription ? { height: numberOfPairs*65+80 } : { height: numberOfPairs*65 } }}>
+        <View style={{ ...styles.container, ...hasDescription ? { height: numberOfPairs*70+60 } : { height: numberOfPairs * 70 } }}>
             {
-                hasDelete
+                hasDelete 
                 &&
                 <View style={{ position: 'absolute', top: 20, right: 17 }}>
                     <DeleteIcon onClick={deleteFunc}/>
@@ -40,14 +40,14 @@ export const Card = ({ contentPair, numberOfPairs, hasDescription, deleteFunc, h
             }            
             {contentPair.map((content, index) => {
                 return (
-                    <View>
+                    <View key={index}>
                         <Text style={{ ...styles.textBorder, ...fontStyles.text20White}}>{content.title}</Text>
                         {
                             (index === numberOfPairs - 1 && hasDescription )
                             ?                        
-                                <View style={{height: 105, width: width * 0.7}}>
+                                <View style={{height: 80, width: width * 0.7}}>
                                     <ScrollView
-                                        style={{height: 105, width: width * 0.65}}
+                                        style={{height: 80, width: width * 0.65}}
                                         ref={scrollViewRef}
                                     >
                                         <Text style={{ 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         height: 22
     },
     arrowsView: {
-        height: 115,
+        height: 90,
         justifyContent: 'space-between',
         position: 'absolute',
         top: - width * 0.01,

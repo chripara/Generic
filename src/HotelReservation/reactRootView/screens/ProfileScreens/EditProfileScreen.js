@@ -5,29 +5,31 @@ import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import fontStyles from "../../config/StyleSheets/fontStyles";
 
+// const content = [
+//     {
+//         title: "FirstName:",
+//         text: "Luitgard",            
+//     },
+//     {
+//         title: "LastName:",
+//         text: "Abdullah",   
+//     },
+//     {
+//         title: "Location:",
+//         text: "9935 Briarwood DriveLakeville, MN 55044",
+//     },
+//     {
+//         title: "Email:",
+//         text: "LuitgardAbdullah@gmail.com",   
+//     },
+//     {
+//         title: "Phone Number:",
+//         text: "941-812-2553",   
+//     }
+// ]
 
-const content = [
-    {
-        title: "FirstName:",
-        text: "Luitgard",            
-    },
-    {
-        title: "LastName:",
-        text: "Abdullah",   
-    },
-    {
-        title: "Location:",
-        text: "9935 Briarwood DriveLakeville, MN 55044",   
-    },
-    {
-        title: "Email:",
-        text: "LuitgardAbdullah@gmail.com",   
-    },
-    {
-        title: "Phone Number:",
-        text: "941-812-2553",   
-    }
-]
+//TODO: Not endpoint yet for that screen.
+//TODO: Edit profile screen needs change email & phone buttons for navigation.
 
 export const EditProfileScreen = ({ navigation }) => (    
     <MainScreen backgroundColor={colors.secondary}>
@@ -42,10 +44,10 @@ export const EditProfileScreen = ({ navigation }) => (
                 <TextInput style={fontStyles.textInput} />
                 <Text style={fontStyles.text24White}>Location:</Text>
                 <TextInput style={fontStyles.textInput} />
-                <Text style={fontStyles.text24White}>Email:</Text>
+                {/* <Text style={fontStyles.text24White}>Email:</Text>
                 <TextInput style={fontStyles.textInput} />
                 <Text style={fontStyles.text24White}>Phone Number:</Text>
-                <TextInput style={fontStyles.textInput} />
+                <TextInput style={fontStyles.textInput} /> */}
             </View>
             <EllipseButtonPrimary
                 marginTop={"3%"}

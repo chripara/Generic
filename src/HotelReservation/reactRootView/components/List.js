@@ -6,7 +6,7 @@ import { Card } from './Card';
 
 const width = Dimensions.get('window').width;
 
-export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc, hasDescription }) => {
+export const List = ({contentPair, numberOfPairs, hasDelete, deleteFunc, hasDescription }) => {
     
     const currIndex = useRef();
     
@@ -15,29 +15,32 @@ export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc, hasDes
     const handleDeleteFromList = (index) => {
         deleteFunc(index);
         setRandomNum(Math.random());
-        currIndex.current.scrollTo({ x: width * (index-1) });    
+        currIndex.current.scrollTo({ x: width * (index - 1) });    
     }
 
-    return (
+    // console.log("In List ", contentPair, " length ", contentPair.Count);               
+
+    return ( 
         <ScrollView 
             horizontal={true}
             showsHorizontalScrollIndicator={false} 
-            style={{ ...hasDescription ? {height: numberOfPairs*75 + 80} :{ height: numberOfPairs*75} , width: width}}
+            style={{ ...hasDescription ? {height: numberOfPairs * 85 + 60} : { height: numberOfPairs * 85} , width: width}}
             contentContainerStyle={styles.scrollViewContainer}
             scrollEnabled={false}
             ref={currIndex}
         >
-            {contentPair.map((pairs, index) => {            
-            return (      
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>        
-                    <View  style={{ ...styles.container, flexDirection: 'column' }}>
-                        { 
-                            hasDelete
-                            ?
-                            <Card contentPair={pairs} numberOfPairs={numberOfPairs} hasDescription={true} hasDelete={true} deleteFunc={() => handleDeleteFromList(index)}/> 
-                            :
-                            <Card contentPair={pairs} numberOfPairs={numberOfPairs}/> 
-                        }
+        {
+            contentPair 
+            &&
+            contentPair.length > 0 
+            ?
+            contentPair.map((content, index) => {  
+                // console.log("Content Num ", content.numberOfPairs); 
+                // console.log("Content pair", content.pairs);
+            return(
+                <View style={{justifyContent: 'center', alignItems: 'center'}} key={index}>        
+                    <View  style={{ ...styles.container, flexDirection: 'column' }}>                
+                        <Card contentPair={content.pairs} numberOfPairs={content.numberOfPairs} hasDescription={hasDescription} hasDelete={hasDelete} deleteFunc={deleteFunc}/>                            
                     </View>
                     <View style={styles.changeHotelCard}>
                         <ArrowButton
@@ -57,8 +60,10 @@ export const List = ({ contentPair, numberOfPairs, hasDelete, deleteFunc, hasDes
                         />
                     </View>    
                 </View>
-        )
-        })}
+            )})
+            :
+            <View/>
+        }
         </ScrollView>
     )
 };

@@ -1,12 +1,12 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AuthScreen } from "../screens/AuthScreens/AuthScreen";
 import { ForgetPasswordScreen } from "../screens/AuthScreens/ForgetPasswordScreen";
 import { SignInScreen } from "../screens/AuthScreens/SignInScreen";
 import { SignUpScreen } from "../screens/AuthScreens/SignUpScreen";
 import { VerifyPhoneNumberScreen } from "../screens/AuthScreens/VerifyPhoneNumberScreen";
-import { VerifyChangeEmailScreen } from "../screens/AuthScreens/VerifyChangeEmailScreen";
+import { ResetPasswordScreen } from "../screens/AuthScreens/ResetPasswordScreen";
 import { WelcomeScreen } from "../screens/AuthScreens/WelcomeScreen";
+import { BookingListHotelScreen } from "../screens/BookingScreens/BookingListHotelScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,12 +21,7 @@ export const AuthStack = () => (
                 name="VerifyPhoneNumber"
                 component={VerifyPhoneNumberScreen}
                 options={{ headerVisible: false }}
-            />
-            <Stack.Screen
-                name="VerifyChangeEmail"
-                component={VerifyChangeEmailScreen}
-                options={{ headerVisible: false }}
-            />           
+            />         
             <Stack.Screen
                 name="ForgotPassword"
                 component={ForgetPasswordScreen}
@@ -37,6 +32,16 @@ export const AuthStack = () => (
                 component={SignUpScreen}
                 options={{ headerVisible: false }}
             />
+            <Stack.Screen
+                name="ResetPassword"
+                component={ResetPasswordScreen}
+                options={{ headerVisible: false }}
+            />
+            <Stack.Screen
+                name="BookingListHotel"
+                component={BookingListHotelScreen}
+                options={{ headerVisible: false }}
+            />            
             <Stack.Screen
                 name="SignIn"
                 component={SignInScreen}

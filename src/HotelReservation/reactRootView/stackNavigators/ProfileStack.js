@@ -5,6 +5,7 @@ import { ManageAccountScreen } from "../screens/ProfileScreens/ManageAccountScre
 import { ChangePasswordScreen } from "../screens/ProfileScreens/ChangePasswordScreen";
 import { ChangeEmailScreen } from "../screens/ProfileScreens/ChangeEmailScreen";
 import { EditProfileScreen } from "../screens/ProfileScreens/EditProfileScreen";
+import { SignInScreen } from "../screens/AuthScreens/SignInScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,13 +14,13 @@ export const ProfileStack = () => (
             initialRouteName="Profile"
         >            
             <Stack.Screen
-                name="Profile"
+                name="ProfileScreen"
                 component={ProfileScreen}
                 options={{ headerVisible: false }}
             />
             <Stack.Screen
-                name="ManageAccount"
-                component={ManageAccountScreen}
+                name="SignIn"
+                component={SignInScreen}
                 options={{ headerVisible: false }}
             />
             <Stack.Screen
@@ -31,11 +32,6 @@ export const ProfileStack = () => (
                 name="ChangeEmail"
                 component={ChangeEmailScreen}
                 options={{ headerVisible: false }}
-            />  
-            <Stack.Screen
-                name="EditProfile"
-                component={EditProfileScreen}
-                options={{ headerVisible: false }}
-            />            
+            /> 
         </Stack.Navigator>
 );

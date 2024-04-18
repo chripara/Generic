@@ -5,7 +5,7 @@ import { ForgetPasswordScreen } from "../screens/AuthScreens/ForgetPasswordScree
 import { SignInScreen } from "../screens/AuthScreens/SignInScreen";
 import { SignUpScreen } from "../screens/AuthScreens/SignUpScreen";
 import { VerifyPhoneNumberScreen } from "../screens/AuthScreens/VerifyPhoneNumberScreen";
-import { VerifyChangeEmailScreen } from "../screens/AuthScreens/VerifyChangeEmailScreen";
+// import { VerifyChangeEmailScreen } from "../screens/AuthScreens/VerifyChangeEmailScreen";
 import { WelcomeScreen } from "../screens/AuthScreens/WelcomeScreen";
 
 const Stack = createNativeStackNavigator();
@@ -22,11 +22,11 @@ export const HotelStack = () => (
                 component={VerifyPhoneNumberScreen}
                 options={{ headerVisible: false }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
                 name="VerifyChangeEmail"
                 component={VerifyChangeEmailScreen}
                 options={{ headerVisible: false }}
-            />
+            /> */}
             <Stack.Screen
                 name="ForgotPassword"
                 component={ForgetPasswordScreen}

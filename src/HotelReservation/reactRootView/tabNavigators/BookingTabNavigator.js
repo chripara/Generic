@@ -17,6 +17,7 @@ export const BookingTabNavigator = () => (
             activeColor={colors.brown}
             barStyle={{ backgroundColor: colors.primary }}
             screenOptions={ () => ({                
+                tabBarHideOnKeyboard: true,     
                 activeBackgroundColors: colors.brown,
                 tabBarIndicatorStyle: { 
                     width: 50, 

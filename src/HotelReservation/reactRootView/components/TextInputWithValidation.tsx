@@ -8,7 +8,7 @@ import uuid from 'react-native-uuid';
 interface IProps{
     secureTextEntry?: Boolean,
     keyboardType?: KeyboardTypeOptions, 
-    errors: string[], 
+    errors?: string[], 
     handleTextValue: (value: string)  => void
 }
 

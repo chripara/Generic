@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { ScrollView, TouchableOpacity, StyleSheet, Dimensions, View, Text } from 'react-native';
 import colors from '../config/colors';
 import fontStyles from "../config/StyleSheets/fontStyles";
 
 const width = Dimensions.get('window').width;
 
-export const DualSelector = ({ leftPage, rightPage }) => {
+interface IProps {
+    leftPage:  ReactNode,
+    rightPage:  ReactNode,
+    leftButtonText:  string,
+    rightButtonText:  string,
+    height?: number | undefined
+}
+
+export const DualSelector = ({ leftPage, rightPage, leftButtonText, rightButtonText, height }) => {
     const [isRight, setIsRight] = useState(false);
 
     const changePage = () => {
@@ -13,7 +21,7 @@ export const DualSelector = ({ leftPage, rightPage }) => {
     }
 
     return(
-        <View style={styles.container}>
+        <View style={{...styles.container, height: height}}>
             <View style={styles.dualSelectorStyle}>
                 <TouchableOpacity 
                     style={{ 
@@ -24,7 +32,7 @@ export const DualSelector = ({ leftPage, rightPage }) => {
                         }}
                     onPress={() => setIsRight(false)}
                 >
-                    <Text style={{ ...styles.textStyle, ...fontStyles.text20White}}>Search room for hotel</Text>
+                    <Text style={{ ...styles.textStyle, ...fontStyles.text20White}}>{leftButtonText}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ 
@@ -34,8 +42,8 @@ export const DualSelector = ({ leftPage, rightPage }) => {
                         {backgroundColor: colors.primary}
                         }}
                     onPress={() => setIsRight(true)}
-                    >
-                    <Text style={{ ...styles.textStyle, ...fontStyles.text20White}}>Search room for Date</Text>
+                >
+                    <Text style={{ ...styles.textStyle, ...fontStyles.text20White}}>{rightButtonText}</Text>
                 </TouchableOpacity>
             </View>
             <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -64,7 +72,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     dualSelectorStyle: {
-        width: width * 0.7,
+        width: width * 0.7,        
         alignSelf: 'center',
         flexDirection: 'row',
         height: width * 0.11,      
@@ -89,7 +97,7 @@ const styles = StyleSheet.create({
     selectorLeft: {
         borderTopLeftRadius: 30,
         borderBottomLeftRadius: 30,
-        height: 40,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: colors.white,
@@ -98,7 +106,7 @@ const styles = StyleSheet.create({
     selectorRight: {
         borderTopRightRadius: 30,
         borderBottomRightRadius: 30,      
-        height: 40,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: colors.white,

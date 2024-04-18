@@ -40,7 +40,6 @@ export const CalendarInput = ({ date, setDate, hasCalendarActive, setHasCalendar
 
 const styles = StyleSheet.create({
     container: {
-        height: 45,
         flexDirection: 'row',
         justifyContent: "center"        
     },

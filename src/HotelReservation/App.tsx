@@ -1,6 +1,6 @@
 import { Button, Text, View } from "react-native";
 import { useState, useEffect } from 'react';
-import axiosAuthCalls from './reactRootView/axiosCalls/AuthCalls/axiosAuthCalls';
+import axiosAuthCalls from './reactRootView/axiosCalls/axiosAuthCalls';
 import axios from 'axios';
 import axiosCalls from './reactRootView/axiosCalls/axiosCalls';
 import { useFonts } from "expo-font";
@@ -13,7 +13,7 @@ import { MainTabNavigator } from "./reactRootView/tabNavigators/MainTabNavigator
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Calendar } from "./reactRootView/components/Calendar";
 import { DualSelector } from "./reactRootView/components/DualSelector";
-import ISignUpInterface from "./reactRootView/interfaces/Auth/ISignUpInterface"
+import ISignUpInterface from "./reactRootView/interfaces/Auth/ISignUp"
 import { TextInputWithValidation } from "./reactRootView/components/TextInputWithValidation";
 
 // function HomeScreen() {
@@ -170,10 +170,9 @@ export default function App() {
         return (           
             
             // <View style={{ alignItems: 'center', marginTop: 10 }}>
-             //     <EllipseButtonSecondary name={"asdf"} onClick={() => 
-                    //    axiosAuthCalls.postSignUpCall(rawBody)
-            //     } marginTop={0}/>                   
-                    
+            //     <EllipseButtonSecondary name={"asdf"} onClick={() => 
+            //    axiosAuthCalls.postSignUpCall(rawBody)
+            //     } marginTop={0}/>           
             //     <DualSelector rightPage={
             //         <View> 
             //             <EllipseButtonSecondary name={"asdf"} onClick={axiosCalls.getTestData} marginTop={0}/>
@@ -182,7 +181,7 @@ export default function App() {
             //         }  
             //     leftPage={ 
             //      <Text>asd1112341sadfasdf</Text>              
-            //         <TextInputWithValidation errors={errors} 
+            //         <TextInputWithValidation errors={errors}
             //             handleTextValue={(value) => {console.log(value);
             //                 console.log(errors);
             //             if(value.length>20 && errors.length === 1)
@@ -193,14 +192,14 @@ export default function App() {
             //             {
             //                 setErrors( errors => ["Error 1"])
             //             }
-                        
             //         }}
             //             // setExmpl(errors, (value) => {console.log(value))}}
             //             />
             // </View> 
 
             <NavigationContainer>
-                <AuthStack />
+                {/* <AuthStack /> */}
+                <MainTabNavigator />
             </NavigationContainer>
         )
     }

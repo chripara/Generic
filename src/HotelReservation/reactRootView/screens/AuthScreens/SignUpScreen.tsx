@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
-import axiosAuthCalls from '../../axiosCalls/AuthCalls/axiosAuthCalls';
+import axiosAuthCalls from '../../axiosCalls/axiosAuthCalls';
 import { EllipseButtonSecondary } from "../../components/EllipseButtonSecondary";
 import { useState } from "react";
 import fontStyles from "../../config/StyleSheets/fontStyles";
-import ISignUpInterface from "../../interfaces/Auth/ISignUpInterface";
+import ISignUp from "../../interfaces/Auth/ISignUp";
 import { TextInputWithValidation } from "../../components/TextInputWithValidation";
 
 export const SignUpScreen = ({ navigation }) => {
@@ -17,7 +17,7 @@ var passwordsMismatch = [];
 var emailFormatInvalid = [];
 var phoneLengthInvalid = [];
 
-const [rawBody, setRawBody] = useState<ISignUpInterface>(
+const [rawBody, setRawBody] = useState<ISignUp>(
     {
         userName: 'string',
         password: 'string',
@@ -27,7 +27,7 @@ const [rawBody, setRawBody] = useState<ISignUpInterface>(
         firstName: 'string',
         lastName: 'string',
         location: 'string'
-    } as ISignUpInterface);
+    } as ISignUp);
 
 const[errorUserName, setErrorUserName]= useState<string[]>();
 const[errorPassword, setErrorPassword]= useState<string[]>();
@@ -52,8 +52,8 @@ const handleAxiosCall = () => {
         setErrorEmail([]);
         setErrorPhoneNumber([]);
 
-        result.then((response) => {
-            //console.log('asdf: ', response.data, response.status);
+        result.then((response) => {     
+            console.log(response);
         })
         .catch((error) => {                        
             if(error.response.data.toLowerCase().indexOf('username') > -1)
@@ -69,10 +69,10 @@ const handleAxiosCall = () => {
                     ...passwordErrors,
                     "• " + error.response.data
                 ]);
-                setErrorConfirmPassword([
-                    ...passwordsMismatch,
-                    "• " + error.response.data
-                ]);                
+                // setErrorConfirmPassword([
+                //     ...passwordsMismatch,
+                //     "• " + error.response.data
+                // ]);                
             }
             if(error.response.data.toLowerCase().indexOf('email') > -1)
             {
@@ -83,7 +83,7 @@ const handleAxiosCall = () => {
             }
             if(error.response.data.toLowerCase().indexOf('phone') > -1)
             {
-                setErrorEmail([
+                setErrorPhoneNumber([
                     ...phoneLengthInvalid,
                     "• " + error.response.data
                 ])                
@@ -97,7 +97,7 @@ const handleAxiosCall = () => {
         "Email ", errorEmail,
         "PhoneNumber ", errorPhoneNumber);
     }
-    //setIsRegistrationCompletedSuccessfully(!isRegistrationCompletedSuccessfully);
+    setIsRegistrationCompletedSuccessfully(!isRegistrationCompletedSuccessfully);
 }
 
 const handleContent = (key: string, val: string) => {
@@ -110,7 +110,6 @@ const handleContent = (key: string, val: string) => {
 }
 
 const handleErrors = () => {    
-    
     
     setErrorUserName(usernameInvalid);
     setErrorPassword(passwordErrors);
@@ -143,6 +142,8 @@ const handleErrors = () => {
     passwordsMismatch.length > 0 && setErrorConfirmPassword(passwordsMismatch);
     emailFormatInvalid.length > 0 && setErrorEmail(emailFormatInvalid);
     phoneLengthInvalid.length > 0 && setErrorPhoneNumber(phoneLengthInvalid);    
+
+    setIsRegistrationCompletedSuccessfully(!isRegistrationCompletedSuccessfully);
 }
 
 return(
@@ -154,9 +155,9 @@ return(
                 <View style={styles.viewText}>
                     <Text style={fontStyles.text48White}>Please Verify your email.</Text>
                     <EllipseButtonSecondary
-                    name={"Sign Up"}
+                    name={"Auth Screen"}
                     onClick={() => (                        
-                        navigation.navigate("Welcome"))}
+                        navigation.navigate("Auth"))}
                     marginTop={50}
                 />
                 </View>
