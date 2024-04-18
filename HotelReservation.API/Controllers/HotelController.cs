@@ -129,7 +129,7 @@ namespace HotelReservation.API.Controllers
                 HotelRoomDtos = _mapper.Map<List<HotelRoom>, List<HotelRoomDto>>(hotel.HotelRooms.ToList())
             };
 
-            Log.Information("AvailabilityInHotel: {@AvailabilityInHotel}", JArray.FromObject(availability));
+            Log.Information("AvailabilityInHotel: {@AvailabilityInHotel}", JObject.FromObject(availability));
             return Ok(availability);
         }
 
@@ -197,8 +197,6 @@ namespace HotelReservation.API.Controllers
                 });
             }
 
-            var asdas = JObject.FromObject(availabilityInHotel);
-            var av = FilterDto(JObject.FromObject(availabilityInHotel));
             Log.Information("AvailabilityInHotel: {@AvailabilityInHotel}", JArray.FromObject(availabilityInHotel));
             return Ok(availabilityInHotel);
         }

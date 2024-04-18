@@ -109,61 +109,6 @@ export const HotelSearchScreen = ({ navigation }) => {
         })
     }
 
-    const handleHotelLists = () => {
-        listOfHotelVar = [];
-        const result = axiosHotelCalls.getAllHotelsCall();
-
-        result.then((response) => {
-            response.data.map((content, index) => {
-                const cont = JSON.stringify(content);
-                const jsonCont = JSON.parse(cont);
-                console.log(jsonCont["address"]);
-                listOfHotelVar.push(
-                    {
-                        numberOfPairs: 8,
-                        pairs: [
-                            {
-                                title: "Name:",
-                                text: jsonCont["name"],            
-                            } as IPair,
-                            {
-                                title: "City:",
-                                text: jsonCont["city"],            
-                            } as IPair,
-                            {
-                                title: "Address:",
-                                text: jsonCont["address"],            
-                            } as IPair,
-                            {
-                                title: "PostCode:",
-                                text: jsonCont["postCode"],            
-                            } as IPair,
-                            {
-                                title: "PhoneNumber:",
-                                text: jsonCont["phoneNumber"],            
-                            } as IPair,
-                            {
-                                title: "Rate:",
-                                text: jsonCont["rate"],            
-                            } as IPair,
-                            {
-                                title: "Type:",
-                                text: jsonCont["type"],            
-                            } as IPair,
-                            {
-                                title: "Description:",
-                                text: jsonCont["description"],            
-                            } as IPair
-                        ]
-                    } as IHotelPair
-                );
-            }) 
-            // console.log("listOfHotelVar ", listOfHotelVar);
-            setListOfHotels(listOfHotelVar);
-        })
-        
-    }
-
     const handleFindAvailableRooms = (isLeft) => {
         if(isLeft){
             setLeftPage(false);
@@ -171,7 +116,6 @@ export const HotelSearchScreen = ({ navigation }) => {
         if(!isLeft){
             setRightPage(false);
         }            
-        // setState(Math.random())
     }
 
     return(
@@ -215,7 +159,7 @@ export const HotelSearchScreen = ({ navigation }) => {
                             />     
                             <EllipseButtonPrimary 
                                 name={"Find Available Rooms"} 
-                                marginTop={width * 0.3} 
+                                marginTop={5} 
                                 onClick={() => {
                                     handleFindAvailableRoomsForHotelCall()
                                     handleFindAvailableRooms(true);
@@ -273,7 +217,7 @@ export const HotelSearchScreen = ({ navigation }) => {
                             />
                             <EllipseButtonPrimary 
                                 name={"Find Available Rooms"} 
-                                marginTop={width * 0.05} 
+                                marginTop={5} 
                                 onClick={() => {
                                     handleFindRoomsForDateCall()
                                     handleFindAvailableRooms(false);
@@ -304,7 +248,7 @@ export const HotelSearchScreen = ({ navigation }) => {
                                     <Text style={fontStyles.text28White}>Availability</Text>
                                 </View>
                                 <Calendar date={date} setDate={setDate} hasBookings={true}/>
-                                <EllipseButtonPrimary name={"Back"} marginTop={20} onClick={() => {
+                                <EllipseButtonPrimary name={"Back"} marginTop={5} onClick={() => {
                                     setRightPage(true);
                                     handleFindRoomsForDateCall();
                                 }}/>
@@ -321,6 +265,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: "3%",
+        // height: width * 2,
     },
     viewText: {
         position: "relative",
@@ -329,7 +274,7 @@ const styles = StyleSheet.create({
     },
     viewFormStyle: {
         width: width * 0.9,
-        height: width * 1.2,
+        height: width * 1.43,
         marginTop: width * 0.05
     },
     textInput: {
