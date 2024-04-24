@@ -37,7 +37,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie();
 
 builder.Services.AddDbContext<AppDbContext>(o =>
-    o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection3")));
+    o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection5")));
 
 builder.Services.AddIdentity<User,Role>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddDefaultTokenProviders()

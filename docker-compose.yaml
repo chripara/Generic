@@ -11,17 +11,17 @@ services:
     environment:
       - ACCEPT_EULA=y
       - SA_PASSWORD=A&VeryComplex123Password
-  web_api:
-    image: hr2:latest
-    container_name: hrLatest
-    networks:
-      - backend
-    ports:
-      - "5000:80"
-    depends_on:
-      - sql_server2022
-    links:
-      - sql_server2022
+  # web_api:
+  #   image: hr2:latest
+  #   container_name: hrLatest
+  #   networks:
+  #     - backend
+  #   ports:
+  #     - "5000:80"
+  #   depends_on:
+  #     - sql_server2022
+  #   links:
+  #     - sql_server2022
 networks:
   backend:
     driver: bridge
