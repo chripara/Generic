@@ -264,8 +264,7 @@ export const HotelSearchScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: "3%",
-        // height: width * 2,
+        padding: "3%"
     },
     viewText: {
         position: "relative",

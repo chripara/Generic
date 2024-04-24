@@ -3,10 +3,9 @@ import { View, StyleSheet, Text } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import fontStyles from "../../config/StyleSheets/fontStyles";
-// import RNRestart from 'react-native-restart'; // Import package from node modules
 import axiosAuthCalls from '../../axiosCalls/axiosAuthCalls';
 
-export const AuthScreen = ({ navigation }) => (
+export const AuthScreen = ({ route, navigation  }) => (
     <MainScreen backgroundColor={colors.primary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
@@ -57,10 +56,13 @@ export const AuthScreen = ({ navigation }) => (
                 <Text style={fontStyles.text48White}>Don't you want</Text>
                 <Text style={fontStyles.text48White}>to create</Text>
                 <Text style={fontStyles.text48White}>an account?</Text>
-            </View>
+            </View>            
             <EllipseButtonSecondary
-                name={"Proceed as Guests"}
-                onClick={() => navigation.navigate("Welcome")}
+                name={"Go to Profile"}
+                marginTop={10}
+                onClick={() => 
+                    navigation.navigate("Profile")
+                } 
             />
         </View>
     </MainScreen>

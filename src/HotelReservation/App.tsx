@@ -13,8 +13,9 @@ import { MainTabNavigator } from "./reactRootView/tabNavigators/MainTabNavigator
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Calendar } from "./reactRootView/components/Calendar";
 import { DualSelector } from "./reactRootView/components/DualSelector";
-import ISignUpInterface from "./reactRootView/interfaces/Auth/ISignUp"
+import ISignUpInterface from "./reactRootView/interfaces/Auth/ISignUp";
 import { TextInputWithValidation } from "./reactRootView/components/TextInputWithValidation";
+import { WelcomeScreen } from "./reactRootView/screens/AuthScreens/WelcomeScreen.tsx";
 
 // function HomeScreen() {
 //     return (
@@ -157,12 +158,15 @@ export default function App() {
     //   console.log("useEffect")
     //   }, [])
     
-    const [errors, setErrors] = useState<string[]>();
+    // const [errors, setErrors] = useState<string[]>();
+    const [stack, setStack] = useState<boolean>(true);
         
     // const [exmp, setExmpl] = useState<IExample>();
+
     const [fontsLoaded] = useFonts({
         "Italiana-Regular": require("./assets/fonts/Italiana-Regular.ttf"),
     });
+
     if (!fontsLoaded) {
         return <Text style={{marginTop: "10%"}}> Fonts are not loaded Successfully!!</Text>;
     } else {
@@ -196,15 +200,15 @@ export default function App() {
             //             // setExmpl(errors, (value) => {console.log(value))}}
             //             />
             // </View> 
-
-            <NavigationContainer>
-                {/* <AuthStack /> */}
-                <MainTabNavigator />
-            </NavigationContainer>
+            // <View>
+                <WelcomeScreen />
+            // </View>
+            // <NavigationContainer>            
+            //     <MainTabNavigator />          
+            // </NavigationContainer>
         )
     }
 }
-
 
 // const [date, setDate] = useState(new Date());
 // const tempDate = date;

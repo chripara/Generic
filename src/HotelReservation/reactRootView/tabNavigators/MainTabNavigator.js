@@ -39,6 +39,7 @@ function SettingsScreen2() {
 const Tab = createBottomTabNavigator();
 
 export const MainTabNavigator = () => (
+   
     <Tab.Navigator 
         initialRouteName="Profile"   
         activeColor={colors.brown}

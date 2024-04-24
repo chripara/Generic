@@ -90,36 +90,36 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-//
-// using (var scope = app.Services.CreateScope())
-// {
-//     try
-//     {
-//         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//         Console.WriteLine("Is SQL Server {0}", db.Database.IsSqlServer());
-//         Console.WriteLine("Can connect {0}", 1);
-//         Console.WriteLine("Can connect {0}", 2);
-//         Console.WriteLine("Can connect {0}", 3);
-//         //db.Database.OpenConnection();
-//         //Console.WriteLine("Can connect {0}", db.Database.CanConnect());
-//         // db.Database.Migrate();
-//         //db.Database.CloseConnection();
-//         // Console.WriteLine("Can connect {0}", db.Database.CanConnect());
-//         // db.Database.Migrate();
-//         await db.Database.MigrateAsync();        
-//     }
-//     catch(System.Exception e) 
-//     {
-//         Console.WriteLine(e);
-//     }    
-// }
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-//}
+if (app.Environment.IsDevelopment())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        try
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            // Console.WriteLine("Is SQL Server {0}", db.Database.IsSqlServer());
+            // Console.WriteLine("Can connect {0}", 1);
+            // Console.WriteLine("Can connect {0}", 2);
+            // Console.WriteLine("Can connect {0}", 3);
+            //db.Database.OpenConnection();
+            //Console.WriteLine("Can connect {0}", db.Database.CanConnect());
+            // db.Database.Migrate();
+            //db.Database.CloseConnection();
+            // Console.WriteLine("Can connect {0}", db.Database.CanConnect());
+            // db.Database.Migrate();
+            await db.Database.MigrateAsync();
+        }
+        catch (System.Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+}
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseSerilogRequestLogging(options =>
