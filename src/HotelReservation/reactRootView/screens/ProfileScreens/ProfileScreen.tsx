@@ -1,6 +1,5 @@
 // import React from "react";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
-import { Card } from "../../components/Card";
 import { View, StyleSheet, Text } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
@@ -28,6 +27,13 @@ export const ProfileScreen = ({ navigation }) => (
                 name={"Sign In"}
                 onClick={() => navigation.navigate("SignIn")}
             />
+            <EllipseButtonPrimary
+                marginTop={"5%"}
+                name={"Auth Screen"}
+                onClick={() => 
+                    navigation.navigate("Auth")
+                }
+            />            
         </View>
     </MainScreen>
 );

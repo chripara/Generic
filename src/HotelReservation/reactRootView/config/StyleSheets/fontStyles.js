@@ -8,6 +8,12 @@ export default {
         fontSize: 48,
         color: colors.white,
     },
+    text40White: {
+        textAlign: "center",
+        fontFamily: "Italiana-Regular",
+        fontSize: 40,
+        color: colors.white,
+    },
     text24Black: {
         textAlign: "center",
         fontFamily: "Italiana-Regular",

@@ -5,7 +5,14 @@ import { ManageAccountScreen } from "../screens/ProfileScreens/ManageAccountScre
 import { ChangePasswordScreen } from "../screens/ProfileScreens/ChangePasswordScreen";
 import { ChangeEmailScreen } from "../screens/ProfileScreens/ChangeEmailScreen";
 import { EditProfileScreen } from "../screens/ProfileScreens/EditProfileScreen";
+import { ForgetPasswordScreen } from "../screens/AuthScreens/ForgetPasswordScreen";
 import { SignInScreen } from "../screens/AuthScreens/SignInScreen";
+import { SignUpScreen } from "../screens/AuthScreens/SignUpScreen";
+import { VerifyPhoneNumberScreen } from "../screens/AuthScreens/VerifyPhoneNumberScreen";
+import { ResetPasswordScreen } from "../screens/AuthScreens/ResetPasswordScreen";
+import { WelcomeScreen } from "../screens/AuthScreens/WelcomeScreen";
+import { BookingListHotelScreen } from "../screens/BookingScreens/BookingListHotelScreen";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -14,9 +21,10 @@ export const ProfileStack = () => (
             initialRouteName="Profile"
         >            
             <Stack.Screen
-                name="ProfileScreen"
+                name="Profile"
                 component={ProfileScreen}
                 options={{ headerVisible: false }}
+                //initialParams={{ handleStack: handleStack}}
             />
             <Stack.Screen
                 name="SignIn"
@@ -32,6 +40,36 @@ export const ProfileStack = () => (
                 name="ChangeEmail"
                 component={ChangeEmailScreen}
                 options={{ headerVisible: false }}
-            /> 
+            />            
+            <Stack.Screen
+                name="VerifyPhoneNumber"
+                component={VerifyPhoneNumberScreen}
+                options={{ headerVisible: false }}
+            />         
+            <Stack.Screen
+                name="ForgotPassword"
+                component={ForgetPasswordScreen}
+                options={{ headerVisible: false }}
+            />
+            <Stack.Screen
+                name="SignUp"
+                component={SignUpScreen}
+                options={{ headerVisible: false }}
+            />
+            <Stack.Screen
+                name="ResetPassword"
+                component={ResetPasswordScreen}
+                options={{ headerVisible: false }}
+            />
+            <Stack.Screen
+                name="BookingListHotel"
+                component={BookingListHotelScreen}
+                options={{ headerVisible: false }}
+            />            
+            <Stack.Screen
+                name="Auth"
+                component={AuthScreen}
+                options={{ headerVisible: false }}                
+            />
         </Stack.Navigator>
 );
