@@ -16,9 +16,6 @@ export const WelcomeScreen = () => {
     return(           
         proceed
         ?        
-            // <View>
-            //     <Text style={{marginTop: 50}}>asdfasdfasdfasdf</Text>
-            // </View>
             <NavigationContainer>            
                 <MainTabNavigator />
             </NavigationContainer>  
@@ -39,7 +36,6 @@ export const WelcomeScreen = () => {
                     onClick={() => {
                         console.log("asdfasdf");
                         handleState();
-                        //navigation.navigate("Auth");
                     }}
                     name="Get started"
                     marginTop={60}

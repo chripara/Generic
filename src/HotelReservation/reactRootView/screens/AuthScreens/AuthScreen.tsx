@@ -40,7 +40,7 @@ export const AuthScreen = ({ route, navigation  }) => (
             <EllipseButtonSecondary
                 name={"Reset Password"}
                 marginTop={"8%"}
-                onClick={() => navigation.navigate("ChangeEmail")}
+                onClick={() => navigation.navigate("ResetPassword")}
             />
             <EllipseButtonSecondary
                 name={"Change Email"}

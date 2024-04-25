@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
@@ -52,9 +51,7 @@ const handleAxiosCall = () => {
         setErrorEmail([]);
         setErrorPhoneNumber([]);
 
-        result.then((response) => {     
-            console.log(response);
-        })
+        result
         .catch((error) => {                        
             if(error.response.data.toLowerCase().indexOf('username') > -1)
             {
@@ -69,10 +66,6 @@ const handleAxiosCall = () => {
                     ...passwordErrors,
                     "• " + error.response.data
                 ]);
-                // setErrorConfirmPassword([
-                //     ...passwordsMismatch,
-                //     "• " + error.response.data
-                // ]);                
             }
             if(error.response.data.toLowerCase().indexOf('email') > -1)
             {
@@ -89,13 +82,6 @@ const handleAxiosCall = () => {
                 ])                
             }
         });
-        //console.log('asdfsdfasdf: ',result.finally);
-
-        console.log("Username ", errorUserName,
-        "Password ", errorPassword,
-        "ConfirmPassword ", errorConfirmPassword,
-        "Email ", errorEmail,
-        "PhoneNumber ", errorPhoneNumber);
     }
     setIsRegistrationCompletedSuccessfully(!isRegistrationCompletedSuccessfully);
 }
@@ -105,8 +91,6 @@ const handleContent = (key: string, val: string) => {
         ...rawBody,
         [key]: val
     });
-    //setRawBody(random);
-    //console.log("handleContent: ", rawBody);
 }
 
 const handleErrors = () => {    
@@ -126,11 +110,8 @@ const handleErrors = () => {
     };
 
     rawBody.confirmPassword !== rawBody.password && passwordsMismatch.push("• Password and Confirm Password mismatch.");
-    //console.log('Email:', rawBody.email);
-    //console.log('Valid Email:', reg['email'].test(rawBody.email));
     !reg['email'].test(rawBody.email) && emailFormatInvalid.push("• Email is not valid.");
     rawBody.phoneNumber.length < 9 && phoneLengthInvalid.push("• Phone number is short.");
-    //console.log(rawBody.confirmPassword, ' = ', rawBody.password)
     !reg['capital'].test(rawBody.password) && passwordErrors.push("• Password need a capital letter.");
     !reg['digit'].test(rawBody.password) && passwordErrors.push("• Password need a digit.");
     !reg['lower'].test(rawBody.password) && passwordErrors.push("• Password need a lower letter.");
@@ -197,11 +178,8 @@ return(
                 <EllipseButtonSecondary
                     name={"Sign Up"}
                     onClick={() => {
-                        //console.log(rawBody);//setRawBody
                         handleErrors();
                         handleAxiosCall();
-                        //axiosAuthCalls.postSignUpCall(rawBody);
-                        //setIsRegistrationCompletedSuccessfully(!isRegistrationCompletedSuccessfully);
                     }}
                     marginTop={0}
                 />

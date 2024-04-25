@@ -10,7 +10,6 @@ import { SignInScreen } from "../screens/AuthScreens/SignInScreen";
 import { SignUpScreen } from "../screens/AuthScreens/SignUpScreen";
 import { VerifyPhoneNumberScreen } from "../screens/AuthScreens/VerifyPhoneNumberScreen";
 import { ResetPasswordScreen } from "../screens/AuthScreens/ResetPasswordScreen";
-import { WelcomeScreen } from "../screens/AuthScreens/WelcomeScreen";
 import { BookingListHotelScreen } from "../screens/BookingScreens/BookingListHotelScreen";
 
 
@@ -24,7 +23,6 @@ export const ProfileStack = () => (
                 name="Profile"
                 component={ProfileScreen}
                 options={{ headerVisible: false }}
-                //initialParams={{ handleStack: handleStack}}
             />
             <Stack.Screen
                 name="SignIn"

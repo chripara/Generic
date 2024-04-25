@@ -10,7 +10,9 @@ import { BookingListHotelScreen } from "../screens/BookingScreens/BookingListHot
 const Stack = createNativeStackNavigator();
 
 export const AuthStack = () => (
+    
     <Stack.Navigator screenOptions={{ headerShown: false }}>  
+    { console.log("allaksa")}
         <Stack.Screen
             name="VerifyPhoneNumber"
             component={VerifyPhoneNumberScreen}

@@ -278,26 +278,27 @@ namespace HotelReservation.API.Controllers
 
             await _userManager.RemovePasswordAsync(user);
 
-            var generatedToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var generatedToken = "Qwe@12";
+                // await _userManager.GeneratePasswordResetTokenAsync(user);
 
             if (generatedToken == null)
             {
                 Log.Information("Something went wrong no token generated. Please try again.");
-                return NotFound("Something went wrong no token generated. Please try again."); //TODO: Remove that for security reasons
+                return Ok("Please check your email for reset password code."); 
             }
 
             user.ForgotPasswordConfirmationToken = generatedToken;
 
-            _context.Update<User>(user);
+            _context.Update(user);
             await _context.SaveChangesAsync();
-
-            var encodedToken = HttpUtility.HtmlAttributeEncode(generatedToken);
-            var subject = "Verification email for generic app.";
-            var plainTextContent = "Please click to reset your password: " + "https://localhost:44347/api/Auth/ResetPassword?token=" + encodedToken + "&email=" + user.Email;
-            var htmlContent = "<strong>Please click to reset your password: " + "https://localhost:44347/api/Auth/ResetPassword?token=" + encodedToken + "&email=" + user.Email + "</strong>";
-
-            await _emailSender.EmailSenderAsync(user.Email, user.UserName, HttpUtility.HtmlEncode(generatedToken),
-                subject, plainTextContent, htmlContent);
+            
+            // var encodedToken = HttpUtility.HtmlAttributeEncode(generatedToken);
+            // var subject = "Verification email for generic app.";
+            // var plainTextContent = "Please click to reset your password: " + "https://localhost:44347/api/Auth/ResetPassword?token=" + encodedToken + "&email=" + user.Email;
+            // var htmlContent = "<strong>Please click to reset your password: " + "https://localhost:44347/api/Auth/ResetPassword?token=" + encodedToken + "&email=" + user.Email + "</strong>";
+            //
+            // await _emailSender.EmailSenderAsync(user.Email, user.UserName, HttpUtility.HtmlEncode(generatedToken),
+            //     subject, plainTextContent, htmlContent);
 
             Log.Information("Please check your email for reset password code.");
             return Ok("Please check your email for reset password code.");
@@ -314,7 +315,7 @@ namespace HotelReservation.API.Controllers
             if(user == null)
             {
                 Log.Information("User not found try again.");
-                return NotFound("User not found try again.");
+                return BadRequest("User not found try again.");
             }
 
             var confirmationToken = HttpUtility.HtmlDecode(dto.Token).Replace(" ", "+");
@@ -322,23 +323,25 @@ namespace HotelReservation.API.Controllers
             if(confirmationToken != user.ForgotPasswordConfirmationToken)
             {
                 Log.Information("Forgot password confirmation token is not a match please try again.");
-                return NotFound("Forgot password confirmation token is not a match please try again.");
+                return BadRequest("Forgot password confirmation token is not a match please try again.");
             }
 
             if (user.Email != dto.Email)
             {
                 Log.Information("Email is not confirmed."); 
-                return NotFound("Email is not confirmed.");
+                return BadRequest("Email is not confirmed.");
             }
             user.EmailConfirmed = true;
 
             if(dto.ConfirmPassword != dto.Password)
             {
                 Log.Information("Passwords are not a match try again.");
-                return NotFound("Passwords are not a match try again.");
+                return BadRequest("Passwords are not a match try again.");
             }
             
             var result = await _userManager.AddPasswordAsync(user, dto.Password);
+
+            user.EmailConfirmationToken = null;
 
             _context.Update(user);
             await _context.SaveChangesAsync();

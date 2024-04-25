@@ -27,32 +27,7 @@ const handleAxiosCall = async () => {
     setErrorSignIn([]);
     var result = axiosAuthCalls.postSignInCallAsync(rawBody);        
     
-    await result.then( async (response) => {   
-        const cnst = response.headers["set-cookie"][0];  
-        await AsyncStorage.setItem(constants.AuthCookie, cnst);       
-
-        let authCookie = "";
-        await AsyncStorage.getItem(constants.AuthCookie).then((value) => {
-            authCookie = value;
-            console.log("Auth ", authCookie);
-        });
-
-        // select right cookie             
-        // console.log('Response Inside result then ', cnst)
-
-        // console.log(response.config.headers.)
-        
-        // setCookie(cnst);
-        // try {
-
-        // AsyncStorage.setItem('.AspNetCore.Identity.Application', response.headers['set-cookie'][0]);        
-        // }
-
-        // catch(e) { 
-
-        //     console.log('Error ', e);
-        // }
-
+    await result.then((response) => {   
     })
     .catch((error) => {          
         setErrorSignIn([             
@@ -61,32 +36,10 @@ const handleAxiosCall = async () => {
         
         console.log('Error ',error);
         console.log('Error message ',error.message);
-        //console.log('Error response data ',error.response.data);
     });
 
-    setIsSignInCompletedSuccessfully(!isSignInCompletedSuccessfully);  
+    setIsSignInCompletedSuccessfully(!isSignInCompletedSuccessfully); 
     
-    // const asd = await AsyncStorage.getItem(cookieName);
-    // const authCookie = await AsyncStorage.getItem(constants.AuthCookie).then((value) => {
-    //     console.log('Async: ', value);
-    // })
-    // .then(res => {
-    //     console.log('State:   ', res);
-    // });
-    // const cookie = AsyncStorage.getItem(cookieName).then((response) => {
-    //     if(cookieName){
-    //     this.setState({mobileNumber: cookieName});
-    //     console.log('State:   ', this.state.mobileNumber);
-    // }})   
-    // console.log('cookie \n');
-    // console.log('cookie \n');
-    // console.log('cookie \n');
-    // console.log('cookie \n');
-    // console.log("AAA:  ", aa);
-    // cookie.then((response) => {
-    //     console.log('Cookie ', response);
-    // });
-    //console.log('Cookie ', asd);
 }
 
 const handleContent = (key: string, val: string) => {
@@ -126,7 +79,6 @@ return (
                 name={"Sign In"}
                 onClick={() => {
                         handleAxiosCall();
-                        //navigation.navigate("Welcome")
                     }
                 }
                 marginTop={"-5%"}

@@ -6,27 +6,16 @@ import { SignInScreen } from "../screens/AuthScreens/SignInScreen";
 import { SignUpScreen } from "../screens/AuthScreens/SignUpScreen";
 import { VerifyPhoneNumberScreen } from "../screens/AuthScreens/VerifyPhoneNumberScreen";
 // import { VerifyChangeEmailScreen } from "../screens/AuthScreens/VerifyChangeEmailScreen";
-import { WelcomeScreen } from "../screens/AuthScreens/WelcomeScreen";
 
 const Stack = createNativeStackNavigator();
 
 export const BookingStack = () => (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen
-                name="Welcome"
-                component={WelcomeScreen}
-                options={{ headerVisible: false }}
-            />
-            <Stack.Screen
                 name="VerifyPhoneNumber"
                 component={VerifyPhoneNumberScreen}
                 options={{ headerVisible: false }}
             />
-            {/* <Stack.Screen
-                name="VerifyChangeEmail"
-                component={VerifyChangeEmailScreen}
-                options={{ headerVisible: false }}
-            /> */}
             <Stack.Screen
                 name="ChangePassword"
                 component={ChangePasswordScreen}

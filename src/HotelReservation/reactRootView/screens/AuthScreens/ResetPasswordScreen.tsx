@@ -33,6 +33,7 @@ export const ResetPasswordScreen = ({ navigation }) => {
     // const[isRegistrationCompletedSuccessfully,setIsRegistrationCompletedSuccessfully] = useState(false);
     
     const handleAxiosCall = () => {
+        console.log(rawBody);
         if(
             tokenErrors.length === 0 &&
             emailErrors.length === 0 &&
@@ -49,37 +50,30 @@ export const ResetPasswordScreen = ({ navigation }) => {
             result.then((response) => {            
             })
             .catch((error) => {   
-            if(error.response.data.toLowerCase().indexOf('token') > -1)
-            {
+                const cont = JSON.stringify(error.response.data);
+                const jsonCont = JSON.parse(cont)['errors'];             
+                jsonCont['Token'] && 
                 setErrorToken([
                     ...tokenErrors,
-                    "• " + error.response.data
+                    "• " + jsonCont['Token'][0]
                 ])                
-            }
-            if(error.response.data.toLowerCase().indexOf('email') > -1)
-            {
+                jsonCont['Email'] && 
                 setErrorEmails([
                     ...emailErrors,
-                    "• " + error.response.data
-                ])                
-            }            
-            if(error.response.data.toLowerCase().indexOf('password') > -1)
-            {
+                    "• " + jsonCont['Email'][0]
+                ])
+                jsonCont['Password'] && 
                 setErrorPasswords([
                     ...passwordsErrors,
-                    "• " + error.response.data
-                ]);
-            }
-        });
-            //console.log('asdfsdfasdf: ',result.finally);
-
-            // console.log("Username ", errorUserName,
-            // "Password ", errorPassword,
-            // "ConfirmPassword ", errorConfirmPassword,
-            // "Email ", errorEmail,
-            // "PhoneNumber ", errorPhoneNumber);
+                    "• " + jsonCont['Password'][0]
+                ])                
+                jsonCont['ConfirmPassword'] && 
+                setErrorConfirmPasswordMismatch([
+                    ...confirmPasswordsMismatch,
+                    "• " + jsonCont['ConfirmPassword'][0]
+                ])
+            });            
         }
-        //setIsRegistrationCompletedSuccessfully(!isRegistrationCompletedSuccessfully);
     }
 
     const handleContent = (key: string, val: string) => {
@@ -92,9 +86,9 @@ export const ResetPasswordScreen = ({ navigation }) => {
     const handleErrors = () => {            
         
         setErrorToken(tokenErrors);
-        setErrorPassword(emailErrors);
-        setErrorConfirmPassword(passwordsErrors);
-        setErrorEmail(confirmPasswordsMismatch);
+        setErrorPasswords(emailErrors);
+        setErrorConfirmPasswordMismatch(passwordsErrors);
+        setErrorEmails(confirmPasswordsMismatch);
 
         var reg = {
             'email'           : /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/,
@@ -104,28 +98,25 @@ export const ResetPasswordScreen = ({ navigation }) => {
             'nonAlphanumeric' : /[`!@#$%^&*_+=\-]/
         };
 
-        rawBody.confirmPassword !== rawBody.password && passwordsMismatch.push("• Password and Confirm Password mismatch.");
-        !reg['email'].test(rawBody.email) && emailFormatInvalid.push("• Email is not valid.");
-        rawBody.phoneNumber.length < 9 && phoneLengthInvalid.push("• Phone number is short.");
-        rawBody.token.length < constants.phoneNumberTokenLength && phoneLengthInvalid.push("• Phone number is short.");
-        !reg['capital'].test(rawBody.password) && passwordErrors.push("• Password need a capital letter.");
-        !reg['digit'].test(rawBody.password) && passwordErrors.push("• Password need a digit.");
-        !reg['lower'].test(rawBody.password) && passwordErrors.push("• Password need a lower letter.");
-        !reg['nonAlphanumeric'].test(rawBody.password) && passwordErrors.push("• Password need a non alphanumeric.");
-        rawBody.confirmPassword !== rawBody.password && passwordErrors.push("• Password and Confirm Password mismatch.");
+        rawBody.confirmPassword !== rawBody.password && confirmPasswordsMismatch.push("• Password and Confirm Password mismatch.");
+        !reg['email'].test(rawBody.email) && emailErrors.push("• Email is not valid.");
+        !reg['capital'].test(rawBody.password) && passwordsErrors.push("• Password need a capital letter.");
+        !reg['digit'].test(rawBody.password) && passwordsErrors.push("• Password need a digit.");
+        !reg['lower'].test(rawBody.password) && passwordsErrors.push("• Password need a lower letter.");
+        !reg['nonAlphanumeric'].test(rawBody.password) && passwordsErrors.push("• Password need a non alphanumeric.");
+        rawBody.confirmPassword !== rawBody.password && passwordsErrors.push("• Password and Confirm Password mismatch.");
 
-        usernameInvalid.length > 0 && setErrorUserName(usernameInvalid);
-        passwordErrors.length > 0  && setErrorPassword(passwordErrors);
-        passwordsMismatch.length > 0 && setErrorConfirmPassword(passwordsMismatch);
-        emailFormatInvalid.length > 0 && setErrorEmail(emailFormatInvalid);
-        phoneLengthInvalid.length > 0 && setErrorPhoneNumber(phoneLengthInvalid);    
+        tokenErrors.length > 0 && setErrorToken(tokenErrors);
+        passwordsErrors.length > 0  && setErrorPasswords(passwordsErrors);
+        confirmPasswordsMismatch.length > 0 && setErrorConfirmPasswordMismatch(confirmPasswordsMismatch);
+        emailErrors.length > 0 && setErrorEmails(emailErrors);
     }
 
 return(
     <MainScreen backgroundColor={colors.secondary}>
         <View style={styles.container}>
             <View style={styles.viewText}>
-                <Text style={fontStyles.text48White}>Change Password</Text>
+                <Text style={fontStyles.text48White}>Reset Password</Text>
             </View>
             <View style={styles.viewText}>
                 <Text style={fontStyles.text24White}>Token:</Text>
@@ -133,7 +124,7 @@ return(
                         handleContent('token', value);
                     }}
                 />
-                <Text style={fontStyles.text24White}>Old Password:</Text>
+                <Text style={fontStyles.text24White}>Email:</Text>
                 <TextInputWithValidation errors={errorsEmail} handleTextValue={(value) => {
                         handleContent('email', value);
                     }}
@@ -156,7 +147,7 @@ return(
                     handleErrors();
                     handleAxiosCall();
                 }}
-                marginTop={"10%"}
+                marginTop={"2%"}
             />
         </View>
     </MainScreen>
@@ -169,7 +160,7 @@ const styles = StyleSheet.create({
     },
     viewText: {
         position: "relative",
-        marginVertical: "10%",
+        marginVertical: "5%",
         paddingHorizontal: "5%",
     }
 });

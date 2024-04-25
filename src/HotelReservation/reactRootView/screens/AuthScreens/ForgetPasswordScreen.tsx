@@ -65,6 +65,15 @@ return(
                     <Text style={{...fontStyles.text24White, textAlign: 'center'}}>Please check your</Text>
                     <Text style={{...fontStyles.text24White, textAlign: 'center'}}>email for reset</Text>
                     <Text style={{...fontStyles.text24White, textAlign: 'center'}}>password code.</Text>
+                    <Text style={{...fontStyles.text24White, textAlign: 'center'}}>Passcode: Qwe@12</Text>
+                    <Text style={{...fontStyles.text24White, textAlign: 'center'}}>Passcode for demonstration reasons.</Text>
+                    <EllipseButtonSecondary
+                        name={"Go to Reset Password"}
+                        onClick={() => {
+                            navigation.navigate("ResetPassword")
+                        }}
+                        marginTop={"10%"}
+                    />
                 </View>
                 :
                 <View>
