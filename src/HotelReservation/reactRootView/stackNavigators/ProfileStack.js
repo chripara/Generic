@@ -50,6 +50,16 @@ export const ProfileStack = () => (
                 options={{ headerVisible: false }}
             />
             <Stack.Screen
+                name="EditProfile"
+                component={EditProfileScreen}
+                options={{ headerVisible: false }}
+            />
+            <Stack.Screen
+                name="ManageAccount"
+                component={ManageAccountScreen}
+                options={{ headerVisible: false }}
+            />
+            <Stack.Screen
                 name="SignUp"
                 component={SignUpScreen}
                 options={{ headerVisible: false }}
@@ -58,12 +68,7 @@ export const ProfileStack = () => (
                 name="ResetPassword"
                 component={ResetPasswordScreen}
                 options={{ headerVisible: false }}
-            />
-            <Stack.Screen
-                name="BookingListHotel"
-                component={BookingListHotelScreen}
-                options={{ headerVisible: false }}
-            />            
+            />   
             <Stack.Screen
                 name="Auth"
                 component={AuthScreen}

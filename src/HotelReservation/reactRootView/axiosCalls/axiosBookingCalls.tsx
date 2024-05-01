@@ -10,10 +10,9 @@ export default {
     {       
         return axios({
             method: 'get',
-            url: `${axiosCalls.baseUrl}/Booking/GetBooking?Id=` + id, // ${id},
+            url: `${axiosCalls.baseUrl}/Booking/GetBooking?Id=` + id,
             headers: {
-                'Content-Type': 'application/json',
-                //'set-Cookie': authCookie
+                'Content-Type': 'application/json'
             }, 
             withCredentials: true
         })
@@ -22,7 +21,7 @@ export default {
     {       
         return axios({
             method: 'delete',
-            url: `${axiosCalls.baseUrl}/Booking/DeleteBooking`, // ${id},
+            url: `${axiosCalls.baseUrl}/Booking/DeleteBooking`, 
             headers: {
                 'Content-Type': 'application/json'
             }, 
@@ -34,7 +33,7 @@ export default {
     {       
         return axios({
             method: 'post',
-            url: `${axiosCalls.baseUrl}/Booking/CreateBookings`, // ${id},
+            url: `${axiosCalls.baseUrl}/Booking/CreateBookings`, 
             headers: {
                 'Content-Type': 'application/json'
             }, 
@@ -58,10 +57,9 @@ export default {
     {       
         return axios({
             method: 'get',
-            url: `${axiosCalls.baseUrl}/Booking/GetMyBookings`, // ${id},
+            url: `${axiosCalls.baseUrl}/Booking/GetMyBookings`,
             headers: {
-                'Content-Type': 'application/json',
-                //'set-Cookie': authCookie
+                'Content-Type': 'application/json'               
             }, 
             withCredentials: true
         })

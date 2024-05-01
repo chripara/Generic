@@ -27,15 +27,16 @@ const handleAxiosCall = async () => {
     setErrorSignIn([]);
     var result = axiosAuthCalls.postSignInCallAsync(rawBody);        
     
-    await result.then((response) => {   
+    await result.then((response) => {  
+        navigation.navigate("Profile");
     })
-    .catch((error) => {          
+    .catch((error) => {
         setErrorSignIn([             
             "• Username or password not much plz try again."
         ]);                
         
-        console.log('Error ',error);
-        console.log('Error message ',error.message);
+        console.log('Error ', error);
+        console.log('Error message ', error.message);
     });
 
     setIsSignInCompletedSuccessfully(!isSignInCompletedSuccessfully); 

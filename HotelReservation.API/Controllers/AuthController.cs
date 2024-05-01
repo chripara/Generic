@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using Serilog;
 using System.Web;
 using HotelReservation.Application.AppConstants;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
 namespace HotelReservation.API.Controllers
@@ -459,7 +460,34 @@ namespace HotelReservation.API.Controllers
             Log.Information("New email verified successfully.");
             return Ok("New email verified successfully.");
         }
-        
+
+        [HttpPost]
+        [Authorize]
+        [Route("EditProfile")]
+        public async Task<IActionResult> EditProfile(EditProfileDto dto)
+        {
+            Log.Information("ChangeEmailDto: {@dto}", FilterDto(JObject.FromObject(dto)));
+            
+            var loggedUser = await _context.Users
+                .FirstOrDefaultAsync(f => f.UserName == User.Identity.Name);
+            
+            if(loggedUser == null)
+            {
+                Log.Information("User not Found.");
+                return NotFound("User not found.");
+            }
+
+            loggedUser.Location = dto.Location;
+            loggedUser.FirstName = dto.FirstName;
+            loggedUser.LastName = dto.LastName;
+
+            _context.Users.Update(loggedUser);
+            await _context.SaveChangesAsync();
+            
+            Log.Information("Profile updated successfully.");
+            return Ok("Profile updated successfully.");
+        }
+
         [HttpPost]
         [Route("SeedAdminAccount")]
         public async Task<IActionResult> SeedAdminAccount()

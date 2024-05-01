@@ -5,6 +5,7 @@ import ISignInInterface from "../interfaces/Auth/ISignIn";
 import IForgotPassword from "../interfaces/Auth/IForgotPassword";
 import IVerifyPhoneNumberInterface from "../interfaces/Auth/IVerifyPhoneNumber";
 import IResetPasswordInterface from "../interfaces/Auth/IResetPassword";
+import IEditProfile from "../interfaces/Auth/IEditProfile";
 
 export default  {    
     postSignUpCall: (dto: ISignUpInterface) =>
@@ -81,6 +82,18 @@ export default  {
             headers: {
                 'Content-Type': 'application/json',
             }
+        })
+    ),
+    postEditProfileCall: (dto: IEditProfile) => 
+    (
+        axios({
+            method: 'post',
+            url: `${axiosCalls.baseUrl}/Auth/EditProfile`,
+            headers: {
+                'Content-Type': 'application/json',
+            }, 
+            data: dto,
+            withCredentials: true
         })
     )
 }

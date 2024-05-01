@@ -169,7 +169,7 @@ return(
                         handleTextValue={(value) => handleContent('phoneNumber', value)}
                         keyboardType="phone-pad"/>
                     <Text style={fontStyles.text24White}>FirstName:</Text>
-                    <TextInput style={fontStyles.textInput}  onChangeText={(value) => handleContent('firstName', value)}/>
+                    <TextInput style={fontStyles.textInput} onChangeText={(value) => handleContent('firstName', value)}/>
                     <Text style={fontStyles.text24White}>LastName:</Text>
                     <TextInput style={fontStyles.textInput} onChangeText={(value) => handleContent('lastName', value)}/>
                     <Text style={fontStyles.text24White}>Locations:</Text>

@@ -47,7 +47,7 @@ export const AuthStack = () => (
             name="Auth"
             component={AuthScreen}
             options={{ headerVisible: false }}
-            //initialParams={{ handleStack: handleStack}}
+            initialParams={{ previousRoute: "Auth"}}
         />
     </Stack.Navigator>
 );

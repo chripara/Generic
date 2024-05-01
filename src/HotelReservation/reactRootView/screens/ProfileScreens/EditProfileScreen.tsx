@@ -1,62 +1,78 @@
-import React from "react";
+import { useState } from "react";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import fontStyles from "../../config/StyleSheets/fontStyles";
+import axiosAuthCalls from '../../axiosCalls/axiosAuthCalls';
+import IEditProfile from "../../interfaces/Auth/IEditProfile";
+import { TextInputWithValidation } from "../../components/TextInputWithValidation";
 
-// const content = [
-//     {
-//         title: "FirstName:",
-//         text: "Luitgard",            
-//     },
-//     {
-//         title: "LastName:",
-//         text: "Abdullah",   
-//     },
-//     {
-//         title: "Location:",
-//         text: "9935 Briarwood DriveLakeville, MN 55044",
-//     },
-//     {
-//         title: "Email:",
-//         text: "LuitgardAbdullah@gmail.com",   
-//     },
-//     {
-//         title: "Phone Number:",
-//         text: "941-812-2553",   
-//     }
-// ]
+export const EditProfileScreen = ({ navigation }) => {  
 
-//TODO: Not endpoint yet for that screen.
-//TODO: Edit profile screen needs change email & phone buttons for navigation.
+    const[errorUserName, setErrorUserName] = useState<string[]>();
 
-export const EditProfileScreen = ({ navigation }) => (    
-    <MainScreen backgroundColor={colors.secondary}>
-        <View style={styles.container}>
-            <View style={styles.viewText}>
-                <Text style={fontStyles.text48White}>Edit Profile</Text>                
+    const [rawBody, setRawBody] = useState<IEditProfile>(
+        {
+            firstName: '',
+            lastName: '',
+            location: ''
+        } as IEditProfile
+    );
+
+    const handleAxiosCall = () => {
+        if(
+            rawBody.firstName.length > 1
+            && rawBody.lastName.length > 1
+            && rawBody.location.length > 1
+        )
+        {
+            var result = axiosAuthCalls.postEditProfileCall(rawBody);
+            setErrorUserName([]);
+            
+            result.catch((error) => {   
+                console.log(error);                     
+                setErrorUserName([
+                    "• " + error.response.data
+                ])
+            });
+        }
+    }
+    
+    const handleContent = (key: string, val: string) => {
+        setRawBody({
+            ...rawBody,
+            [key]: val
+        });
+    }
+    return (
+        <MainScreen backgroundColor={colors.secondary}>
+            <View style={styles.container}>
+                <View style={styles.viewText}>
+                    <Text style={fontStyles.text48White}>Edit Profile</Text>                
+                </View>
+                <View style={styles.viewText}>
+                    <Text style={fontStyles.text24White}>FirstName:</Text>                
+                    <TextInputWithValidation errors={errorUserName}
+                        handleTextValue={(value) => handleContent('firstName', value)} />
+                    <Text style={fontStyles.text24White}>LastName:</Text>               
+                    <TextInput style={fontStyles.textInput} onChangeText={(value) => 
+                        handleContent('lastName', value)}/>
+                    <Text style={fontStyles.text24White}>Location:</Text>                
+                    <TextInput style={fontStyles.textInput} onChangeText={(value) => 
+                        handleContent('location', value)}/>
+                </View>
+                <EllipseButtonPrimary
+                    marginTop={"3%"}
+                    name={"Submit changes"}
+                    onClick={() => 
+                        handleAxiosCall()
+                    }
+                />
             </View>
-            <View style={styles.viewText}>
-                <Text style={fontStyles.text24White}>FirstName:</Text>
-                <TextInput style={fontStyles.textInput} />
-                <Text style={fontStyles.text24White}>LastName:</Text>
-                <TextInput style={fontStyles.textInput} />
-                <Text style={fontStyles.text24White}>Location:</Text>
-                <TextInput style={fontStyles.textInput} />
-                {/* <Text style={fontStyles.text24White}>Email:</Text>
-                <TextInput style={fontStyles.textInput} />
-                <Text style={fontStyles.text24White}>Phone Number:</Text>
-                <TextInput style={fontStyles.textInput} /> */}
-            </View>
-            <EllipseButtonPrimary
-                marginTop={"3%"}
-                name={"Submit changes"}
-                onClick={() => navigation.navigate("SubmitChanges")}
-            />
-        </View>
-    </MainScreen>
-);
+        </MainScreen>
+    )
+};
 
 const styles = StyleSheet.create({
     container: {
