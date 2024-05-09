@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { View, StyleSheet, Text, TextInput, Dimensions } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
 import { CalendarInput } from "../../components/CalendarInput";
 import fontStyles from "../../config/StyleSheets/fontStyles";
-// import IBooking from "../../interfaces/Booking/IBooking";
 import axiosBookingCalls from "../../axiosCalls/axiosBookingCalls";
 const width = Dimensions.get('window').width;
 
@@ -15,6 +14,11 @@ export const BookingCreateScreen = ({ navigation }) => {
     const [hasCalendarActiveCheckInDate, setHasCalendarActiveCheckInDate] = useState(false);
     const [hasCalendarActiveCheckOutDate, setHasCalendarActiveCheckOutDate] = useState(false);
 
+    const roomRef = useRef();    
+    const firstNameRef = useRef();    
+    const lastNameRef = useRef();    
+    const descriptionRef = useRef();  
+      
     useEffect(() => {
         setCreateBooking(
             {
@@ -87,6 +91,8 @@ export const BookingCreateScreen = ({ navigation }) => {
                     <TextInput 
                         style={fontStyles.textInput} 
                         value={createBooking.hotelRoomId}
+                        onSubmitEditing={() => {roomRef.current.focus()}}
+                        returnKeyType={"next"}
                         onChangeText={(value) => 
                             handleContent('hotelRoomId', parseInt(value))
                         }
@@ -97,6 +103,9 @@ export const BookingCreateScreen = ({ navigation }) => {
                     <TextInput 
                         style={fontStyles.textInput} 
                         value={createBooking.room}
+                        onSubmitEditing={() => {firstNameRef.current.focus()}}
+                        returnKeyType={"next"}
+                        ref={roomRef}
                         onChangeText={(value) => 
                             handleContent('room', value)
                         }
@@ -107,6 +116,9 @@ export const BookingCreateScreen = ({ navigation }) => {
                     <TextInput 
                         style={fontStyles.textInput} 
                         value={createBooking.firstname}
+                        onSubmitEditing={() => {lastNameRef.current.focus()}}
+                        returnKeyType={"next"}
+                        ref={firstNameRef}
                         onChangeText={(value) => 
                             handleContent('firstName', value)
                         }
@@ -117,6 +129,9 @@ export const BookingCreateScreen = ({ navigation }) => {
                     <TextInput 
                         style={fontStyles.textInput} 
                         value={createBooking.lastname}
+                        onSubmitEditing={() => {descriptionRef.current.focus()}}
+                        returnKeyType={"next"}
+                        ref={lastNameRef}
                         onChangeText={(value) => 
                             handleContent('lastName', value)
                         }
@@ -126,6 +141,7 @@ export const BookingCreateScreen = ({ navigation }) => {
                     </Text>
                     <TextInput 
                         style={styles.textInput} 
+                        ref={descriptionRef}
                         multiline={true}
                         value={createBooking.description}
                         onChangeText={(value) => 

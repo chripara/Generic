@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, TextInput, Dimensions } from "react-native";
+import { useState, useEffect, useRef } from "react";
+import { View, StyleSheet, Text, Dimensions } from "react-native";
 import { MainScreen } from "../MainScreen";
 import { DualSelector } from "../../components/DualSelector";
 import colors from "../../config/colors";
@@ -10,13 +10,16 @@ import axiosHotelCalls from "../../axiosCalls/axiosHotelCalls";
 import { TextInputWithValidation } from "../../components/TextInputWithValidation";
 import IHotelFindAvailableRoomsForHotel from "../../interfaces/Hotel/IHotelFindAvailableRoomsForHotel";
 import IHotelFindRoomsForDate from "../../interfaces/Hotel/IHotelFindRoomsForDate";
-import IPair from "../../interfaces/General/IPair";
-import IHotelPair from "../../interfaces/Hotel/IHotelPair";
 import { CalendarInput } from "../../components/CalendarInput";
 
 const width = Dimensions.get('window').width;
 
 export const HotelSearchScreen = ({ navigation }) => {
+
+    const findAvailableRoomsForHotelCallCapacityRef = useRef();   
+    const findRoomsForDateCapacityRef = useRef(); 
+    const findRoomsForDateMinPricePerDayRef = useRef(); 
+    const findRoomsForDateMaxPricePerDayRef = useRef(); 
 
     const [leftPage, setLeftPage] = useState(true);
     const [rightPage, setRightPage] = useState(true);
@@ -48,8 +51,8 @@ export const HotelSearchScreen = ({ navigation }) => {
             hotelName: "Hotel1",
             capacity: "3",
             startDate: "01/01/2000",
-            endDate: "02/01/2000",
-        }   // as IHotelFindAvailableRoomsForHotel
+            endDate: "02/01/2000"
+        }
     );
 
     const [findRoomsForDate, setFindRoomsForDate] = useState<IHotelFindRoomsForDate>(
@@ -59,8 +62,8 @@ export const HotelSearchScreen = ({ navigation }) => {
             minPricePerDay: 0.1,
             maxPricePerDay: 1.1,
             startDate: "01/01/2000",
-            endDate: "02/01/2000",
-        }   // as IHotelFindRoomsForDate
+            endDate: "02/01/2000"
+        }
     );
     
     const handleFindRoomsForDate = (key: string, val) => {
@@ -147,15 +150,18 @@ export const HotelSearchScreen = ({ navigation }) => {
                             <TextInputWithValidation
                                 handleTextValue={(value) => {
                                     handleFindAvailableRoomsForHotel('hotelName', value)
-                                    console.log("FindRoomsForDate: ", findRoomsForDate)
+                                    console.log("FindAvailableRoomsForHotelCall: ", findRoomsForDate)
                                 }} 
+                                onSubmitEditing={() => {findAvailableRoomsForHotelCallCapacityRef.current.focus()}}
+                                returnKeyType={"next"}
                             />
                             <Text style={fontStyles.text24White}>Capacity:</Text>
                             <TextInputWithValidation
                                 handleTextValue={(value) => {
                                     handleFindAvailableRoomsForHotel('capacity', value)
-                                    console.log("FindRoomsForDate: ", findRoomsForDate)
+                                    console.log("FindAvailableRoomsForHotelCall: ", findRoomsForDate)
                                 }}  
+                                textInputRef={findAvailableRoomsForHotelCallCapacityRef}
                             />     
                             <EllipseButtonPrimary 
                                 name={"Find Available Rooms"} 
@@ -199,21 +205,31 @@ export const HotelSearchScreen = ({ navigation }) => {
                             <TextInputWithValidation handleTextValue={(value) => 
                                     handleFindRoomsForDate('city', value)
                                 }
+                                onSubmitEditing={() => {findRoomsForDateCapacityRef.current.focus()}}
+                                returnKeyType={"next"}
                             />
                             <Text style={fontStyles.text24White}>Capacity:</Text>
                             <TextInputWithValidation handleTextValue={(value) => 
                                     handleFindRoomsForDate('capacity', value)
                                 }
+                                textInputRef={findRoomsForDateCapacityRef}
+                                onSubmitEditing={() => {findRoomsForDateMinPricePerDayRef.current.focus()}}
+                                returnKeyType={"next"}
                             />
                             <Text style={fontStyles.text24White}>Minimum Price Per Day:</Text>
                             <TextInputWithValidation handleTextValue={(value) => 
                                     handleFindRoomsForDate('minPricePerDay', value)
-                                }
+                                }                                
+                                textInputRef={findRoomsForDateMinPricePerDayRef}
+                                onSubmitEditing={() => {findRoomsForDateMaxPricePerDayRef.current.focus()}}
+                                returnKeyType={"next"}
                             />  
                             <Text style={fontStyles.text24White}>Maximum Price Per Day:</Text>
                             <TextInputWithValidation handleTextValue={(value) => 
                                     handleFindRoomsForDate('maxPricePerDay', value)
-                                }
+                                }                                
+                                textInputRef={findRoomsForDateMaxPricePerDayRef}
+                                returnKeyType={"done"}
                             />
                             <EllipseButtonPrimary 
                                 name={"Find Available Rooms"} 

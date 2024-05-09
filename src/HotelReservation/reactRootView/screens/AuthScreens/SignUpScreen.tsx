@@ -3,7 +3,7 @@ import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import axiosAuthCalls from '../../axiosCalls/axiosAuthCalls';
 import { EllipseButtonSecondary } from "../../components/EllipseButtonSecondary";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import fontStyles from "../../config/StyleSheets/fontStyles";
 import ISignUp from "../../interfaces/Auth/ISignUp";
 import { TextInputWithValidation } from "../../components/TextInputWithValidation";
@@ -27,6 +27,15 @@ const [rawBody, setRawBody] = useState<ISignUp>(
         lastName: 'string',
         location: 'string'
     } as ISignUp);
+
+const userNameRef = useRef();
+const userPasswordRef = useRef();
+const userConfirmPasswordRef = useRef();
+const userEmailRef = useRef();
+const userPhoneNumberRef = useRef();
+const firstNameRef = useRef();
+const lastNameRef = useRef();
+const locationRef = useRef();
 
 const[errorUserName, setErrorUserName]= useState<string[]>();
 const[errorPassword, setErrorPassword]= useState<string[]>();
@@ -124,7 +133,14 @@ const handleErrors = () => {
     emailFormatInvalid.length > 0 && setErrorEmail(emailFormatInvalid);
     phoneLengthInvalid.length > 0 && setErrorPhoneNumber(phoneLengthInvalid);    
 
-    setIsRegistrationCompletedSuccessfully(!isRegistrationCompletedSuccessfully);
+    if(
+        usernameInvalid.length === 0 &&
+        passwordErrors.length === 0 &&
+        passwordsMismatch.length === 0 &&
+        emailFormatInvalid.length === 0 &&
+        phoneLengthInvalid.length === 0
+    )
+        setIsRegistrationCompletedSuccessfully(!isRegistrationCompletedSuccessfully);
 }
 
 return(
@@ -135,6 +151,7 @@ return(
             <View>
                 <View style={styles.viewText}>
                     <Text style={fontStyles.text48White}>Please Verify your email.</Text>
+                    <Text style={fontStyles.text20White}>(Auto verified)</Text>
                     <EllipseButtonSecondary
                     name={"Auth Screen"}
                     onClick={() => (                        
@@ -151,29 +168,61 @@ return(
                 <View style={styles.viewText}>
                     <Text style={fontStyles.text24White}>Username:</Text>
                     <TextInputWithValidation errors={errorUserName}
+                        textInputRef={userNameRef}        
+                        returnKeyType = {"next"}
+                        onSubmitEditing={() => {userPasswordRef.current.focus()}}
                         handleTextValue={(value) => handleContent('userName', value)} />
                     <Text style={fontStyles.text24White}>Password:</Text>
                     <TextInputWithValidation  errors={errorPassword}                        
+                        textInputRef={userPasswordRef}       
+                        returnKeyType = {"next"}
+                        onSubmitEditing={() => {userConfirmPasswordRef.current.focus()}}
                         handleTextValue={(value) => handleContent('password', value)}
                         secureTextEntry={true}/>
                     <Text style={fontStyles.text24White}>Confirm Password:</Text>
                     <TextInputWithValidation errors={errorConfirmPassword} 
+                        textInputRef={userConfirmPasswordRef}       
+                        returnKeyType = {"next"}
+                        onSubmitEditing={() => {userEmailRef.current.focus()}}
                         handleTextValue={(value) => handleContent('confirmPassword', value)}
                         secureTextEntry={true}/>
                     <Text style={fontStyles.text24White}>Email:</Text>
                     <TextInputWithValidation errors={errorEmail} 
+                        textInputRef={userEmailRef}       
+                        returnKeyType = {"next"}
+                        onSubmitEditing={() => {userPhoneNumberRef.current.focus()}}
                         handleTextValue={(value) => handleContent('email', value)}
                         keyboardType="email-address"/>
                     <Text style={fontStyles.text24White}>PhoneNumber:</Text>
                     <TextInputWithValidation errors={errorPhoneNumber} 
+                        textInputRef={userPhoneNumberRef}       
+                        returnKeyType = {"next"}
+                        onSubmitEditing={() => {firstNameRef.current.focus()}}
                         handleTextValue={(value) => handleContent('phoneNumber', value)}
                         keyboardType="phone-pad"/>
                     <Text style={fontStyles.text24White}>FirstName:</Text>
-                    <TextInput style={fontStyles.textInput} onChangeText={(value) => handleContent('firstName', value)}/>
+                    <TextInput                         
+                        ref={firstNameRef}       
+                        returnKeyType = {"next"}
+                        onSubmitEditing={() => {lastNameRef.current.focus()}}
+                        style={fontStyles.textInput}
+                        onChangeText={(value) => handleContent('firstName', value)}
+                    />
                     <Text style={fontStyles.text24White}>LastName:</Text>
-                    <TextInput style={fontStyles.textInput} onChangeText={(value) => handleContent('lastName', value)}/>
+                    <TextInput                         
+                        ref={lastNameRef}       
+                        returnKeyType = {"next"}
+                        onSubmitEditing={() => {locationRef.current.focus()}}
+                        style={fontStyles.textInput}
+                        onChangeText={(value) => handleContent('lastName', value)}
+                    />
                     <Text style={fontStyles.text24White}>Locations:</Text>
-                    <TextInput style={fontStyles.textInput} onChangeText={(value) => handleContent('location', value)} keyboardType="email-address"/>                
+                    <TextInput
+                        ref={locationRef}
+                        style={fontStyles.textInput} 
+                        onChangeText={(value) => handleContent('location', value)} 
+                        keyboardType="email-address"
+                    />
                 </View>
                 <EllipseButtonSecondary
                     name={"Sign Up"}

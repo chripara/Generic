@@ -11,9 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using System.Web;
-using HotelReservation.Application.AppConstants;
+using HotelReservation.Application.Models.Auth;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace HotelReservation.API.Controllers
 {

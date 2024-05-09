@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
@@ -11,6 +11,7 @@ export const ChangeEmailScreen = ({ navigation }) => {
     
     var emailInvalid = [];
     var confirmEmailInvalid = [];
+    const confirmEmailRef = useRef();   
 
     const[errorEmail, setErrorEmail]= useState<string[]>();
     const[errorConfirmEmail, setErrorConfirmEmail]= useState<string[]>();
@@ -70,10 +71,14 @@ export const ChangeEmailScreen = ({ navigation }) => {
             </View>
             <View style={styles.viewText}>
                 <Text style={fontStyles.text24White}>Current Email:</Text>
-                <TextInputWithValidation style={fontStyles.textInput} errors={errorEmail}  
+                <TextInputWithValidation style={fontStyles.textInput} errors={errorEmail}
+                    onSubmitEditing={() => {confirmEmailRef.current.focus()}}
+                    returnKeyType={"next"}  
                     handleTextValue={(value) => {handleContent('currentEmail', value)}} />
                 <Text style={fontStyles.text24White}>New Email:</Text>
-                <TextInputWithValidation style={fontStyles.textInput} errors={errorConfirmEmail}  
+                <TextInputWithValidation style={fontStyles.textInput}
+                    textInputRef={confirmEmailRef}
+                    errors={errorConfirmEmail}  
                     handleTextValue={(value) => {handleContent('confirmEmail', value)}} />
             </View>
             <EllipseButtonPrimary

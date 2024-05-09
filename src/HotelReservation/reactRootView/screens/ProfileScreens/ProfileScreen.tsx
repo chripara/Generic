@@ -47,8 +47,8 @@ export const ProfileScreen = ({ navigation }) => {
             }      
             <EllipseButtonPrimary
                 marginTop={"5%"}
-                name={"Edit Profile"}
-                onClick={() => navigation.navigate("EditProfile")}
+                name={"Change Profile"}
+                onClick={() => navigation.navigate("ChangeProfile")}
             />
             <EllipseButtonPrimary
                 marginTop={"5%"}

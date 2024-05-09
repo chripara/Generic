@@ -4,6 +4,7 @@ import { ProfileScreen } from "../screens/ProfileScreens/ProfileScreen";
 import { ManageAccountScreen } from "../screens/ProfileScreens/ManageAccountScreen";
 import { ChangePasswordScreen } from "../screens/ProfileScreens/ChangePasswordScreen";
 import { ChangeEmailScreen } from "../screens/ProfileScreens/ChangeEmailScreen";
+import { ChangeProfileScreen } from "../screens/ProfileScreens/ChangeProfileScreen";
 import { EditProfileScreen } from "../screens/ProfileScreens/EditProfileScreen";
 import { ForgetPasswordScreen } from "../screens/AuthScreens/ForgetPasswordScreen";
 import { SignInScreen } from "../screens/AuthScreens/SignInScreen";
@@ -29,6 +30,11 @@ export const ProfileStack = () => (
                 component={SignInScreen}
                 options={{ headerVisible: false }}
             />
+            <Stack.Screen
+                name="ChangeProfile"
+                component={ChangeProfileScreen}
+                options={{ headerVisible: false }}
+            />  
             <Stack.Screen
                 name="ChangePassword"
                 component={ChangePasswordScreen}
