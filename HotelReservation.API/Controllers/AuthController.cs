@@ -11,10 +11,12 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using System.Web;
+<<<<<<< HEAD
 using HotelReservation.Application.AppConstants;
+=======
+>>>>>>> 2123b17384575de67a7580a33ac2f2e714882a74
 using HotelReservation.Application.Models.Auth;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace HotelReservation.API.Controllers
 {
@@ -120,6 +122,9 @@ namespace HotelReservation.API.Controllers
             // _userManager.AddToRoleAsync(newUser, RoleConstants.RoleUser);
             newUser.EmailConfirmed = true;
             newUser.PhoneNumberConfirmed = true;
+
+            await _userManager.AddToRoleAsync(newUser, RoleConstants.RoleUser);
+            
             _context.Update(newUser);
             await _context.SaveChangesAsync();
             // await _userManager.AddPasswordAsync(newUser, dto.Password);

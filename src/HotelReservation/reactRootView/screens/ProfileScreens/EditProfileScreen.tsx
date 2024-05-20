@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
@@ -10,6 +10,10 @@ import { TextInputWithValidation } from "../../components/TextInputWithValidatio
 
 export const EditProfileScreen = ({ navigation }) => {  
 
+    const emailRef = useRef();
+    const phoneNumberRef = useRef();
+    const lastNameRef = useRef();
+    const locationRef = useRef();
     const[errorUserName, setErrorUserName] = useState<string[]>();
 
     const [rawBody, setRawBody] = useState<IEditProfile>(
@@ -53,13 +57,22 @@ export const EditProfileScreen = ({ navigation }) => {
                 </View>
                 <View style={styles.viewText}>
                     <Text style={fontStyles.text24White}>FirstName:</Text>                
-                    <TextInputWithValidation errors={errorUserName}
+                    <TextInputWithValidation 
+                        errors={errorUserName}
+                        returnKeyType = {"next"}
+                        onSubmitEditing={() => {lastNameRef.current.focus()}}
                         handleTextValue={(value) => handleContent('firstName', value)} />
                     <Text style={fontStyles.text24White}>LastName:</Text>               
-                    <TextInput style={fontStyles.textInput} onChangeText={(value) => 
+                    <TextInput style={fontStyles.textInput} 
+                        ref={lastNameRef}
+                        returnKeyType = {"next"}
+                        onSubmitEditing={() => {locationRef.current.focus()}}
+                        onChangeText={(value) => 
                         handleContent('lastName', value)}/>
                     <Text style={fontStyles.text24White}>Location:</Text>                
-                    <TextInput style={fontStyles.textInput} onChangeText={(value) => 
+                    <TextInput style={fontStyles.textInput} 
+                        ref={locationRef}
+                        onChangeText={(value) => 
                         handleContent('location', value)}/>
                 </View>
                 <EllipseButtonPrimary

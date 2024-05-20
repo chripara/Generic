@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
@@ -14,6 +14,9 @@ export const VerifyPhoneNumberScreen = ({ navigation }) => {
     var tokenLengthInvalid = [];
     var phoneLengthInvalid = [];
     var emailInvalid = [];
+    
+    const emailRef = useRef();
+    const phoneNumberRef = useRef();
     
     const [rawBody, setRawBody] = useState<IVerifyPhoneNumber>(
     {
@@ -78,17 +81,25 @@ return(
             </View>
             <View style={styles.viewText}>
                 <Text style={fontStyles.text24White}>Code:</Text>
-                <TextInputWithValidation style={fontStyles.text24White}
+                <TextInputWithValidation 
+                    style={fontStyles.text24White}
+                    onSubmitEditing={() => {emailRef.current.focus()}}
+                    returnKeyType={"next"}
                     errors={errorToken}
                     handleTextValue={(value) => {handleContent('token', value)}}
                 />
                 <Text style={fontStyles.text24White}>Email:</Text>
-                <TextInputWithValidation style={fontStyles.textInput} 
+                <TextInputWithValidation 
+                    style={fontStyles.textInput} 
+                    onSubmitEditing={() => {phoneNumberRef.current.focus()}}
+                    returnKeyType={"next"}
+                    ref={emailRef}
                     errors={errorEmail}
                     handleTextValue={(value) => {handleContent('email', value)}}
                 />
                 <Text style={fontStyles.text24White}>Phone Number:</Text>
                 <TextInputWithValidation 
+                    ref={phoneNumberRef}
                     errors={errorPhoneNumber} 
                     handleTextValue={(value) => {handleContent('phoneNumber', value)}} 
                 />

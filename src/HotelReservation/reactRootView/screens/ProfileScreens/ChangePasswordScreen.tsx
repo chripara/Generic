@@ -1,4 +1,5 @@
 import { View, StyleSheet, Text, TextInput } from "react-native";
+import { useRef } from "react";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
@@ -10,6 +11,8 @@ export const ChangePasswordScreen = ({ navigation }) => {
     var oldPasswordInvalid = [];
     var newPasswordInvalid = [];
     var confirmNewPasswordInvalid = [];
+    const confirmEmailRef = useRef();   
+    const confirmNewPasswordRef = useRef();   
 
     const[errorEmail, setErrorOldPassword]= useState<string[]>();
     const[errorConfirmEmail, setErrorNewPassword]= useState<string[]>();
@@ -72,18 +75,24 @@ export const ChangePasswordScreen = ({ navigation }) => {
             <View style={styles.viewText}>
                 <Text style={fontStyles.text24White}>Old Password:</Text>
                 <TextInputWithValidation errors={errorEmail} handleTextValue={(value) => {
-
+                        (value) => {handleContent('currentEmail', value)}
                     }} 
+                    onSubmitEditing={() => {findRoomsForDateCapacityRef.current.focus()}}
+                    returnKeyType={"next"}
                 />
                 <Text style={fontStyles.text24White}>New Password:</Text>
                 <TextInputWithValidation errors={errorConfirmEmail} handleTextValue={(value) => {
-
+                        (value) => {handleContent('confirmEmail', value)}                        
                     }} 
+                    onSubmitEditing={() => {findRoomsForDateCapacityRef.current.focus()}}
+                    returnKeyType={"next"}
+                    textInputRef={confirmEmailRef}
                 />
                 <Text style={fontStyles.text24White}>Confirm New Password:</Text>
                 <TextInputWithValidation errors={errorConfirmNewPassword} handleTextValue={(value) => {
-
+                        (value) => {handleContent('confirmNewPassword', value)}                        
                     }} 
+                    textInputRef={confirmNewPasswordRef}
                 />
             </View>
             <EllipseButtonPrimary

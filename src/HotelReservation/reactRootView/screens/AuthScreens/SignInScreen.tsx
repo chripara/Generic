@@ -1,4 +1,5 @@
-import { View, StyleSheet, Text, TextInput } from "react-native";
+import { View, StyleSheet, Text, TextInput, } from "react-native";
+import { useRef } from "react";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import { EllipseButtonSecondary } from "../../components/EllipseButtonSecondary";
@@ -12,6 +13,8 @@ import constants from "../../config/constants";
 
 export const SignInScreen = ({ navigation }) => {
 
+const passwordRef = useRef();
+
 const [rawBody, setRawBody] = useState<ISignIn>(
 {
     userName: 'string',
@@ -19,7 +22,6 @@ const [rawBody, setRawBody] = useState<ISignIn>(
 } as ISignIn);
 
 const [errorSignIn, setErrorSignIn]= useState<string[]>();
-const [cookie, setCookie]=useState<string>();
 
 const [isSignInCompletedSuccessfully, setIsSignInCompletedSuccessfully] = useState(false);
     
@@ -58,13 +60,18 @@ return (
             </View>
             <View style={styles.viewText}>
                 <Text style={fontStyles.text24White}>Username:</Text>
-                <TextInputWithValidation errors={errorSignIn} 
+                <TextInputWithValidation 
+                    errors={errorSignIn} 
+                    onSubmitEditing={() => {passwordRef.current.focus()}}
+                    returnKeyType={"next"}
                     handleTextValue={(value) => {
                         handleContent('userName', value)
                     }} 
                 />
                 <Text style={fontStyles.text24White}>Password:</Text>
-                <TextInput style={fontStyles.textInput} 
+                <TextInput 
+                    ref={passwordRef}
+                    style={fontStyles.textInput} 
                     onChangeText={(value) => 
                     handleContent('password', value)}
                     secureTextEntry={true}

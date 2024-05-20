@@ -12,7 +12,6 @@ const Stack = createNativeStackNavigator();
 export const AuthStack = () => (
     
     <Stack.Navigator screenOptions={{ headerShown: false }}>  
-    { console.log("allaksa")}
         <Stack.Screen
             name="VerifyPhoneNumber"
             component={VerifyPhoneNumberScreen}
@@ -47,7 +46,6 @@ export const AuthStack = () => (
             name="Auth"
             component={AuthScreen}
             options={{ headerVisible: false }}
-            initialParams={{ previousRoute: "Auth"}}
         />
     </Stack.Navigator>
 );

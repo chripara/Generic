@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, StyleSheet, Text, TextInput, Dimensions } from "react-native";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
@@ -11,6 +11,9 @@ import axiosBookingCalls from "../../axiosCalls/axiosBookingCalls";
 const width = Dimensions.get('window').width;
 
 export const BookingUpdateScreen = ({ navigation }) => {
+
+    const roomRef = useRef();    
+
     const [checkInDate, setCheckInDate] = useState(new Date());
     const [checkOutDate, setCheckOutDate] = useState(new Date());
     const [hasCalendarActiveCheckInDate, setHasCalendarActiveCheckInDate] = useState(false);
@@ -38,12 +41,7 @@ export const BookingUpdateScreen = ({ navigation }) => {
     }
 
     const handleUpdateBooking = () => {
-        // setCreateBooking(
-        // {
-        //     ...createBooking,
-        //     ["startDate"]: checkInDate,
-        //     ["endDate"]: checkOutDate
-        // })
+        
         const result = axiosBookingCalls.updateBookingCall(updateBooking);
         console.log(updateBooking);
         result.then((response) => {
@@ -78,6 +76,8 @@ export const BookingUpdateScreen = ({ navigation }) => {
                     <TextInput 
                         style={fontStyles.textInput} 
                         value={updateBooking.hotelRoomId}
+                        onSubmitEditing={() => {hotelRoomIdRef.current.focus()}}
+                        returnKeyType={"next"}
                         onChangeText={(value) => 
                             handleContent('id', parseInt(value))
                         }
@@ -88,6 +88,9 @@ export const BookingUpdateScreen = ({ navigation }) => {
                     <TextInput 
                         style={fontStyles.textInput} 
                         value={updateBooking.hotelRoomId}
+                        onSubmitEditing={() => {roomRef.current.focus()}}
+                        returnKeyType={"next"}
+                        ref={hotelRoomIdRef}
                         onChangeText={(value) => 
                             handleContent('hotelRoomId', parseInt(value))
                         }
@@ -98,6 +101,9 @@ export const BookingUpdateScreen = ({ navigation }) => {
                     <TextInput 
                         style={fontStyles.textInput} 
                         value={updateBooking.room}
+                        onSubmitEditing={() => {firstNameRef.current.focus()}}
+                        returnKeyType={"next"}
+                        ref={roomRef}
                         onChangeText={(value) => 
                             handleContent('room', value)
                         }
@@ -108,6 +114,9 @@ export const BookingUpdateScreen = ({ navigation }) => {
                     <TextInput 
                         style={fontStyles.textInput} 
                         value={updateBooking.firstname}
+                        onSubmitEditing={() => {lastNameRef.current.focus()}}
+                        returnKeyType={"next"}
+                        ref={firstNameRef}
                         onChangeText={(value) => 
                             handleContent('firstName', value)
                         }
@@ -117,7 +126,10 @@ export const BookingUpdateScreen = ({ navigation }) => {
                     </Text>
                     <TextInput 
                         style={fontStyles.textInput} 
-                        value={updateBooking.lastname}
+                        value={updateBooking.lastname}                        
+                        onSubmitEditing={() => {lastNameRef.current.focus()}}
+                        returnKeyType={"next"}
+                        ref={lastNameRef}
                         onChangeText={(value) => 
                             handleContent('lastName', value)
                         }
@@ -145,6 +157,7 @@ export const BookingUpdateScreen = ({ navigation }) => {
                         style={styles.textInput} 
                         multiline={true}
                         value={updateBooking.description}
+                        ref={descriptionRef}
                         onChangeText={(value) => 
                             handleContent('description', value)
                         }

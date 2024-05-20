@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { MainScreen } from "../MainScreen";
 import colors from "../../config/colors";
 import { EllipseButtonPrimary } from "../../components/EllipseButtonPrimary";
@@ -16,6 +16,11 @@ export const ResetPasswordScreen = ({ navigation }) => {
     var emailErrors = [];
     var passwordsErrors = [];
     var confirmPasswordsMismatch = [];
+    
+    const tokenRef = useRef();
+    const emailRef = useRef();
+    const passwordsRef = useRef();
+    const confirmPasswordsRef = useRef();
 
     const [rawBody, setRawBody] = useState<IResetPassword>(
     {
@@ -29,8 +34,6 @@ export const ResetPasswordScreen = ({ navigation }) => {
     const[errorsEmail, setErrorEmails]= useState<string[]>();
     const[errorPasswords, setErrorPasswords]= useState<string[]>();
     const[errorConfirmPasswordMismatch, setErrorConfirmPasswordMismatch]= useState<string[]>();    
-
-    // const[isRegistrationCompletedSuccessfully,setIsRegistrationCompletedSuccessfully] = useState(false);
     
     const handleAxiosCall = () => {
         console.log(rawBody);
@@ -120,22 +123,40 @@ return(
             </View>
             <View style={styles.viewText}>
                 <Text style={fontStyles.text24White}>Token:</Text>
-                <TextInputWithValidation errors={errorsToken} handleTextValue={(value) => {
+                <TextInputWithValidation 
+                    ref={tokenRef}
+                    onSubmitEditing={() => {emailRef.current.focus()}}
+                    errors={errorsToken} 
+                    returnKeyType = {"next"}                    
+                    handleTextValue={(value) => {
                         handleContent('token', value);
                     }}
                 />
                 <Text style={fontStyles.text24White}>Email:</Text>
-                <TextInputWithValidation errors={errorsEmail} handleTextValue={(value) => {
+                <TextInputWithValidation 
+                    ref={emailRef}
+                    onSubmitEditing={() => {passwordsRef.current.focus()}}
+                    errors={errorsEmail}
+                    returnKeyType = {"next"}                    
+                    handleTextValue={(value) => {
                         handleContent('email', value);
                     }}
                 />
                 <Text style={fontStyles.text24White}>New Password:</Text>
-                <TextInputWithValidation errors={errorPasswords} handleTextValue={(value) => {
+                <TextInputWithValidation 
+                    ref={passwordsRef}
+                    onSubmitEditing={() => {confirmPasswordsRef.current.focus()}}
+                    errors={errorPasswords}                     
+                    returnKeyType = {"next"}
+                    handleTextValue={(value) => {
                         handleContent('password', value);
                     }}
                 />
                 <Text style={fontStyles.text24White}>Confirm New Password:</Text>
-                <TextInputWithValidation errors={errorConfirmPasswordMismatch} handleTextValue={(value) => {
+                <TextInputWithValidation 
+                    ref={confirmPasswordsRef}
+                    errors={errorConfirmPasswordMismatch} 
+                    handleTextValue={(value) => {
                         handleContent('confirmPassword', value);
                     }}
                 />
