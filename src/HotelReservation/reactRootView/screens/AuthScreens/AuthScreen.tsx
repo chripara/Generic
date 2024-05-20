@@ -15,7 +15,7 @@ export const AuthScreen = ({ route, navigation  }) => (
             </View>
             <EllipseButtonSecondary
                 name={"Sign In"}
-                onClick={() => navigation.navigate(navigation.navigate("SignIn",  {previousRoute: "Auth"}))} 
+                onClick={() => navigation.navigate("SignIn")} 
             />
             <EllipseButtonSecondary
                 name={"Sign Up"}

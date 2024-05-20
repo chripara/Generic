@@ -118,6 +118,9 @@ namespace HotelReservation.API.Controllers
             // _userManager.AddToRoleAsync(newUser, RoleConstants.RoleUser);
             newUser.EmailConfirmed = true;
             newUser.PhoneNumberConfirmed = true;
+
+            await _userManager.AddToRoleAsync(newUser, RoleConstants.RoleUser);
+            
             _context.Update(newUser);
             await _context.SaveChangesAsync();
             // await _userManager.AddPasswordAsync(newUser, dto.Password);

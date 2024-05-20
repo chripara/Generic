@@ -34,8 +34,6 @@ export const ResetPasswordScreen = ({ navigation }) => {
     const[errorsEmail, setErrorEmails]= useState<string[]>();
     const[errorPasswords, setErrorPasswords]= useState<string[]>();
     const[errorConfirmPasswordMismatch, setErrorConfirmPasswordMismatch]= useState<string[]>();    
-
-    // const[isRegistrationCompletedSuccessfully,setIsRegistrationCompletedSuccessfully] = useState(false);
     
     const handleAxiosCall = () => {
         console.log(rawBody);

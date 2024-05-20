@@ -22,7 +22,6 @@ const [rawBody, setRawBody] = useState<ISignIn>(
 } as ISignIn);
 
 const [errorSignIn, setErrorSignIn]= useState<string[]>();
-const [cookie, setCookie]=useState<string>();
 
 const [isSignInCompletedSuccessfully, setIsSignInCompletedSuccessfully] = useState(false);
     
