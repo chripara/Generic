@@ -1,4 +1,4 @@
-﻿namespace HotelReservation.Domain.Models.Auth;
+﻿namespace HotelReservation.Application.Models.Auth;
 
 public class EditProfileDto
 {

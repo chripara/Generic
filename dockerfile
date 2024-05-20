@@ -14,12 +14,6 @@ COPY . .
 WORKDIR "/src/HotelReservation.API"
 RUN dotnet build "HotelReservation.API.csproj" -c Release -o /app/build
 
-FROM build as migrations
-RUN dotnet tool install --version 6.0.9 --global dotnet-ef
-ENV PATH="$PATH:/root/.dotnet/tools"
-WORKDIR /src
-RUN dotnet-ef database update -s "HotelReservation.API\" -p "HotelReservation.Persistence\"
-
 FROM build AS publish
 RUN dotnet publish "HotelReservation.API.csproj" -c Release -o /app/publish
 
